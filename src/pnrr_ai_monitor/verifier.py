@@ -228,7 +228,7 @@ class AiVerifier:
     """Second-opinion judge backed by Gemini. The *mode* controls how many AI
     calls are spent, so the same code runs free (off/capped) or fully (paid)."""
 
-    def __init__(self, mode: str = AI_CAPPED, budget: int = 50) -> None:
+    def __init__(self, mode: str = AI_CAPPED, budget: int = 200) -> None:
         if mode not in AI_MODES:
             raise ValueError(f"ai mode must be one of {AI_MODES}, got {mode!r}")
         self.mode = mode
