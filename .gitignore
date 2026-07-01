@@ -1,6 +1,9 @@
 # Secrets
 .env
 
+# Claude Code local settings (per-machine permission approvals, not project config)
+.claude/settings.local.json
+
 # Virtual environment
 .venv/
 
@@ -16,6 +19,7 @@ scratch/
 
 # Generated reports
 data/opportunities.csv
+
 
 # Runtime artifacts: state DB + logs.
 # NOTE: CI force-commits these (git add -f) for SQLite-fallback state
