@@ -1,0 +1,54 @@
+[2026-07-01 15:05:38] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 100); workers: 8
+[2026-07-01 15:05:44] ERROR fetching VITF010009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VIIT0007
+[2026-07-01 15:05:45] ERROR fetching RESD01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/REIA0001
+[2026-07-01 15:06:11] ERROR fetching TRIS009005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TRLS0003
+[2026-07-01 15:06:13] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for ARPM010006 | AVVISO DI SELEZIONE PER L’INDIVIDUAZIONE DI UN DOCENTE INTER
+[2026-07-01 15:06:27] ERROR fetching NAIC8GR00N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0258
+[2026-07-01 15:06:27] ERROR fetching BATD21000D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/bait0040
+[2026-07-01 15:08:15] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for LEIS00600N | DECRETO PER L’AVVIO DI UNA PROCEDURA DI SELEZIONE PER IL CON
+[2026-07-01 15:08:32] ERROR fetching RCTF030008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RCIT0012
+[2026-07-01 15:08:45] ALERT: I.I.S.S. "A. MEUCCI" | CUP I74D25003790006 | 1 avviso/i: AVVISO DI SELEZIONE PER IL CONFERIMENTO DI INCARIC
+[2026-07-01 15:08:46] ERROR fetching PCIC818008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PCME0017
+[2026-07-01 15:10:25] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for CSIC819007 | AVVISO MANIFESTAZIONE DI INTERESSE PROGETTO PNRR – Istituto 
+[2026-07-01 15:10:49] ERROR fetching PGIS014001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGII0007
+[2026-07-01 15:10:50] ERROR fetching RMIS071006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMII0075
+[2026-07-01 15:12:03] ALERT: I.C. CASELETTE | CUP H74D25002610006 | 1 avviso/i: Decreto DS + avviso di selezione ESPERTO E TUTOR i
+[2026-07-01 15:12:35] ERROR fetching VARC02000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VAIP0001
+[2026-07-01 15:12:35] ERROR fetching SIIS00300R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SIII0001
+[2026-07-01 15:16:01] ERROR fetching GOIS00900R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/goii0009
+[2026-07-01 15:16:03] ERROR fetching SPTD110005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SPII0004
+[2026-07-01 15:16:50] ERROR fetching NOTF040002 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NOIT0005
+[2026-07-01 15:19:12] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for SAIS07600R | Avviso di selezione per il conferimento di 1 incarico indivi
+[2026-07-01 15:19:16] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for NAIC8FY007 | AVVISO DI SELEZIONE PER N. 23 FIGURE DI TUTOR PROGETTO PN 20
+[2026-07-01 15:19:16] ERROR fetching SRIS011004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SRII0005
+[2026-07-01 15:19:43] ERROR fetching BGIC87800N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BGME0038
+[2026-07-01 15:20:53] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for SAIS07600R | Avviso di selezione per il conferimento di 1 incarico indivi
+[2026-07-01 15:21:54] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for FGIC85700X | DECRETO DI ASSUNZIONE A BILANCIO - SNODI FORMATIVI PER L'INT
+[2026-07-01 15:21:56] ALERT: I.C. "V.DA FELTRE-N.ZINGARELLI" | CUP F74D25003090006 | 1 avviso/i: DECRETO DI ASSUNZIONE A BILANCIO - SNODI FORMATIVI
+[2026-07-01 15:22:00] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for SAIS07600R | Decreto avvio procedura di selezione per il conferimento di 
+[2026-07-01 15:22:27] WARNING: AI verification unavailable (ClientError: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Request contains an invalid argument.', 'status': 'INVALID_ARG); falling back to rules for CSPC060008 | Manifestazione di interessi aperta per operatori economici i
+[2026-07-01 15:22:27] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for SAIS07600R | Decreto avvio procedura di selezione per il conferimento di 
+[2026-07-01 15:23:45] ALERT: IIS GALILEI VOGHERA | CUP F14D25003500006 | 2 avviso/i: Avviso_pubblico_unico_esperti_tutor_DM219_Galilei; 147_Decreto_avvio_procedura_selezione_DM219_Galile
+[2026-07-01 15:24:07] ERROR fetching RMPC41000C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMLG0034
+[2026-07-01 15:25:01] ALERT: I.C. FIGINO SERENZA | CUP I94D25004590006 | 2 avviso/i: Avviso di selezione docenti per 16 laboratori sul ; Decreto di avvio di selezione docenti per n. 16 la
+[2026-07-01 15:25:05] ERROR fetching APIC81000A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/apme0011
+[2026-07-01 15:25:08] ALERT: "A. PACINOTTI" - SCAFATI | CUP H84D25002980006 | 4 avviso/i: Avviso di selezione per il conferimento di 1 incar; Avviso di selezione per il conferimento di 1 incar; Decreto avvio procedura di selezione per il confer; Decreto avvio procedura di selezione per il confer
+[2026-07-01 15:27:07] ALERT: I.C. DI TEVEROLA | CUP F94D25003430006 | 1 avviso/i: Decreto avvio procedura di selezione rivolta a per
+[2026-07-01 15:27:30] ERROR fetching CAIC8AF006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/cadd0077
+[2026-07-01 15:27:32] ERROR fetching ARIS00200R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ARII0002
+[2026-07-01 15:28:43] ERROR fetching PETD07000X (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PEII0007
+[2026-07-01 15:31:14] ERROR fetching VAIS008004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VAII0005
+[2026-07-01 15:32:31] ERROR fetching LETD08000R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LEIT0016
+[2026-07-01 15:32:57] ALERT: LS "PITAGORA" RENDE | CUP H24D25002740006 | 1 avviso/i: Avvio selezione formatori Progetto M4C1I2.1-2026-1
+[2026-07-01 15:33:37] ERROR fetching ARIC81600E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ARME0005
+[2026-07-01 15:35:00] ERROR fetching NAIC8EZ00C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0087
+[2026-07-01 15:37:15] ERROR fetching CSIC8AH00B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/CSDD0041
+[2026-07-01 15:41:14] ERROR fetching PRIS00300G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/prii0002
+[2026-07-01 15:42:11] ALERT: I.T.E.T. "G. CALO'" | CUP B64D25005630006 | 1 avviso/i: AUTODICHIARAZIONE impegno orario_Progetto DM 219_2
+[2026-07-01 15:45:33] ALERT: I.C. VIVENZA- GIOVANNI XXIII | CUP I34D25004650006 | 2 avviso/i: DECRETO RUP ASSENZA CANDIDATURE INTERNE AVVISO 865; Selezione interna esperti e tutor progetto AI@SCUO
+[2026-07-01 15:45:49] ERROR fetching TEIC84500C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TEME0030
+[2026-07-01 15:45:49] ERROR fetching RMIC80700P (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0150
+[2026-07-01 15:47:04] ERROR fetching TPIS01200Q (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TPII0011
+[2026-07-01 15:47:04] ERROR fetching RMIC8DZ00R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0312
+[2026-07-01 15:47:04] ERROR fetching PGIC847004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGME0045
+[2026-07-01 15:47:05] ERROR fetching MNIS00900E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MNII0005
