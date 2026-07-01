@@ -1,0 +1,77 @@
+name: PNRR AI Opportunity Monitor
+
+on:
+  schedule:
+    - cron: "7 * * * *"   # hourly at :07
+  workflow_dispatch:
+    inputs:
+      ai_mode:
+        description: "AI judging mode"
+        type: choice
+        default: "capped"
+        options: ["off", "capped", "full"]
+      ai_budget:
+        description: "Max AI calls per run (capped mode)"
+        default: "50"
+
+# Never let two runs overlap (avoids double-processing and commit races).
+concurrency:
+  group: pnrr-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # to commit the dedup state back to the repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install OCR system packages
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-ita
+
+      - name: Set up uv (installs Python from pyproject)
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run monitor
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+          CC_EMAIL: ${{ secrets.CC_EMAIL }}
+          BCC_EMAIL: ${{ secrets.BCC_EMAIL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AI_VERIFICATION_REQUIRED: "true"
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}   # optional; empty -> local SQLite
+        # Runs the REAL funded list (data/projects_funded.csv). That file must be
+        # generated (scripts/extract_ministry_pdf.py), mapped (--map), and committed.
+        run: |
+          uv run python run_monitor.py \
+            --projects data/projects_funded.csv \
+            --ai-mode "${{ github.event.inputs.ai_mode || 'capped' }}" \
+            --ai-budget "${{ github.event.inputs.ai_budget || '50' }}" \
+            --monitor-workers 8
+
+      - name: Persist dedup state
+        # Only needed when using the SQLite fallback (no DATABASE_URL). With
+        # Postgres the state lives in the DB and this is a no-op diff.
+        if: ${{ always() }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Force-add: these are gitignored for local hygiene but deliberately
+          # committed in CI to persist dedup state across runs (SQLite fallback).
+          git add -f monitor_history.sqlite3 run_log.txt 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No state changes to commit."
+          else
+            git commit -m "chore: update monitor state [skip ci]"
+            git push
+          fi

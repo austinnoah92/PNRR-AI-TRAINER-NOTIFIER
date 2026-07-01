@@ -1,0 +1,26 @@
+# Secrets
+.env
+
+# Virtual environment
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.cache/
+
+# Throwaway analysis / scratch work
+scratch/
+
+# Generated reports
+data/opportunities.csv
+
+# Runtime artifacts: state DB + logs.
+# NOTE: CI force-commits these (git add -f) for SQLite-fallback state
+# persistence; locally they stay untracked.
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+run_log.txt
