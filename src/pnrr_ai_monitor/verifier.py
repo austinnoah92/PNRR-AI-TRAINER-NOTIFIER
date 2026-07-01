@@ -22,7 +22,7 @@ CALL_TERMS = (
     "esperti formatori", "esperto formatore", "esperto", "esperti", "formatore",
     "formatori", "tutor", "reclutamento", "percorsi formativi", "laboratori formativi",
     "percorsi e laboratori formativi", "figure professionali", "operatori economici",
-    "operatore economico", "manifestazione di interesse", "indagine di mercato",
+    "operatore economico", "manifestazione di interesse", "manifestazione d'interesse", "indagine di mercato",
     "affidamento diretto", "servizi di formazione", "rdo", "mepa", "capitolato",
     "disciplinare", "presentazione candidatura", "istanza di partecipazione",
     "domanda di partecipazione", "richiesta disponibilita", "richiesta disponibilità",
@@ -35,7 +35,7 @@ CALL_CORE_TERMS = (
     "esperti formatori", "esperto formatore", "esperti esterni", "formatori esterni",
     "reclutamento esperti", "reclutamento tutor", "reclutamento formatori",
     "avviso di reclutamento", "figure professionali", "operatori economici",
-    "operatore economico", "manifestazione di interesse", "indagine di mercato",
+    "operatore economico", "manifestazione di interesse", "manifestazione d'interesse operatori economici", "indagine di mercato",
     "rdo", "mepa", "istanza di partecipazione", "domanda di partecipazione",
     "presentazione candidatura", "richiesta disponibilita",
 )
