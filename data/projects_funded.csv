@@ -374,7 +374,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 373,Centro - Nord,PVIC81500V,IC SIZIANO,LOMBARDIA,Statale,C54D25007660006,M4C1I2.1-2026-1745-P-64416,49604.80,https://www.icsiziano.it,2026-03-30,Argo,SC25545,
 374,Mezzogiorno,PETD010008,"ITC-ITT-ITG ""T. ACERBO"" PESCARA",ABRUZZO,Statale,C24D25002380006,M4C1I2.1-2026-1745-P-64693,48182.40,http://www.istitutotecnicoacerbope.gov.it,2026-03-30,,,
 375,Centro - Nord,NOTF03000B,ITI OMAR - NOVARA,PIEMONTE,Statale,I14D25003310006,M4C1I2.1-2026-1745-P-64958,49604.80,http://www.itiomar.it,2026-03-30,Generic,,http://www.itiomar.it/struttura/albo-online.php
-376,Centro - Nord,RMIC8F700A,"I.C. "" GINO FELCI """,LAZIO,Statale,F14D25003540006,M4C1I2.1-2026-1745-P-64821,49448.00,https://www.ginofelci.edu.it,2026-03-30,Generic,,https://www.ginofelci.edu.it/tipologia-documento/albo-online/
+376,Centro - Nord,RMIC8F700A,"I.C. "" GINO FELCI """,LAZIO,Statale,F14D25003540006,M4C1I2.1-2026-1745-P-64821,49448.00,https://www.ginofelci.edu.it,2026-03-30,Generic,,https://www.ginofelci.edu.it/tipologia-documento/albo-online
 377,Mezzogiorno,NAIC8EM009,CASORIA 3 IC CARDUCCI-KING,CAMPANIA,Statale,C74D25003210006,M4C1I2.1-2026-1745-P-64343,48076.00,http://www.casoria3carducciking.edu.it,2026-03-30,Argo,SC27630,
 378,Centro - Nord,CNIC812005,VILLANOVA MONDOVI',PIEMONTE,Statale,D74D25005390006,M4C1I2.1-2026-1745-P-64796,45276.00,http://www.icvillanovamondovi.edu.it,2026-03-30,Spaggiari,CNME0013,
 379,Mezzogiorno,NA1E03900G,ENTE RELIGIOSO SUORE DELLE DIVINE VOCAZIONI,CAMPANIA,Paritaria,F64C25000310006,M4C1I2.1-2026-1765-P-64982,49728.00,http://www.scuolamadrerussolillo.it,2026-03-30,Generic,,https://www.scuolamadrerussolillo.it/amministrazione-trasparente.htm
@@ -611,7 +611,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 610,Mezzogiorno,LEIC80400T,I.C. ALESSANO,PUGLIA,Statale,I24D25005230006,M4C1I2.1-2026-1745-P-65298,49753.20,https://comprensivoalessano.edu.it,2026-03-31,Argo,SC15351,
 611,Mezzogiorno,FGMM15400A,CPIA FOGGIA D.M. SASSOLI,PUGLIA,Statale,C74D25003150006,M4C1I2.1-2026-1745-P-64208,49644.00,,2026-03-31,Search,,
 612,Mezzogiorno,CEIS03700T,ALESSANDRO VOLTA AVERSA,CAMPANIA,Statale,I34D25004850006,M4C1I2.1-2026-1745-P-65317,49207.20,https://www.isisvoltaaversa.edu.it,2026-03-31,Argo,SG27674,
-613,Centro - Nord,BGRI15000D,"""CESARE PESENTI""",LOMBARDIA,Statale,I14D25003370006,M4C1I2.1-2026-1745-P-65269,49649.60,http://www.istitutopesenti.edu.it,2026-03-31,,,
+613,Centro - Nord,BGRI15000D,"""CESARE PESENTI""",LOMBARDIA,Statale,I14D25003370006,M4C1I2.1-2026-1745-P-65269,49649.60,http://www.istitutopesenti.edu.it,2026-03-31,Argo,SG28613,
 614,Mezzogiorno,NAIS10100T,"ISTITUTO ISIS "" EINAUDI-GIORDANO""",CAMPANIA,Statale,F74D25003190006,M4C1I2.1-2026-1745-P-65244,49546.00,http://www.einaudi-giordano.edu.it,2026-03-31,Argo,SG27172,
 615,Mezzogiorno,NAIC8FE00Q,S. GIORGIO I.C. 2 - MASSAIA,CAMPANIA,Statale,C64D25003320006,M4C1I2.1-2026-1745-P-65305,49235.20,http://www.ic2massaia.edu.it,2026-03-31,Nuvola,NAIC8FE00Q,
 616,Mezzogiorno,BRIC82700T,TERZO I.C. FRANCAVILLA F.NA,PUGLIA,Statale,F64D25003920006,M4C1I2.1-2026-1745-P-64950,48552.00,,2026-03-31,Search,,
@@ -721,7 +721,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 720,Mezzogiorno,AGPS02000P,LICEO SCIENTIFICO - ENRICO FERMI,SICILIA,Statale,F84D25004690006,M4C1I2.1-2026-1745-P-64934,49644.00,http://www.liceofermisciacca.edu.it,2026-03-31,Argo,SS16959,
 721,Mezzogiorno,CTIC8A300B,IC LEONARDO DA VINCI-MASCALUCIA,SICILIA,Statale,H64D25002780006,M4C1I2.1-2026-1745-P-64745,47611.20,http://www.vincimascalucia.gov.it,2026-03-31,,,
 722,Centro - Nord,IBIC81900C,LAIVES,TRENTINO-ALTO ADIGE,Statale,G14D25005490006,M4C1I2.1-2026-1745-P-65023,49207.20,,2026-03-31,Search,,
-723,Centro - Nord,RMIS104008,PUBLIO ELIO ADRIANO,LAZIO,Statale,I34D25004590006,M4C1I2.1-2026-1745-P-64276,49168.00,http://www.liceoadriano.edu.it,2026-03-31,Generic,,https://www.liceoadriano.edu.it/tipologia-documento/albo-online/
+723,Centro - Nord,RMIS104008,PUBLIO ELIO ADRIANO,LAZIO,Statale,I34D25004590006,M4C1I2.1-2026-1745-P-64276,49168.00,http://www.liceoadriano.edu.it,2026-03-31,Generic,,https://www.liceoadriano.edu.it/tipologia-documento/albo-online
 724,Centro - Nord,VRIC873005,IC SANGUINETTO E CASALEONE,VENETO,Statale,B24D25003650006,M4C1I2.1-2026-1745-P-64955,49828.80,http://www.icsanguinetto.edu.it,2026-03-31,Generic,,http://www.icsanguinetto.edu.it/albo-online
 725,Centro - Nord,ROIC807009,VILLADOSE,VENETO,Statale,J94D25002520006,M4C1I2.1-2026-1745-P-65199,49644.00,https://www.icvilladose.edu.it,2026-03-31,Generic,,https://www.icvilladose.edu.it/albo-online
 726,Centro - Nord,FIIC855001,BOTTICELLI,TOSCANA,Statale,H14D25002640006,M4C1I2.1-2026-1745-P-64571,44800.00,https://www.icbotticelli.edu.it,2026-03-31,Argo,SC28986,
@@ -829,7 +829,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 828,Centro - Nord,VIIC885003,IC 1 ARZIGNANO,VENETO,Statale,B34D25006270006,M4C1I2.1-2026-1745-P-65597,47838.00,https://www.ics1arzignano.edu.it,2026-04-01,Generic,,https://www.ics1arzignano.edu.it/albo-online
 829,Mezzogiorno,RCIC84500A,ISTITUTO COMPRENSIVO BOVALINO,CALABRIA,Statale,H64D25002790006,M4C1I2.1-2026-1745-P-65303,49716.80,,2026-04-01,Search,,
 830,Mezzogiorno,CAPS050007,"L.S. ""A. PACINOTTI"" CAGLIARI",SARDEGNA,Statale,H84D25003210006,M4C1I2.1-2026-1745-P-64388,47264.00,http://www.pacinotti.edu.it,2026-04-01,Argo,SS16447,
-831,Mezzogiorno,MEIS00300Q,"I.I.S. SANT'AGATA DI M.LLO "" L.SCIASCIA""",SICILIA,Statale,I44D25003400006,M4C1I2.1-2026-1745-P-64094,49207.20,http://www.liceosciasciafermi.edu.it,2026-04-01,Generic,,https://www.liceosciasciafermi.edu.it/tipologia-documento/albo-online/
+831,Mezzogiorno,MEIS00300Q,"I.I.S. SANT'AGATA DI M.LLO "" L.SCIASCIA""",SICILIA,Statale,I44D25003400006,M4C1I2.1-2026-1745-P-64094,49207.20,http://www.liceosciasciafermi.edu.it,2026-04-01,Generic,,https://www.liceosciasciafermi.edu.it/tipologia-documento/albo-online
 832,Mezzogiorno,RCPM02000L,"LICEO SCIENZE UMANE""G.MAZZINI"" LOCRI",CALABRIA,Statale,I14D25003410006,M4C1I2.1-2026-1745-P-64253,49207.20,https://www.liceimazzinilocri.edu.it,2026-04-01,Generic,,https://www.liceimazzinilocri.edu.it/albo-online
 833,Mezzogiorno,CTIC84200B,IC G. MARCONI - PATERNO',SICILIA,Statale,B14D25003850006,M4C1I2.1-2026-1745-P-65599,49207.20,http://www.icmarconiscuola.edu.it,2026-04-01,Argo,SC14710,
 834,Centro - Nord,ARIC812007,I.C. ALTO CASENTINO,TOSCANA,Statale,G44D25006220006,M4C1I2.1-2026-1745-P-64900,49644.00,https://www.icaltocasentino.edu.it,2026-04-01,Generic,,https://www.icaltocasentino.edu.it/albo-online
@@ -891,7 +891,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 890,Centro - Nord,RMIC8AB006,GALLICANO NEL LAZIO VIA TRE NOV,LAZIO,Statale,G24D25004720006,M4C1I2.1-2026-1745-P-65692,49207.20,https://www.icgallicano.edu.it,2026-04-01,Generic,,https://www.icgallicano.edu.it/albo-online
 891,Mezzogiorno,NAPS55000X,"LICEO STATALE ""N. BRAUCCI"" -CAIVANO",CAMPANIA,Statale,D44D25004800006,M4C1I2.1-2026-1745-P-65286,48552.00,http://www.liceocaivano.edu.it,2026-04-01,Argo,albopretorioPF3,
 892,Centro - Nord,RNEE018005,2 CIRCOLO SANTARCANGELO DI R.,EMILIA-ROMAGNA,Statale,D44D25004830006,M4C1I2.1-2026-1745-P-65580,49644.00,http://www.circolo2santarcangelo.edu.it,2026-04-01,Argo,SE27406,
-893,Centro - Nord,RMMM67000C,CPIA 1,LAZIO,Statale,E84D25005830006,M4C1I2.1-2026-1745-P-65679,49644.00,http://www.cpia1roma.edu.it,2026-04-01,Generic,,https://www.cpia1roma.edu.it/tipologia-documento/albo-online/
+893,Centro - Nord,RMMM67000C,CPIA 1,LAZIO,Statale,E84D25005830006,M4C1I2.1-2026-1745-P-65679,49644.00,http://www.cpia1roma.edu.it,2026-04-01,Generic,,https://www.cpia1roma.edu.it/tipologia-documento/albo-online
 894,Mezzogiorno,NAIC8EJ00T,BOSCOTRECASE IC 1 - S.M. PRISCO,CAMPANIA,Statale,B24D25003670006,M4C1I2.1-2026-1745-P-64035,49131.60,http://www.comprensivoboscotrecase.edu.it,2026-04-01,Generic,,https://www.comprensivoboscotrecase.edu.it/albo-online
 895,Centro - Nord,TOIC8CD00E,I.C. BARICCO - TO,PIEMONTE,Statale,J14D25008140006,M4C1I2.1-2026-1745-P-65345,49168.00,https://www.scuolabaricco.edu.it,2026-04-01,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV3.aspx?Customer_ID=8542efc3-2c97-44c2-9b01-7530661b3e34
 896,Mezzogiorno,CETD21000R,"I.T.S.-SETTORE EC. E TEC. ""C. ANDREOZZI""",CAMPANIA,Statale,F34D26000750006,M4C1I2.1-2026-1745-P-64313,49644.00,http://www.itcgandreozziaversa.it,2026-04-01,Argo,SG26808,
@@ -1440,7 +1440,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 1439,Centro - Nord,PGIC813001,I.O. CERRETO DI SPOLETO-SELLANO,UMBRIA,Statale,G74D25005760006,M4C1I2.1-2026-1745-P-66269,49644.00,https://omnicomprensivocerretodispoleto.edu.it,2026-04-02,Nuvola,PGIC813001,
 1440,Mezzogiorno,CEIC872001,"ISTITUTO COMPRENSIVO""DON DIANA""",CAMPANIA,Statale,I84D25004050006,M4C1I2.1-2026-1745-P-65963,49982.80,http://www.icdd2.edu.it,2026-04-02,Spaggiari,CEME0079,
 1441,Mezzogiorno,CEPS03000C,F. QUERCIA MARCIANISE,CAMPANIA,Statale,D24D25004930006,M4C1I2.1-2026-1745-P-65757,49585.20,http://www.liceofedericoquercia.edu.it,2026-04-02,Argo,SS16845,
-1442,Mezzogiorno,NAIC8CW00Q,NA - I.C. FERDINANDO RUSSO,CAMPANIA,Statale,D64D25005240006,M4C1I2.1-2026-1745-P-65883,49168.00,http://www.icsferdinandorusso.edu.it,2026-04-02,Generic,,https://www.icsferdinandorusso.edu.it/albo-online/
+1442,Mezzogiorno,NAIC8CW00Q,NA - I.C. FERDINANDO RUSSO,CAMPANIA,Statale,D64D25005240006,M4C1I2.1-2026-1745-P-65883,49168.00,http://www.icsferdinandorusso.edu.it,2026-04-02,Generic,,https://www.icsferdinandorusso.edu.it/albo-online
 1443,Mezzogiorno,CTIC8BQ005,IC T.DI CALCUTTA - SANZIO,SICILIA,Statale,F64D25004060006,M4C1I2.1-2026-1745-P-66045,49604.80,http://www.teresadicalcuttasanzio.edu.it,2026-04-02,Generic,,https://amministrazionetrasparente.org/pagina-pubblica/ctic8bq005/amministrazione-trasparente
 1444,Centro - Nord,BLIC83300P,IC FELTRE,VENETO,Statale,D94D25003870006,M4C1I2.1-2026-1745-P-66273,49985.60,http://www.comprensivofeltre.edu.it,2026-04-02,Argo,SC27939,
 1445,Mezzogiorno,AVIC81700G,I.C. J F.KENNEDY,CAMPANIA,Statale,E74D25004710006,M4C1I2.1-2026-1745-P-66157,22780.80,http://icnusco.edu.it,2026-04-02,Argo,SC21809,
@@ -1449,7 +1449,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 1448,Mezzogiorno,LE1E00800D,OXFORD,PUGLIA,Paritaria,F84D25004880006,M4C1I2.1-2026-1765-P-66257,49753.20,http://www.oxfordgrouplecce.it,2026-04-02,Search,,
 1449,Mezzogiorno,CHIC840006,"I.C. ""MARIO BOSCO""",ABRUZZO,Statale,F44D25003230006,M4C1I2.1-2026-1745-P-66214,49576.80,https://www.icmarioboscolanciano.edu.it,2026-04-02,Spaggiari,CHME0036,
 1450,Mezzogiorno,SATFU9500P,"""A.MEUCCI"" IST. TECNICO SETT. TECNOLOGICO IND. INFORM. E TELEC. ART. INFORMATICA",CAMPANIA,Paritaria,I54D25009420006,M4C1I2.1-2026-1765-P-64368,49644.00,http://www.itimeucci.it,2026-04-02,Generic,,http://www.itimeucci.it/istituto/albo-online
-1451,Mezzogiorno,NAIC8AS00A,I.C. PELLICO - R. IOZZINO,CAMPANIA,Statale,B54D25011500006,M4C1I2.1-2026-1745-P-64688,49509.60,http://www.icpellicoiozzino.edu.it,2026-04-02,Generic,,https://www.icpellicoiozzino.edu.it/albo-pretorio-online/
+1451,Mezzogiorno,NAIC8AS00A,I.C. PELLICO - R. IOZZINO,CAMPANIA,Statale,B54D25011500006,M4C1I2.1-2026-1745-P-64688,49509.60,http://www.icpellicoiozzino.edu.it,2026-04-02,Generic,,https://www.icpellicoiozzino.edu.it/albo-pretorio-online
 1452,Centro - Nord,MIIS003003,V. BACHELET,LOMBARDIA,Statale,E44D25004380006,M4C1I2.1-2026-1745-P-66143,49985.60,http://www.iisbachelet.it,2026-04-02,Nuvola,MIIS003003,
 1453,Centro - Nord,RMIC8EM008,IC PIERSANTI MATTARELLA,LAZIO,Statale,C84D25003540006,M4C1I2.1-2026-1745-P-66196,49644.00,http://www.istitutocomprensivopiersantimattarella.edu.it,2026-04-02,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV2.aspx?Customer_ID=b32e8968-8106-413e-bd75-323f1f0320ac
 1454,Centro - Nord,LIIS004009,ISIS VAL DI CORNIA,TOSCANA,Statale,F74D25003240006,M4C1I2.1-2026-1745-P-65596,32172.00,http://www.isisvaldicornia.edu.it,2026-04-02,Argo,SG17817,
@@ -1678,7 +1678,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 1677,Centro - Nord,PGPM02500T,LICEO ECONOMICO SOCIALE S.FRANCESCO DI SALES,UMBRIA,Paritaria,C14D25003350006,M4C1I2.1-2026-1765-P-66364,49610.40,http://www.sanfrancescodisales.edu.it,2026-04-02,Search,,
 1678,Mezzogiorno,NAIC8EH00L,ARZANO IC 1 - ARIOSTO,CAMPANIA,Statale,H74D25002850006,M4C1I2.1-2026-1745-P-66256,49644.00,http://www.icarzano1ariosto.edu.it,2026-04-02,Argo,SC27633,
 1679,Centro - Nord,MIIC836006,IC DON LORENZO MILANI,LOMBARDIA,Statale,D34D25007810006,M4C1I2.1-2026-1745-P-64631,49173.60,https://www.comprensivoturbigo.edu.it,2026-04-02,Generic,,https://www.comprensivoturbigo.edu.it/novita/albo-pretorio
-1680,Mezzogiorno,VVVC010001,CONVITTO NAZ. FILANGIERI-IC III CIRCOLO,CALABRIA,Statale,G44D25006340006,M4C1I2.1-2026-1745-P-66434,48552.00,http://www.convittofilangieri.edu.it,2026-04-02,Generic,,http://convittofilangieri.edu.it/novita/amministrazione-trasparente/
+1680,Mezzogiorno,VVVC010001,CONVITTO NAZ. FILANGIERI-IC III CIRCOLO,CALABRIA,Statale,G44D25006340006,M4C1I2.1-2026-1745-P-66434,48552.00,http://www.convittofilangieri.edu.it,2026-04-02,Generic,,http://convittofilangieri.edu.it/novita/amministrazione-trasparente
 1681,Centro - Nord,RMIC83600P,"I.C.""MARCO ULPIO TRAIANO""",LAZIO,Statale,B84D25005650006,M4C1I2.1-2026-1745-P-64897,49588.00,https://ictraiano.edu.it,2026-04-02,Nuvola,RMIC83600P,
 1682,Mezzogiorno,CTIC8BG009,IC SPEDALIERI - CASTIGLIONE,SICILIA,Statale,C94D25003080006,M4C1I2.1-2026-1745-P-66446,48182.40,,2026-04-02,Search,,
 1683,Centro - Nord,MBRC010001,"ISTITUTO P.S.S.C.T.S. ""L. MILANI""",LOMBARDIA,Statale,G24D25004770006,M4C1I2.1-2026-1745-P-64865,49644.00,http://www.ipcmeda.edu.it,2026-04-02,Generic,,http://www.ipcmeda.edu.it/albo-online
@@ -1918,7 +1918,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 1917,Centro - Nord,TOIC8AY00L,I.C. PALAZZESCHI - TO,PIEMONTE,Statale,G14D25005710006,M4C1I2.1-2026-1745-P-66366,20692.00,https://www.icaldopalazzeschi.edu.it,2026-04-03,Argo,SC27821,
 1918,Centro - Nord,MIIC8AU00C,IC IV E. MONTALE,LOMBARDIA,Statale,H24D25002920006,M4C1I2.1-2026-1745-P-66168,49644.00,http://www.icsmontale.edu.it,2026-04-03,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV3.aspx?Customer_ID=7aebd33c-6e95-47e6-89c4-00b765f7b2e6
 1919,Centro - Nord,BOIC82100Q,I.C. CERETOLO,EMILIA-ROMAGNA,Statale,B84D25005690006,M4C1I2.1-2026-1745-P-66476,49963.20,https://www.icceretolo.edu.it,2026-04-03,Generic,,https://www.icceretolo.edu.it/albo-online
-1920,Centro - Nord,RMIS113003,CROCE-ALERAMO,LAZIO,Statale,H84D25003470006,M4C1I2.1-2026-1745-P-66651,49996.80,http://www.crocealeramo.edu.it,2026-04-03,Generic,,https://www.crocealeramo.edu.it/novita/albo-online/
+1920,Centro - Nord,RMIS113003,CROCE-ALERAMO,LAZIO,Statale,H84D25003470006,M4C1I2.1-2026-1745-P-66651,49996.80,http://www.crocealeramo.edu.it,2026-04-03,Generic,,https://www.crocealeramo.edu.it/novita/albo-online
 1921,Mezzogiorno,NA1MTL500Q,SAN PAOLO,CAMPANIA,Paritaria,F84D25004990006,M4C1I2.1-2026-1765-P-66513,49985.60,http://www.farescuolasrl.com,2026-04-03,Search,,
 1922,Mezzogiorno,RGIC811003,ANTONIO AMORE,SICILIA,Statale,B14D25004030006,M4C1I2.1-2026-1745-P-66629,49350.00,https://www.icsamore.edu.it,2026-04-03,Argo,SC14776,
 1923,Centro - Nord,RMIC8D500D,I.C. VELLETRI NORD,LAZIO,Statale,D14D25009020006,M4C1I2.1-2026-1745-P-66670,49644.00,https://www.icvelletrinord.edu.it,2026-04-03,Generic,,https://www.icvelletrinord.edu.it/tipologia-documento/albo-online
@@ -2065,7 +2065,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2064,Mezzogiorno,AGIC812006,IC - A. MANZONI,SICILIA,Statale,F54D25009310006,M4C1I2.1-2026-1745-P-65227,49604.80,http://www.icmanzoniadr.edu.it,2026-04-07,Argo,SC15577,
 2065,Centro - Nord,RMIC8FH006,DAVID SASSOLI,LAZIO,Statale,B84D25005310006,M4C1I2.1-2026-1745-P-64099,49168.00,https://www.icsassoli.edu.it,2026-04-07,Generic,,https://www.icsassoli.edu.it/albo-online
 2066,Centro - Nord,LTIC81300V,I.C.VITRUVIO POLLIONE,LAZIO,Statale,D84D25004810006,M4C1I2.1-2026-1745-P-66805,49890.40,http://www.icpollione.it,2026-04-07,Search,,
-2067,Centro - Nord,RMIC8GM00D,"IC VIA CASALOTTI, 259",LAZIO,Statale,C84D25003590006,M4C1I2.1-2026-1745-P-65676,49308.00,http://www.iccasalotti.edu.it,2026-04-07,Generic,,https://www.iccasalotti.edu.it/novita/albo-online/
+2067,Centro - Nord,RMIC8GM00D,"IC VIA CASALOTTI, 259",LAZIO,Statale,C84D25003590006,M4C1I2.1-2026-1745-P-65676,49308.00,http://www.iccasalotti.edu.it,2026-04-07,Generic,,https://www.iccasalotti.edu.it/novita/albo-online
 2068,Centro - Nord,RM1M07600P,S. MEDIA SANT'APOLLINARE,LAZIO,Paritaria,D84D25004800006,M4C1I2.1-2026-1765-P-66785,13384.00,https://www.istitutoapollinare.org,2026-04-07,Generic,,https://www.istitutoapollinare.org/amministrazione-trasparente
 2069,Centro - Nord,LTIC83700B,I.C. GARIBALDI,LAZIO,Statale,F14D25003770006,M4C1I2.1-2026-1745-P-66807,49207.20,http://www.comprensivogaribaldiaprilia.edu.it,2026-04-07,Generic,,https://www.comprensivogaribaldiaprilia.edu.it/novita/albo-online
 2070,Mezzogiorno,CTIC8AP00P,"I.C. ""SALVO BASSO""",SICILIA,Statale,D44D25005020006,M4C1I2.1-2026-1745-P-66773,49719.60,https://www.icsalvobasso.edu.it,2026-04-07,Argo,SC26901,
@@ -2165,7 +2165,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2164,Mezzogiorno,ENIS017006,"I.I.S. ""L. DA VINCI""",SICILIA,Statale,J34D25004030006,M4C1I2.1-2026-1745-P-66827,49644.00,,2026-04-07,Search,,
 2165,Mezzogiorno,NA1E051006,FIMAR IMPRESA SOCIALE S.R.L.,CAMPANIA,Paritaria,I64D25003570006,M4C1I2.1-2026-1765-P-66464,49644.00,,2026-04-07,Search,,
 2166,Mezzogiorno,PAPS3Q5009,ISTITUTO GONZAGA,SICILIA,Paritaria,F74D25003380006,M4C1I2.1-2026-1765-P-66818,49627.20,http://www.gonzagacampus.it,2026-04-07,Generic,,http://www.gonzagacampus.it/amministrazione-trasparente
-2167,Centro - Nord,RM1M09100R,"SCUOLA SECONDARIA DI PRIMO GRADO PARITARIA ""S.G. BOSCO""",LAZIO,Paritaria,G84D25006960006,M4C1I2.1-2026-1765-P-66757,49803.60,http://WWW.istitutodonboscocinecitta.com,2026-04-07,Generic,,https://www.istitutodonboscocinecitta.com/amministrazione-trasparente/
+2167,Centro - Nord,RM1M09100R,"SCUOLA SECONDARIA DI PRIMO GRADO PARITARIA ""S.G. BOSCO""",LAZIO,Paritaria,G84D25006960006,M4C1I2.1-2026-1765-P-66757,49803.60,http://WWW.istitutodonboscocinecitta.com,2026-04-07,Generic,,https://www.istitutodonboscocinecitta.com/amministrazione-trasparente
 2168,Mezzogiorno,PAIC8AN00G,I.C. ALBERICO GENTILI -PA,SICILIA,Statale,J74D25003260006,M4C1I2.1-2026-1745-P-66907,25737.60,http://WWW.ICSALBERICOGENTILIPALERMO.edu.IT,2026-04-07,Argo,SC27092,
 2169,Mezzogiorno,PEIC807003,"I.C .""A.MANZI"" TORRE DE PASSERI",ABRUZZO,Statale,D84D25004510006,M4C1I2.1-2026-1745-P-65144,49884.80,http://www.ictorredepasseri.edu.it,2026-04-07,Argo,SC22324,
 2170,Centro - Nord,RMTF200009,GIANCARLO VALLAURI,LAZIO,Statale,E14D25005930006,M4C1I2.1-2026-1745-P-66949,49982.80,https://www.itisvallauri.edu.it,2026-04-07,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV3.aspx?Customer_ID=7e879d71-afd0-4bcc-8025-38923caeb576&amp;TM=H&amp;IM=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
@@ -2197,7 +2197,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2196,Mezzogiorno,CEIS048008,"I.S.I.S. ""GALILEI"" MONDRAGONE",CAMPANIA,Statale,D54D25011700006,M4C1I2.1-2026-1745-P-65302,49982.80,,2026-04-08,Search,,
 2197,Centro - Nord,SPIS002004,"""V. CARDARELLI""",LIGURIA,Statale,J44D25003930006,M4C1I2.1-2026-1745-P-66663,49644.00,https://www.istitutocardarelli.edu.it,2026-04-08,Argo,SG18493,
 2198,Centro - Nord,RM1E143003,SCUOLA PRIMARIA PARIF. S.SOFIA,LAZIO,Paritaria,D34D25007950006,M4C1I2.1-2026-1765-P-66804,49803.60,http://www.santasofiasalesianecivitavecchia.com,2026-04-08,Generic,,https://santasofiasalesianecivitavecchia.com/amministrazione-trasparente
-2199,Mezzogiorno,NAIS13700L,ISTITUTO SUPERIORE GUGLIELMO MARCONI,CAMPANIA,Statale,D94D25003950006,M4C1I2.1-2026-1745-P-66992,49338.80,https://www.ismarconi.edu.it,2026-04-08,Generic,,https://www.ismarconi.edu.it/tipologia-documento/albo-online/
+2199,Mezzogiorno,NAIS13700L,ISTITUTO SUPERIORE GUGLIELMO MARCONI,CAMPANIA,Statale,D94D25003950006,M4C1I2.1-2026-1745-P-66992,49338.80,https://www.ismarconi.edu.it,2026-04-08,Generic,,https://www.ismarconi.edu.it/tipologia-documento/albo-online
 2200,Mezzogiorno,CEIC8AB009,"I.C.""G. FALCONE E P.BORSELLINO""",CAMPANIA,Statale,D24D25004960006,M4C1I2.1-2026-1745-P-66842,49448.00,,2026-04-08,Search,,
 2201,Centro - Nord,MIIC8DW00R,I.C. VIA DE ANDREIS,LOMBARDIA,Statale,B44D25004610006,M4C1I2.1-2026-1745-P-66612,16800.00,http://www.icdeandreismilano.edu.it,2026-04-08,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV3.aspx?Customer_ID=c570e35e-e2fc-475e-bb45-1fa2494b18f4
 2202,Mezzogiorno,PZIS028007,"I.I.S. ""GASPARRINI-RIGHETTI"" MELFI",BASILICATA,Statale,B67G26000070006,M4C1I2.1-2026-1745-P-66974,47544.00,http://www.iisgasparrini-righetti.edu.it,2026-04-08,Argo,SG27287,
@@ -2410,7 +2410,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2409,Centro - Nord,PCIC80400A,IC LUGAGNANO,EMILIA-ROMAGNA,Statale,D64D25005460006,M4C1I2.1-2026-1745-P-67175,49946.40,https://www.iclugagnanovaldarda.edu.it,2026-04-09,Generic,,https://www.iclugagnanovaldarda.edu.it/albo-online
 2410,Centro - Nord,RMIC8D7005,IC VIA U. BOCCIONI,LAZIO,Statale,I84D25004200006,M4C1I2.1-2026-1745-P-67084,49168.00,https://www.icviaboccioni.edu.it,2026-04-09,Argo,SC28117,
 2411,Centro - Nord,BOIC809005,I.C. DI BORGO TOSSIGNANO,EMILIA-ROMAGNA,Statale,B44D25004630006,M4C1I2.1-2026-1745-P-66114,49890.40,http://www.borgotossignanoic.it,2026-04-09,,,
-2412,Centro - Nord,NOVC010008,C. ALBERTO,PIEMONTE,Statale,C14D25003460006,M4C1I2.1-2026-1745-P-67088,49644.00,http://www.convittonovara.edu.it,2026-04-09,Generic,,https://convittonovara.edu.it/tipologia-documento/albo-online/
+2412,Centro - Nord,NOVC010008,C. ALBERTO,PIEMONTE,Statale,C14D25003460006,M4C1I2.1-2026-1745-P-67088,49644.00,http://www.convittonovara.edu.it,2026-04-09,Generic,,https://convittonovara.edu.it/tipologia-documento/albo-online
 2413,Centro - Nord,CNIC85700P,CUNEO CORSO SOLERI,PIEMONTE,Statale,C24D25002760006,M4C1I2.1-2026-1745-P-67273,49660.80,http://iccuneocorsosoleri.edu.it,2026-04-09,Generic,,http://iccuneocorsosoleri.edu.it/albo-online
 2414,Mezzogiorno,CAIC86200X,ISTITUTO COMPRENSIVO SU PLANU,SARDEGNA,Statale,H54D25008390006,M4C1I2.1-2026-1745-P-66715,49207.20,http://www.istitutocomprensivosuplanu.gov.it,2026-04-09,,,
 2415,Centro - Nord,MBIC8AJ009,IC DON CAMAGNI/ BRUGHERIO,LOMBARDIA,Statale,H24D25003020006,M4C1I2.1-2026-1745-P-67288,24147.20,http://www.icdoncamagni.gov.it,2026-04-09,,,
@@ -2429,7 +2429,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2428,Mezzogiorno,TAIC858004,"I.C. ""MARCONI-MICHELANGELO""",PUGLIA,Statale,H54D25008400006,M4C1I2.1-2026-1745-P-66826,26768.00,http://www.icmarconimichelangelo.edu.it,2026-04-09,Argo,SC26995,
 2429,Mezzogiorno,SRIC853002,"I I.C. ""SILVIO PELLICO"" PACHINO",SICILIA,Statale,H94D25002570006,M4C1I2.1-2026-1745-P-66753,48484.80,http://www.pellicopachino.edu.it,2026-04-09,Argo,SC15264,
 2430,Centro - Nord,UDTD010004,"ITC ""A. ZANON "" UDINE",FRIULI VENEZIA GIULIA,Statale,F24D25003040006,M4C1I2.1-2026-1745-P-67089,49576.80,http://www.itzanon.edu.it,2026-04-09,Generic,,http://www.itzanon.edu.it/albo-online
-2431,Centro - Nord,RMPS010004,ANTONIO LABRIOLA,LAZIO,Statale,J84D25004770006,M4C1I2.1-2026-1745-P-67268,49963.20,http://www.liceolabriola.edu.it,2026-04-09,Generic,,https://www.liceolabriola.edu.it/tipologia-documento/albo-online/
+2431,Centro - Nord,RMPS010004,ANTONIO LABRIOLA,LAZIO,Statale,J84D25004770006,M4C1I2.1-2026-1745-P-67268,49963.20,http://www.liceolabriola.edu.it,2026-04-09,Generic,,https://www.liceolabriola.edu.it/tipologia-documento/albo-online
 2432,Centro - Nord,VAIC80800X,"I.C. LONATE POZZOLO ""CARMINATI""",LOMBARDIA,Statale,G54D25010760006,M4C1I2.1-2026-1745-P-67263,26768.00,http://www.ic-lonatepozzolo.edu.it,2026-04-09,Generic,,http://www.ic-lonatepozzolo.edu.it/albo-online
 2433,Centro - Nord,UDIC81200A,JACOPO LINUSSIO - ANGELO MATIZ,FRIULI VENEZIA GIULIA,Statale,D74D25005740006,M4C1I2.1-2026-1745-P-65990,49924.00,http://www.iclinussiomatiz.edu.it,2026-04-09,Nuvola,UDIC81200A,
 2434,Centro - Nord,TOIS017001,I.I.S. E. FERRARI,PIEMONTE,Statale,E84D25006160006,M4C1I2.1-2026-1745-P-67148,49644.00,https://www.ferrarisusa.edu.it,2026-04-09,Argo,SG18156,
@@ -2439,7 +2439,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2438,Mezzogiorno,TAIC85900X,"I.C. ""F.G. PIGNATELLI""",PUGLIA,Statale,B44D25004650006,M4C1I2.1-2026-1745-P-66462,49168.00,https://www.istitutocomprensivopignatelli.edu.it,2026-04-09,Argo,SC26986,
 2439,Mezzogiorno,ISMM11100P,C.P.I.A.,MOLISE,Statale,E54D25009000006,M4C1I2.1-2026-1745-P-67286,49644.00,http://www.cpiaisernia.edu.it,2026-04-09,Generic,,https://www.cpiaisernia.edu.it/novita/albo-online
 2440,Centro - Nord,MORI030007,G.VALLAURI,EMILIA-ROMAGNA,Statale,C94D25003210006,M4C1I2.1-2026-1745-P-67302,49644.00,http://www.vallauricarpi.it,2026-04-09,Generic,,http://www.vallauricarpi.it/albo-online
-2441,Centro - Nord,MIIC8FV006,I.C DI VIA PALMIERI,LOMBARDIA,Statale,C44D25003260006,M4C1I2.1-2026-1745-P-67222,49089.60,http://www.icviapalmieri.edu.it,2026-04-09,Generic,,https://icviapalmieri.edu.it/novita/albo-online/
+2441,Centro - Nord,MIIC8FV006,I.C DI VIA PALMIERI,LOMBARDIA,Statale,C44D25003260006,M4C1I2.1-2026-1745-P-67222,49089.60,http://www.icviapalmieri.edu.it,2026-04-09,Generic,,https://icviapalmieri.edu.it/novita/albo-online
 2442,Centro - Nord,PVIC801001,IC CHIGNOLO PO,LOMBARDIA,Statale,E24D25004390006,M4C1I2.1-2026-1745-P-67284,23217.60,https://www.istitutocomprensivochignolopo.edu.it,2026-04-09,Argo,SC10313,
 2443,Centro - Nord,RMIC8E4008,IC NICOLA CALIPARI,LAZIO,Statale,E84D25006180006,M4C1I2.1-2026-1745-P-67315,49548.80,http://www.icnicolacalipari.edu.it,2026-04-09,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV2.aspx?Customer_ID=3020de08-bf81-4964-bbb5-3192509a5dc8
 2444,Mezzogiorno,SRIC85100A,"I.C. ""F. D'AMICO"" ROSOLINI",SICILIA,Statale,G24D25004880006,M4C1I2.1-2026-1745-P-67267,30184.00,http://www.damicorosolini.edu.it,2026-04-09,Argo,SC15306,
@@ -2556,7 +2556,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2555,Centro - Nord,BG1M006009,"SCUOLA SEC. 1° GRADO ""S.GIUSEPPE""",LOMBARDIA,Paritaria,I34D25005080006,M4C1I2.1-2026-1765-P-65864,35190.40,http://www.scuolasangiuseppe.org,2026-04-09,Search,,
 2556,Mezzogiorno,AGPC010001,LICEO CLASSICO - EMPEDOCLE,SICILIA,Statale,B44D25004670006,M4C1I2.1-2026-1745-P-66698,49845.60,http://www.liceoempedocle.edu.it,2026-04-09,Argo,SS16322,
 2557,Centro - Nord,LCTDVP5000,ISTITUTO TECNICO ECONOMICO IND.AMMINISTR. FINANZA E MARKETING MARIA AUSILIATRICE,LOMBARDIA,Paritaria,H14D25002880006,M4C1I2.1-2026-1765-P-66567,49604.80,http://www.imalecco.it,2026-04-09,Search,,
-2558,Centro - Nord,PGIC86100A,I.C. FOLIGNO 1,UMBRIA,Statale,E64D25004700006,M4C1I2.1-2026-1745-P-67132,49604.80,http://www.foligno1.edu.it,2026-04-09,Generic,,https://www.foligno1.edu.it/albo-pretorio-online/
+2558,Centro - Nord,PGIC86100A,I.C. FOLIGNO 1,UMBRIA,Statale,E64D25004700006,M4C1I2.1-2026-1745-P-67132,49604.80,http://www.foligno1.edu.it,2026-04-09,Generic,,https://www.foligno1.edu.it/albo-pretorio-online
 2559,Mezzogiorno,RCPS010001,"LICEO SCIENTIFICO ""LEONARDO DA VINCI""",CALABRIA,Statale,H34D25002930006,M4C1I2.1-2026-1745-P-67028,49168.00,http://www.liceovinci.eu,2026-04-09,Spaggiari,rcls0001,
 2560,Centro - Nord,BSIS03400L,"ISTITUTO SUPERIORE ""GIOVANNI FALCONE""",LOMBARDIA,Statale,F44D25003420006,M4C1I2.1-2026-1745-P-66561,49644.00,http://www.falconeiis.edu.it,2026-04-09,Nuvola,BSIS03400L,
 2561,Mezzogiorno,PEIS00600B,"IIS ""A. VOLTA"" PESCARA",ABRUZZO,Statale,I24D25005400006,M4C1I2.1-2026-1745-P-63991,49644.00,http://www.iisvoltapescara.edu.it,2026-04-09,Spaggiari,PEII0006,
@@ -2781,7 +2781,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2780,Mezzogiorno,CTTD22000N,"I.T.E.T. ""ENRICO DE NICOLA""",SICILIA,Statale,G54D25010740006,M4C1I2.1-2026-1745-P-67003,43702.40,https://www.denicola.edu.it,2026-04-10,Argo,sg29304,
 2781,Centro - Nord,SOPS050001,LICEO P.NERVI - G.FERRARI,LOMBARDIA,Statale,F94D25003710006,M4C1I2.1-2026-1745-P-67424,48972.00,http://www.nerviferrari.edu.it,2026-04-10,Generic,,http://www.nerviferrari.edu.it/albo-online
 2782,Centro - Nord,PGIC86600D,I.C. PERUGIA 3,UMBRIA,Statale,E94D25007060006,M4C1I2.1-2026-1745-P-67694,15187.20,https://www.istitutocomprensivoperugia3.edu.it,2026-04-10,Nuvola,PGIC86600D,
-2783,Mezzogiorno,RCPM05000C,"LICEO STATALE ""G.RECHICHI"" POLISTENA",CALABRIA,Statale,J14D25008370006,M4C1I2.1-2026-1745-P-65013,49548.80,http://www.liceorechichipolistena.edu.it,2026-04-10,Generic,,https://liceorechichipolistena.edu.it/novita/albo-online/
+2783,Mezzogiorno,RCPM05000C,"LICEO STATALE ""G.RECHICHI"" POLISTENA",CALABRIA,Statale,J14D25008370006,M4C1I2.1-2026-1745-P-65013,49548.80,http://www.liceorechichipolistena.edu.it,2026-04-10,Generic,,https://liceorechichipolistena.edu.it/novita/albo-online
 2784,Mezzogiorno,SAIC8A6001,"I.C. ""GIOVANNI PAOLO II"" SA",CAMPANIA,Statale,F54D25009480006,M4C1I2.1-2026-1745-P-67720,49890.40,http://www.icgiovannipaolosecondosalerno.edu.it,2026-04-10,Argo,SC27768,
 2785,Centro - Nord,FRPM070002,"""VARRONE"" CASSINO",LAZIO,Statale,D34D25008060006,M4C1I2.1-2026-1745-P-67459,49826.00,http://www.liceovarronecassino.it,2026-04-10,Generic,,http://www.liceovarronecassino.it/albo-online
 2786,Centro - Nord,CNIC847004,CUNEO BORGO SAN GIUSEPPE,PIEMONTE,Statale,E24D25004450006,M4C1I2.1-2026-1745-P-67659,49890.40,http://www.icborgosangiuseppe.edu.it,2026-04-10,Generic,,http://www.icborgosangiuseppe.edu.it/albo-online
@@ -2830,7 +2830,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 2829,Centro - Nord,VBIS00200Q,"IS ""FERRINI-FRANZOSINI""",PIEMONTE,Statale,F54D25009500006,M4C1I2.1-2026-1745-P-67564,15842.40,http://www.ferrinifranzosini.edu.it,2026-04-10,Generic,,http://www.ferrinifranzosini.edu.it/albo-online
 2830,Centro - Nord,VAIC852002,"I.C. UBOLDO "" MANZONI""",LOMBARDIA,Statale,B94D25003850006,M4C1I2.1-2026-1745-P-67545,27048.00,http://www.ic-manzoni-uboldo.edu.it,2026-04-10,Spaggiari,VAME0018,
 2831,Centro - Nord,RMIC80600V,ISTITUTO COMPRENSIVO VIRGILIO,LAZIO,Statale,E84D25006210006,M4C1I2.1-2026-1745-P-67443,49207.20,http://www.icvirgilioroma.edu.it,2026-04-10,Spaggiari,RMME0079,
-2832,Mezzogiorno,BNMM09000E,CPIA PROVINCIA DI BENEVENTO,CAMPANIA,Statale,D84D25004920006,M4C1I2.1-2026-1745-P-67248,49716.80,http://www.cpiabenevento.edu.it,2026-04-10,Generic,,https://www.cpiabenevento.edu.it/albo-online/
+2832,Mezzogiorno,BNMM09000E,CPIA PROVINCIA DI BENEVENTO,CAMPANIA,Statale,D84D25004920006,M4C1I2.1-2026-1745-P-67248,49716.80,http://www.cpiabenevento.edu.it,2026-04-10,Generic,,https://www.cpiabenevento.edu.it/albo-online
 2833,Centro - Nord,PCEE00800Q,CD OTTAVO CIRCOLO,EMILIA-ROMAGNA,Statale,G34D25007120006,M4C1I2.1-2026-1745-P-67194,49719.60,http://www.ottavocircolopiacenza.edu.it,2026-04-10,Generic,,http://www.ottavocircolopiacenza.edu.it/amministrazione-trasparente
 2834,Mezzogiorno,MTIC83200T,"IC ""G. PAOLO II"" - POLICORO N.2",BASILICATA,Statale,H84D25003700006,M4C1I2.1-2026-1745-P-67165,49168.00,,2026-04-10,Search,,
 2835,Centro - Nord,FOMM09400T,VIA A.FRANK,EMILIA-ROMAGNA,Statale,B14D25004080006,M4C1I2.1-2026-1745-P-67736,19420.80,http://www.viafrankcesena.edu.it,2026-04-10,Generic,,http://www.viafrankcesena.edu.it/albo-online
@@ -3324,7 +3324,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 3323,Mezzogiorno,TEIC842001,I.C. ROSETO 1,ABRUZZO,Statale,G94D25004720006,M4C1I2.1-2026-1745-P-67875,49644.00,http://www.icroseto1.edu.it,2026-04-13,Generic,,http://www.icroseto1.edu.it/albo-online
 3324,Centro - Nord,REIC81600G,BUSANA-ARIOSTO,EMILIA-ROMAGNA,Statale,D34D25007900006,M4C1I2.1-2026-1745-P-65411,31416.00,http://www.icbusana.gov.it,2026-04-13,,,
 3325,Centro - Nord,ANPC060007,VITTORIO EMANUELE II,MARCHE,Statale,G44D25006580006,M4C1I2.1-2026-1745-P-67816,9139.20,http://www.liceoclassicojesi.edu.it,2026-04-13,Nuvola,ANPC060007,
-3326,Mezzogiorno,CEIC8AL005,MADDALONI2-VALLE DI MAD-CERVINO,CAMPANIA,Statale,E14D25006120006,M4C1I2.1-2026-1745-P-66089,49644.00,http://www.icmaddaloni2valle.edu.it,2026-04-13,Generic,,https://www.icmaddaloni2valle.edu.it/albo-online-axios/
+3326,Mezzogiorno,CEIC8AL005,MADDALONI2-VALLE DI MAD-CERVINO,CAMPANIA,Statale,E14D25006120006,M4C1I2.1-2026-1745-P-66089,49644.00,http://www.icmaddaloni2valle.edu.it,2026-04-13,Generic,,https://www.icmaddaloni2valle.edu.it/albo-online-axios
 3327,Mezzogiorno,SRIC81300G,"XIII I.C.""ARCHIMEDE"" SIRACUSA",SICILIA,Statale,J34D25004060006,M4C1I2.1-2026-1745-P-66777,35308.00,http://www.istitutocomprensivoarchimede.edu.it,2026-04-13,Argo,SC15262,
 3328,Mezzogiorno,PZIC886003,"I.C. ""TORRACA-LA VISTA"" POTENZA",BASILICATA,Statale,B34D25006800006,M4C1I2.1-2026-1745-P-68156,18110.40,http://www.ictorracabonaventurapz.edu.it,2026-04-13,Nuvola,PZIC886003,
 3329,Centro - Nord,FIIC87100V,I.C. ST. DI CASTELFIORENTINO,TOSCANA,Statale,D34D25008180006,M4C1I2.1-2026-1745-P-67269,49753.20,http://www.iccastelfiorentino.edu.it,2026-04-13,Generic,,http://www.iccastelfiorentino.edu.it/albo-online
@@ -3597,7 +3597,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 3596,Mezzogiorno,AQIC83800R,IST.COMPRENSIVO A. B. SABIN,ABRUZZO,Statale,G84D25007330006,M4C1I2.1-2026-1745-P-65301,49789.60,http://www.iccapistrello.edu.it,2026-04-14,Argo,SC26613,
 3597,Centro - Nord,TVIS02200R,"I.S.I.S.S. ""C. ROSSELLI""",VENETO,Statale,C24D25002740006,M4C1I2.1-2026-1745-P-67201,49168.00,http://WWW.istitutorosselli.net,2026-04-14,Generic,,http://WWW.istitutorosselli.net/albo-online
 3598,Centro - Nord,TNIS013001,"""M. BUONARROTI""",TRENTINO-ALTO ADIGE,Statale,I64D25003560006,M4C1I2.1-2026-1745-P-66454,49168.00,,2026-04-15,Search,,
-3599,Mezzogiorno,CZIS01800B,"IIS ""GUARASCI-CALABRETTA""",CALABRIA,Statale,C34D25003650006,M4C1I2.1-2026-1745-P-67692,49089.60,http://www.guarascicalabretta.edu.it,2026-04-15,Generic,,https://www.guarascicalabretta.edu.it/albo-online/
+3599,Mezzogiorno,CZIS01800B,"IIS ""GUARASCI-CALABRETTA""",CALABRIA,Statale,C34D25003650006,M4C1I2.1-2026-1745-P-67692,49089.60,http://www.guarascicalabretta.edu.it,2026-04-15,Generic,,https://www.guarascicalabretta.edu.it/albo-online
 3600,Mezzogiorno,BTEE06400D,"6 C.D. ""GIRONDI""",PUGLIA,Statale,C94D25003340006,M4C1I2.1-2026-1745-P-68150,37531.20,http://WWW.SCUOLAGIRONDI.EDU.IT,2026-04-15,Argo,SE6206,
 3601,Mezzogiorno,NAIC83000R,NA - I.C. MAROTTA,CAMPANIA,Statale,B64D25005910006,M4C1I2.1-2026-1745-P-66573,49168.00,,2026-04-15,Search,,
 3602,Mezzogiorno,CT1ELO5000,Campus Don Bosco Soc.Coop.,SICILIA,Paritaria,I64D25003860006,M4C1I2.1-2026-1765-P-67702,26768.00,http://www.campusdonbosco.it,2026-04-15,Search,,
@@ -3767,7 +3767,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 3766,Centro - Nord,FRIS031001,"I.I.S. ""CARDUCCI"" CASSINO",LAZIO,Statale,G34D25007240006,M4C1I2.1-2026-1745-P-67794,28476.00,http://www.iiscarduccicassino.edu.it,2026-04-15,Spaggiari,FRII0023,
 3767,Centro - Nord,RMIC821001,"VIA R. FUCINI, 265",LAZIO,Statale,H84D25003820006,M4C1I2.1-2026-1745-P-68447,47460.00,https://www.icrenatofucini.edu.it,2026-04-15,Generic,,https://www.icrenatofucini.edu.it/albo-online
 3768,Mezzogiorno,NA1E05500D,ASSOCIAZIONE REGIONALE A.R.S.E.F. CENTRO SCOLASTICO BELFORTE,CAMPANIA,Paritaria,H64D25003230006,M4C1I2.1-2026-1765-P-67341,28000.00,http://www.scuolabelforte.org,2026-04-15,,,
-3769,Centro - Nord,GRIC82400T,"IC ""DON MILANI"" ORBETELLO",TOSCANA,Statale,B34D25006860006,M4C1I2.1-2026-1745-P-68242,49358.40,http://www.scuolainlaguna.edu.it,2026-04-15,Generic,,https://scuolainlaguna.edu.it/tipologia-documento/albo-online/
+3769,Centro - Nord,GRIC82400T,"IC ""DON MILANI"" ORBETELLO",TOSCANA,Statale,B34D25006860006,M4C1I2.1-2026-1745-P-68242,49358.40,http://www.scuolainlaguna.edu.it,2026-04-15,Generic,,https://scuolainlaguna.edu.it/tipologia-documento/albo-online
 3770,Centro - Nord,VIIC80800N,"IC ""G. CISCATO"" MALO",VENETO,Statale,I54D25009870006,M4C1I2.1-2026-1745-P-67771,49784.00,http://www.ciscato.edu.it,2026-04-15,Nuvola,VIIC80800N,
 3771,Mezzogiorno,PA1E014004,THOMAS MORE,SICILIA,Paritaria,D74D25005920006,M4C1I2.1-2026-1765-P-67980,33460.00,http://www.scuolathomasmore.it,2026-04-15,Search,,
 3772,Centro - Nord,BSIC84800A,IC CALVISANO,LOMBARDIA,Statale,I44D25003790006,M4C1I2.1-2026-1745-P-68330,26768.00,http://www.iccalvisano.edu.it,2026-04-15,Argo,SC25476,
@@ -4169,7 +4169,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 4168,Mezzogiorno,NAMM0CR008,"NA PROV.1 C/O""TORRENTE"" CASAVA",CAMPANIA,Statale,G54D25010960006,M4C1I2.1-2026-1745-P-68001,10878.00,https://www.cpianapoliprov1.edu.it,2026-04-16,Argo,SM28288,
 4169,Centro - Nord,MNIC805003,ISTITUTO COMPRENSIVO GOITO,LOMBARDIA,Statale,I24D25005610006,M4C1I2.1-2026-1745-P-68732,49207.20,https://icgoito.edu.it,2026-04-16,Nuvola,MNIC805003,
 4170,Centro - Nord,TOPS20500T,MADRE MAZZARELLO,PIEMONTE,Paritaria,E14D25006230006,M4C1I2.1-2026-1765-P-68526,18110.40,http://www.liceomazzarello.it,2026-04-16,Search,,
-4171,Mezzogiorno,FGMM00700X,"S.S. 1 G. ""L. MURIALDO""",PUGLIA,Statale,F74D25003730006,M4C1I2.1-2026-1745-P-68551,41006.00,http://www.scuolamurialdofg.edu.it,2026-04-16,Generic,,https://www.scuolamurialdofg.edu.it/albo-online/
+4171,Mezzogiorno,FGMM00700X,"S.S. 1 G. ""L. MURIALDO""",PUGLIA,Statale,F74D25003730006,M4C1I2.1-2026-1745-P-68551,41006.00,http://www.scuolamurialdofg.edu.it,2026-04-16,Generic,,https://www.scuolamurialdofg.edu.it/albo-online
 4172,Mezzogiorno,SSIC856001,ISTITUTO COMPRENSIVO BRIGATA SA,SARDEGNA,Statale,B44D25004850006,M4C1I2.1-2026-1745-P-66932,18984.00,http://www.icbrigatasassari.edu.it,2026-04-16,Argo,SC28487,
 4173,Centro - Nord,TVIC883004,IC MONTEBELLUNA 1,VENETO,Statale,C94D25003420006,M4C1I2.1-2026-1745-P-68746,24091.20,http://www.icmontebelluna1.edu.it,2026-04-16,Argo,SC27157,
 4174,Mezzogiorno,BAPS07000G,"LICEO ""G. TARANTINO""",PUGLIA,Statale,J84D25004940006,M4C1I2.1-2026-1745-P-65432,49644.00,http://www.liceogravina.edu.it,2026-04-16,Argo,SS21234,
@@ -4256,7 +4256,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 4255,Mezzogiorno,PAIC84900P,I.C.S. FALCONE E BORSELLINO,SICILIA,Statale,F54D25009650006,M4C1I2.1-2026-1745-P-68683,30184.00,https://www.icsfalconeborsellino.edu.it,2026-04-17,Argo,SC27273,
 4256,Mezzogiorno,CHIC809006,"I.C. PAGLIETA ""B. CROCE""",ABRUZZO,Statale,I84D25004540006,M4C1I2.1-2026-1745-P-68737,49593.60,http://www.icpaglieta.edu.it,2026-04-17,Generic,,https://www.icpaglieta.edu.it/site/novita/albo-online
 4257,Centro - Nord,UDPC010005,"LICEO CLASSICO ""J. STELLINI"" UDINE",FRIULI VENEZIA GIULIA,Statale,F24D25003220006,M4C1I2.1-2026-1745-P-68187,39748.80,http://www.stelliniudine.edu.it,2026-04-17,Spaggiari,udlg0001,
-4258,Mezzogiorno,NAIC8AH006,C.MMARE I.C. DI CAPUA,CAMPANIA,Statale,G84D25007340006,M4C1I2.1-2026-1745-P-68217,48832.00,http://www.icfdicapua.edu.it,2026-04-17,Generic,,https://www.icfdicapua.edu.it/albo-pretorio-online/
+4258,Mezzogiorno,NAIC8AH006,C.MMARE I.C. DI CAPUA,CAMPANIA,Statale,G84D25007340006,M4C1I2.1-2026-1745-P-68217,48832.00,http://www.icfdicapua.edu.it,2026-04-17,Generic,,https://www.icfdicapua.edu.it/albo-pretorio-online
 4259,Centro - Nord,MOTD01000L,A. BAGGI,EMILIA-ROMAGNA,Statale,E84D25006480006,M4C1I2.1-2026-1745-P-68777,28000.00,http://www.itcgbaggi.edu.it,2026-04-17,Generic,,http://www.itcgbaggi.edu.it/albo-online
 4260,Centro - Nord,CNIC86500N,"FOSSANO ""ANDREA PAGLIERI""",PIEMONTE,Statale,I44D25003800006,M4C1I2.1-2026-1745-P-68215,48216.00,http://ICFOSSANO.EDU.IT,2026-04-17,,,
 4261,Centro - Nord,BLIC83200V,IC SEDICO,VENETO,Statale,F54D25009670006,M4C1I2.1-2026-1745-P-68763,18300.80,http://www.istitutocomprensivosedico-sospirolo.edu.it,2026-04-17,Argo,SC27595,
@@ -4408,12 +4408,12 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 4407,Mezzogiorno,NAPC14000P,L.CLAS.UMBERTO I-NAPOLI-,CAMPANIA,Statale,I64D25003950006,M4C1I2.1-2026-1745-P-68815,49131.60,http://www.liceoumberto.edu.it,2026-04-17,Argo,SS16212,
 4408,Centro - Nord,PCIC80700T,IC DELLA VAL NURE,EMILIA-ROMAGNA,Statale,F74D25003630006,M4C1I2.1-2026-1745-P-68328,49168.00,http://icdellavalnure.edu.it,2026-04-17,Nuvola,PCIC80700T,
 4409,Centro - Nord,TO1M02400D,FONDAZIONE ISTITUTI RIUNITI SALOTTO E FIORITO ETS,PIEMONTE,Paritaria,I24D25005630006,M4C1I2.1-2026-1765-P-68809,47460.00,http://www.salottofiorito.it,2026-04-17,Search,,
-4410,Centro - Nord,RMPC39000C,JAMES JOYCE,LAZIO,Statale,J74D25003610006,M4C1I2.1-2026-1745-P-68514,20076.00,http://www.liceojoyce.edu.it,2026-04-17,Generic,,https://www.liceojoyce.edu.it/tipologia-documento/albo-online/
+4410,Centro - Nord,RMPC39000C,JAMES JOYCE,LAZIO,Statale,J74D25003610006,M4C1I2.1-2026-1745-P-68514,20076.00,http://www.liceojoyce.edu.it,2026-04-17,Generic,,https://www.liceojoyce.edu.it/tipologia-documento/albo-online
 4411,Centro - Nord,RMIC8EB00L,I.C. SINOPOLI-FERRINI,LAZIO,Statale,H84D25003900006,M4C1I2.1-2026-1745-P-68858,28000.00,http://www.icsinopoliferrini.edu.it,2026-04-17,Generic,,https://www.icsinopoliferrini.edu.it/albo-pretorio-online
 4412,Mezzogiorno,LEIC836009,I.C. MINERVINO,PUGLIA,Statale,J24D25003780006,M4C1I2.1-2026-1745-P-64599,11390.40,http://www.icminervinole.gov.it,2026-04-17,,,
 4413,Mezzogiorno,BAIC85700G,"I.C. ""R.SCARDIGNO-SAN D. SAVIO""",PUGLIA,Statale,H54D25008620006,M4C1I2.1-2026-1745-P-68027,49168.00,http://www.scardignosaviomolfetta.edu.it,2026-04-17,Argo,SC27421,
 4414,Centro - Nord,PNIC818009,"IC FIUME VENETO""P.BAGELLARDO""",FRIULI VENEZIA GIULIA,Statale,E24D25004570006,M4C1I2.1-2026-1745-P-68856,22876.00,,2026-04-17,Search,,
-4415,Mezzogiorno,CBIC84700C,"""COLOZZA""",MOLISE,Statale,E34D25008500006,M4C1I2.1-2026-1745-P-68270,13384.00,https://www.iccolozzacb.edu.it,2026-04-17,Generic,,https://iccolozzacb.edu.it/site/novita/albo-online/
+4415,Mezzogiorno,CBIC84700C,"""COLOZZA""",MOLISE,Statale,E34D25008500006,M4C1I2.1-2026-1745-P-68270,13384.00,https://www.iccolozzacb.edu.it,2026-04-17,Generic,,https://iccolozzacb.edu.it/site/novita/albo-online
 4416,Mezzogiorno,LEIC87500X,I.C. TRICASE VIA APULIA,PUGLIA,Statale,J74D25003640006,M4C1I2.1-2026-1745-P-68827,46844.00,http://www.apuliascuola.edu.it,2026-04-17,Generic,,http://www.apuliascuola.edu.it/servizio/albo-online
 4417,Mezzogiorno,MEIC81700D,LIPARI,SICILIA,Statale,H64D25003290006,M4C1I2.1-2026-1745-P-68778,49644.00,https://www.iclipari.edu.it,2026-04-17,Argo,SC14893,
 4418,Centro - Nord,GEPM04000P,LICEO STATALE SANDRO PERTINI,LIGURIA,Statale,I34D25005530006,M4C1I2.1-2026-1745-P-68793,49644.00,http://www.liceopertini.edu.it,2026-04-17,Generic,,http://www.liceopertini.edu.it/albo-online
@@ -4442,7 +4442,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 4441,Centro - Nord,UDIS00400G,"ISTITUTO SUPERIORE ""E.MATTEI"" LATISANA",FRIULI VENEZIA GIULIA,Statale,H94D25002840006,M4C1I2.1-2026-1745-P-67601,37016.00,http://www.isislatisana.it,2026-04-17,Generic,,http://www.isislatisana.it
 4442,Mezzogiorno,SAIS066006,"""DELLA CORTE - VANVITELLI"" - CAVA D.T.",CAMPANIA,Statale,E74D25005010006,M4C1I2.1-2026-1745-P-68502,49890.40,https://dellacortevanvitelli.edu.it,2026-04-17,Argo,SG27804,
 4443,Centro - Nord,ANIC81100G,"ANCONA ""AUGUSTO SCOCCHERA""",MARCHE,Statale,G34D25007300006,M4C1I2.1-2026-1745-P-66966,49982.80,https://augustoscocchera.edu.it,2026-04-17,Generic,,https://www.trasparenzascuole.it/Public/AmministrazioneTrasparenteV3.aspx?Customer_ID=ff1e69ce-0a3e-4df8-9b55-00b4edb636fb
-4444,Mezzogiorno,CHMM062004,I.O.DA GUARDIAGRELE-DELLA PORTA,ABRUZZO,Statale,B14D25004250006,M4C1I2.1-2026-1745-P-64964,49338.80,http://www.omnicomprensivoguardiagrele.edu.it,2026-04-17,Generic,,https://www.omnicomprensivoguardiagrele.edu.it/novita/albo-online/
+4444,Mezzogiorno,CHMM062004,I.O.DA GUARDIAGRELE-DELLA PORTA,ABRUZZO,Statale,B14D25004250006,M4C1I2.1-2026-1745-P-64964,49338.80,http://www.omnicomprensivoguardiagrele.edu.it,2026-04-17,Generic,,https://www.omnicomprensivoguardiagrele.edu.it/novita/albo-online
 4445,Mezzogiorno,SSIC825009,LOIRI,SARDEGNA,Statale,G34D25007330006,M4C1I2.1-2026-1745-P-68684,49576.80,https://www.icloiri.edu.it,2026-04-17,Spaggiari,SSME0010,
 4446,Mezzogiorno,BRPS130004,SCUOLA EUROPEA - LICEO FERMI-MONTICELLI,PUGLIA,Statale,B84D25006290006,M4C1I2.1-2026-1745-P-67192,32368.00,http://www.fermimonticelli.edu.it,2026-04-17,Argo,SG27690,
 4447,Mezzogiorno,NAIC8GL00P,ERCOLANO I.C. 5 MAIURI,CAMPANIA,Statale,F34D25004750006,M4C1I2.1-2026-1745-P-68605,49644.00,https://www.ic5maiuri.edu.it,2026-04-17,Argo,SC28368,
@@ -4473,7 +4473,7 @@ progressive,area,school_code,school_name,region,school_type,cup,clp,amount,websi
 4472,Mezzogiorno,CLIS008003,"I.I.S. ""VIRGILIO""",SICILIA,Statale,B84C26000140001,M4C1I2.1-2026-1745-P-67163,49350.00,https://www.virgiliomussomeli.edu.it,2026-04-17,Generic,,https://accesso.registroarchimede.it/archimede/segreteriaDigitale/albo-pretorio.seam?tipoPubblicazione=ALBO_ONLINE&#038;scuola=138
 4473,Centro - Nord,MITN02000X,ISTITUTO TECNICO E LICEO-P. P. PASOLINI,LOMBARDIA,Statale,C44D25003200006,M4C1I2.1-2026-1745-P-66991,49282.80,http://www.itspasolini.edu.it,2026-04-17,Spaggiari,MIIT0029,
 4474,Centro - Nord,UDIC84500N,TRASAGHIS,FRIULI VENEZIA GIULIA,Statale,E64D25004850006,M4C1I2.1-2026-1745-P-67483,11200.00,,2026-04-17,Search,,
-4475,Mezzogiorno,CBIS022008,IISS ALFANO DA TERMOLI,MOLISE,Statale,B34D25006910006,M4C1I2.1-2026-1745-P-68493,49644.00,http://www.iissalfano.edu.it,2026-04-17,Generic,,https://www.iissalfano.edu.it/novita/albo-online/
+4475,Mezzogiorno,CBIS022008,IISS ALFANO DA TERMOLI,MOLISE,Statale,B34D25006910006,M4C1I2.1-2026-1745-P-68493,49644.00,http://www.iissalfano.edu.it,2026-04-17,Generic,,https://www.iissalfano.edu.it/novita/albo-online
 4476,Centro - Nord,TNIC82600V,"""TAIO""",TRENTINO-ALTO ADIGE,Statale,B44D25004890006,M4C1I2.1-2026-1745-P-67250,21756.00,,2026-04-17,Search,,
 4477,Centro - Nord,MIIS03900T,B. RUSSELL,LOMBARDIA,Statale,J44D25004230006,M4C1I2.1-2026-1745-P-68864,49644.00,http://www.iis-russell.edu.it,2026-04-17,Nuvola,MIIS03900T,
 4478,Centro - Nord,LCIC82000E,I.C. GALBIATE,LOMBARDIA,Statale,D44D25005360006,M4C1I2.1-2026-1745-P-68844,30861.60,http://www.icsgalbiate.edu.it,2026-04-17,Nuvola,LCIC82000E,
