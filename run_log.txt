@@ -52,3 +52,9 @@
 [2026-07-01 15:47:04] ERROR fetching RMIC8DZ00R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0312
 [2026-07-01 15:47:04] ERROR fetching PGIC847004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGME0045
 [2026-07-01 15:47:05] ERROR fetching MNIS00900E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MNII0005
+[2026-07-01 19:11:00] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 100); workers: 8
+[2026-07-01 19:11:03] ERROR fetching VITF010009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VIIT0007
+[2026-07-01 19:11:06] ERROR fetching RESD01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/REIA0001
+[2026-07-01 19:11:11] ERROR fetching TRIS009005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TRLS0003
+[2026-07-01 19:11:12] ERROR fetching NAIC8GR00N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0258
+[2026-07-01 19:11:13] ERROR fetching BATD21000D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/bait0040
