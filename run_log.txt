@@ -52,3 +52,112 @@
 [2026-07-01 15:47:04] ERROR fetching RMIC8DZ00R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0312
 [2026-07-01 15:47:04] ERROR fetching PGIC847004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGME0045
 [2026-07-01 15:47:05] ERROR fetching MNIS00900E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MNII0005
+[2026-07-01 19:11:00] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 100); workers: 8
+[2026-07-01 19:11:03] ERROR fetching VITF010009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VIIT0007
+[2026-07-01 19:11:06] ERROR fetching RESD01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/REIA0001
+[2026-07-01 19:11:11] ERROR fetching TRIS009005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TRLS0003
+[2026-07-01 19:11:12] ERROR fetching NAIC8GR00N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0258
+[2026-07-01 19:11:13] ERROR fetching BATD21000D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/bait0040
+[2026-07-02 12:55:49] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 50); workers: 8
+[2026-07-02 12:55:56] ERROR hydrating RESD01000L|2373826: 404 Client Error: Not Found for url: https://web.spaggiari.eu/sdg2/Documenti/REIA0001/193337560?download=1
+[2026-07-02 12:56:03] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for LEIS00600N | DECRETO PER L’AVVIO DI UNA PROCEDURA DI SELEZIONE PER IL CON
+[2026-07-02 12:56:43] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for CSIC819007 | AVVISO MANIFESTAZIONE DI INTERESSE PROGETTO PNRR – Istituto 
+[2026-07-02 12:57:16] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for LEIS00700D | Avviso di selezione per il conferimento di incarichi di espe
+[2026-07-02 12:57:16] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for CSPC060008 | Manifestazione di interessi aperta per operatori economici i
+[2026-07-02 13:03:55] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TOIC8CG002 | Decreto di avvio procedura selettiva per il RECLUTAMENTO di 
+[2026-07-02 13:04:53] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for CEPS02000T | Decreto di avvio della procedura per la selezione Esperti - 
+[2026-07-02 13:05:11] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for NAIC8EZ00C | Decreto di individuazione esperti e tutor fase2.pdf
+[2026-07-02 13:05:11] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TVTF04000T | Avviso pubblico per la procedura di selezione per il conferi
+[2026-07-02 13:07:46] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TOIC8CG002 | Secondo Avviso di selezione allievi scuola secondaria per l’
+[2026-07-02 13:08:16] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for FIIS00800G | Decreto di avvio procedura di selezione per il reclutamento 
+[2026-07-02 13:12:38] ALERT: I.T.E.T. "G. CALO'" | CUP B64D25005630006 | 1 avviso/i: AUTODICHIARAZIONE impegno orario_Progetto DM 219_2
+[2026-07-02 13:14:54] ALERT: LICEO "CAGNAZZI" | CUP C74D25003230006 | 1 avviso/i: PNRR Investimento 2.1: Snodi formativi per la tran
+[2026-07-02 13:16:47] ALERT: I.C. VIVENZA- GIOVANNI XXIII | CUP I34D25004650006 | 2 avviso/i: DECRETO RUP ASSENZA CANDIDATURE INTERNE AVVISO 865; Selezione interna esperti e tutor progetto AI@SCUO
+[2026-07-02 13:37:22] ALERT: I.C. "N. ZINGARELLI" | CUP C94D25002960006 | 2 avviso/i: 2026 02 Lug 00134/2026 Avviso di selezione per doc; 2026 02 Lug 00134/2026 Decreto di avvio e Avviso d
+[2026-07-02 13:39:56] ALERT: "F.MARCHI" | CUP D34D25007390006 | 2 avviso/i: PNRR DM 219/2025: Avviso di selezione per conferim; PNRR DM 219/2025: Decreto avvio procedura di selez
+[2026-07-02 13:42:32] ALERT: I.I.S. S.DACQUISTO, 69 | CUP B14D25003750006 | 1 avviso/i: DM219_All.4_inesistenza_conflitto_interessi_RUP.pd
+[2026-07-02 13:46:26] ALERT: IC CASTELNUOVO -COCCONATO- MON | CUP C24D25002430006 | 2 avviso/i: SNODI FORMATIVI PNRR DM 219/2025 - ATIC80100B-1-17; SNODI FORMATIVI PNRR DM 219/2025 - ATIC80100B-1-17
+[2026-07-02 13:52:53] ALERT: IC MONTALTO UFF. TAVERNA-SCALO | CUP J84D25004440006 | 1 avviso/i: 3.1 PNRR - DM 219 - Decisione Avvio procedura Sele
+[2026-07-02 13:55:16] ALERT: I.C.CERMENATE | CUP D84D25004460006 | 6 avviso/i: Nomina DS per l’attività di direzione e coordiname; Decreto di avvio della procedura per l'affidamento; Avviso di Selezione interna per il reclutamento di; Avviso pubblico per la selezione interna "Laborato; Decreto di Avvio della Procedura di Selezione inte; Decreto di Avvio della Procedura di Selezione inte
+[2026-07-02 13:57:16] ALERT: QUALIANO 1 - RIONE PRINCIPE | CUP I14D25003340006 | 5 avviso/i: DECRETO DI RETTIFICA ERRORE MATERIALE IMPORTO TUTO; AVVISO DI SELEZIONE - PROCEDURA INTERNA/ESTERNA DI; DECRETO DI AVVIO - PROCEDURA INTERNA/ESTERNA DI SE; DECRETO DI AVVIO - PROCEDURA INTERNA DI SELEZIONE ; DECRETO INCARICO DS - DIREZIONE PERCORSI FORMATIVI
+[2026-07-02 14:03:28] ERROR fetching ARIS00800Q (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-02 14:19:50] ALERT: "STEFANO CATANI" | CUP J44D25003660006 | 2 avviso/i: FIRMATO_timbro_Decreto assunzione PTOF snodi forma; FIRMATO_timbro_Decreto assunzione PTOF snodi forma
+[2026-07-02 14:23:48] ALERT: I.C. PERTINI - TO | CUP J14D25008120006 | 2 avviso/i: Avviso Selezione Interna e Collaborazioni Plurime ; Decreto Avvio Procedura Selezione Interna e Collab
+[2026-07-02 14:27:47] ALERT: ISTITUTO SUPERIORE O.M.CORBINO PARTINICO | CUP E84D25005750006 | 1 avviso/i: Ripartizione costi -PNRR 2.1 D.M. 219/2025 - Orizz
+[2026-07-02 14:30:46] ERROR fetching BGIC81300V (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/SC10129
+[2026-07-02 14:33:52] ALERT: LICEO SCIENTIFICO "G. BATTAGLINI" | CUP D54D25011440006 | 1 avviso/i: Avviso di selezione Esperti e Tutor Percorsi di fo
+[2026-07-02 14:35:15] ALERT: CD "DOMODOSSOLA I" | CUP D64D25005160006 | 2 avviso/i: Avviso di selezione Laboratori sul campo per n. 10; Avviso di selezione per n. 3 ESPERTI e 3 TUTOR_ IA
+[2026-07-02 14:36:39] ALERT: I.I.S.S. "AUGUSTO RIGHI" | CUP H54D25008180006 | 1 avviso/i: DECRETO AVVIO PROCEDURA BANDO TUTOR SNODI FORMATIV
+[2026-07-02 14:41:11] ALERT: IC E.FERMI | CUP G24D25004680006 | 1 avviso/i: avviso unico di selezione per INDIVIDUAZIONE PERSO
+[2026-07-02 14:45:46] ALERT: I.I.S. "GREGORIO DA CATINO" | CUP E44D25004150006 | 1 avviso/i: AVVISO INTERNO - MANIFESTAZIONE DI INTERESSE PER L
+[2026-07-02 14:46:43] ALERT: I.C. "GIOVANNI PAOLO II" | CUP D14D25008870006 | 1 avviso/i: PNRR - D.M. n. 219/2025 - Codice progetto: M4C1I2.
+[2026-07-02 14:48:57] ALERT: I.C. "V. VENETO" | CUP E94D25006790006 | 1 avviso/i: D.M. 219/25 Sinergie Digitali: L’IA per la gestion
+[2026-07-02 14:50:44] ALERT: I.C. SETTIMO III | CUP F34D25003760006 | 1 avviso/i: AVVISO DI SELEZIONE PUBBLICA PER IL RECLUTAMENTO D
+[2026-07-02 15:04:04] ALERT: IC "BAGNOLINI" | CUP D84D25004580006 | 2 avviso/i: Avviso di selezione AA - Mind & machine CO-PROGETT; Decreto di avvio selezione AA - Mind & machine CO-
+[2026-07-02 15:06:12] ALERT: FRATTAMAGGIORE 4 - MARCONI | CUP C74D25003270006 | 1 avviso/i: NAEE332005-0-17309113-AC-M4C1I2.1-2026-1745-P-6513
+[2026-07-02 15:06:32] ALERT: I.C. SAN REMO CENTRO LEVANTE | CUP B24D25003690006 | 1 avviso/i: Decreto per l’avvio di una procedura di selezione 
+[2026-07-02 15:07:48] ALERT: I.C. G. DI VITTORIO -PA | CUP B74D25004370006 | 1 avviso/i: Avviso interno per selezione di tre docenti compon
+[2026-07-02 15:13:17] ALERT: I.C. BUSTO A."PERTINI" | CUP H44D25003330006 | 3 avviso/i: INTELLIGENZA ARTIFICIALE NELLA SCUOLA SANDRO PERTI; 2026 19 Giu NOMINA DIREZIONE E COORDINAMENTO GENER; 2026 11 Giu Informazione, Comunicazione, sensibili
+[2026-07-02 15:18:03] ALERT: ISTITUTO TECNICO "GIULIO CESARE FALCO" | CUP J44D25003730006 | 1 avviso/i: PNRR DM 219/25 Avviso per la selezione di personal
+[2026-07-02 15:20:26] ALERT: CUNEO OLTRESTURA | CUP C24D25002480006 | 2 avviso/i: AVVISO SELEZIONE DOCENTE ESPERTO FORMATORE LABORAT; AVVISO SELEZIONE TUTOR PERCORSI FORMATIVI PNRR MIS
+[2026-07-02 15:23:45] ALERT: I.S. ETTORE MAJORANA LICEO SCIENTIFICO | CUP I44D25003390006 | 1 avviso/i: AVVISO DI SELEZIONE PER IL CONFERIMENTO DI ICARICH
+[2026-07-02 15:25:54] ALERT: I.I.S.S. "DEL PRETE - FALCONE" | CUP G44D25005970006 | 3 avviso/i: Avviso di Selezione aperto anche a dipendenti di a; Avviso di Selezione aperto anche a dipendenti di a; AVVISO DI SELEZIONE ASSISTENTI AMMINISTRATIVI - Av
+[2026-07-02 15:27:07] ERROR fetching NAPS55000X (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-02 15:35:56] ALERT: I.C. "ALDO DE BERNART" | CUP B14D25003860006 | 3 avviso/i: SELEZIONE INTERNA TUTOR PERCORSI FORMATIVI PNRR DM; SELEZIONE INTERNA DEL PERSONALE DIPENDENTE PERSONA; Predisposizione piano finanziario. - “L’evoluzione
+[2026-07-02 15:36:48] ALERT: ISTITUTO TECNICO E LICEO - G. NATTA | CUP I44D25003430006 | 1 avviso/i: decreto avvio selezione docenti per DM.219 Snodi f
+[2026-07-02 15:37:43] ALERT: I.C. PIOSSASCO II BERTRAND | CUP B44D25004470006 | 1 avviso/i: Decreto per l’avvio di una procedura di selezione 
+[2026-07-02 15:37:52] ALERT: I.C. BORSELLINO NAVACCHIO | CUP D54D25011510006 | 1 avviso/i: PNRR DM 219 - Snodi Formativi | Istituto Comprensi
+[2026-07-02 15:39:13] ALERT: I.C. ALMESE | CUP B54D25011600006 | 4 avviso/i: [DM219] GdL_AVVISO di selezione; [DM219] ATA_Avviso procedura selezione Personale A; [DM219] ATA_Decreto avvio procedura selezione Pers; DM219_DECRETO - Avvio di procedura URGENTE di sele
+[2026-07-02 15:43:21] ALERT: I.I.S. "S. PERTINI" ALATRI | CUP C54D25007780006 | 2 avviso/i: Incarico project managmente DS CONTE DANIELA PNRR ; DECRETO DS INSERIMENTO PTOF Snodi formativi per la
+[2026-07-02 15:44:06] ALERT: UGO MURSIA | CUP G24D25004570006 | 1 avviso/i: PNRR D.M. 219 -Avviso pubblico prot. n 73226 2026 
+[2026-07-02 15:45:12] ALERT: NA - I.C. NEVIO | CUP B64D25005690006 | 1 avviso/i: AVVISO per la SELEZIONE DI PERSONALE INTERNO/ESTER
+[2026-07-02 15:46:29] ALERT: LIC.ARTISTICO-NAPOLI- | CUP G64D25007500006 | 2 avviso/i: ADDENDUM AVVISO PUBBLICO ESPERTI ESTERNI DM 219/20; AVVISO PUBBLICO, RIVOLTO AI DOCENTI INTERNI ED ESP
+[2026-07-02 15:46:42] ALERT: GIUGLIANO 5 | CUP B94D25003620006 | 1 avviso/i: Progetto snodi formativi _ DM 219_AVVISO ESPERTI E
+[2026-07-02 15:50:23] ALERT: I. I. S. S. "G. FALCONE" - LOANO | CUP E14D25005690006 | 1 avviso/i: PNRR: Assunzione a bilancio Codice Progetto M4C1I2
+[2026-07-02 15:51:18] ALERT: I.T.T. "G. GIORGI" | CUP B84D25005560006 | 1 avviso/i: DECRETO NOMINA DS - COORDINAMENTO PROGETTO - DM 21
+[2026-07-02 15:51:25] ALERT: BRA 2 "ILARIA ALPI-GINO STRADA" | CUP G74D25005520006 | 2 avviso/i: DM219 Dichiarazione assenza incompatibilità RUP pr; DM 219 Decreto avvio procedimento di selezione e a
+[2026-07-02 15:53:30] ALERT: IST. COMPRENSIVO F.P. MICHETTI | CUP G24D25004710006 | 1 avviso/i: Piano Nazionale Di Ripresa E Resilienza - Missione
+[2026-07-02 15:53:37] ALERT: I.C. NICHELINO I | CUP I14D25003450006 | 3 avviso/i: AVVISO ESTERNO COLLABORAZIONE PLURIMA PER L'INDIVI; AVVISO ESTERNO COLLABORAZIONE PLURIMA PER L'INDIVI; AVVISO INTERNO PER L'INDIVIDUAZIONE DI UN DOCENTE 
+[2026-07-02 16:07:49] ALERT: IC DI PONSO | CUP G74D25005710006 | 3 avviso/i: ACCORDO DI CONCESSIONE per la regolamentazione dei; Allegato A – Modulo di adesione_SNODI FORMATIVI_DM; Allegato A – Modulo di adesione_SNODI FORMATIVI_DM
+[2026-07-02 16:11:30] ALERT: IC STATALE "DON LORENZO MILANI" | CUP D24D25004900006 | 2 avviso/i: PNRR SNODI FORMATIVI Decisione avvio di una proced; INFORMAZIONE COMUNICAZIONE SENSIBILIZZAZIONE PUBBL
+[2026-07-02 16:13:49] ALERT: I.C. ANDEZENO | CUP H74D25002800006 | 1 avviso/i: Avviso di selezione interna per il conferimento de
+[2026-07-02 16:21:44] ALERT: IC VIA ACQUARONI | CUP G84D25006710006 | 1 avviso/i: 2026 22 Mag PNRR Snodi formativi AI D.M. 219/2025 
+[2026-07-02 16:25:28] ALERT: IC PALOMBARA SABINA V.LE RISORG | CUP J14D25008170006 | 1 avviso/i: 2026 30 Mag DM 219 DM 219
+[2026-07-02 16:25:35] ALERT: IST.PROF "DE' FRANCESCHI - A.PACINOTTI" | CUP D54D25011530006 | 1 avviso/i: Decreto 3930 avvio di selezione interna formatori 
+[2026-07-02 16:27:04] ALERT: A. POLIZIANO | CUP I74D25003920006 | 1 avviso/i: AVVISO INTEGRATO RIVOLTO A FIGURE PROFESSIONALI IN
+[2026-07-02 16:27:57] ALERT: I.C. MONCALIERI/NASI | CUP C24D25002580006 | 2 avviso/i: PNRR DM 219-25 - AVVISO SELEZIONE ESPERTI - LABORA; PNRR DM 219-25 - AVVISO SELEZIONE ESPERTI E TUTOR 
+[2026-07-02 16:28:34] ALERT: IST. OMNICOMPRENSIVO ORTE | CUP G94D25004590006 | 1 avviso/i: Avviso interno per la selezione di esperti e tutor
+[2026-07-02 16:46:13] ALERT: ITCG "L. OGGIANO" SINISCOLA | CUP B44D25004520006 | 2 avviso/i: M4C1I2.1-2026-1745-P-65980 - Avviso selezione pers; PNRR-M4C1I2.1-2026-1745-P-65980 - Decreto-nomina-R
+[2026-07-02 16:49:22] ALERT: LS G.SALVEMINI | CUP F14D25003670006 | 2 avviso/i: DECRETO AVVIO PROCEDURA SELEZIONE TUTOR D'AULA ED ; AVVISO DI SELEZIONE RIVOLTA AL PERSONALE INTERNO P
+[2026-07-02 16:57:11] ALERT: 1 C.D. "DE AMICIS" | CUP E14D25005760006 | 2 avviso/i: Avviso pubblico per la selezione di Tutor; Avviso pubblico per la selezione di esperti
+[2026-07-02 16:58:11] ALERT: IST.COMPR.MONTECORVINO PUGLIANO | CUP D64D25005280006 | 1 avviso/i: AVVISO TUTOR INTERNO - progetto PNRR "Snodi format
+[2026-07-02 17:02:23] ALERT: I. C. VASTO N.1 | CUP F34D25004040006 | 1 avviso/i: FIRMATO_Assunzione Ufficio RUP  progetto PNRR IA D
+[2026-07-02 17:03:42] ALERT: ISIS VAL DI CORNIA | CUP F74D25003240006 | 1 avviso/i: Avviso di selezione personale interno DSGA - AA - 
+[2026-07-02 17:08:56] ALERT: ITS "A. ORIANI" | CUP B24D25003790006 | 4 avviso/i: AVVISO di SELEZIONE personale interno docente e AT; Decreto di avvio procedure selettive personale doc; Assunzione nel PTOF - Progetto denominato "Intelli; Decreto assunzione bilancio - Progetto denominato 
+[2026-07-02 17:08:59] ALERT: I.C. EGIDI VITERBO | CUP B84D25005600006 | 1 avviso/i: DECRETO DI CONFERIMENTO DEGLI INCARICHI INDIVIDUAL
+[2026-07-02 17:11:44] ALERT: I.C. "SCANZANO-MONTALBANO" | CUP J94D25002670006 | 1 avviso/i: Assunzione in Programma Annuale 2026 - Snodi forma
+[2026-07-02 17:12:55] ERROR hydrating SSIC83200C|2533136: 404 Client Error: Not Found for url: https://web.spaggiari.eu/sdg2/Documenti/SSME0033/203294381?download=1
+[2026-07-02 17:19:01] ALERT: I.I.S. "A. VOLTA" FROSINONE | CUP F44D25003220006 | 1 avviso/i: Avviso_Selezione_Esperti_Tutor_PNRR_DM219 IIS VOLT
+[2026-07-02 17:19:19] ALERT: ANTONIO PACINOTTI | CUP B74D25004380006 | 1 avviso/i: DM 219 - assunzione_in_bilancio.pdf
+[2026-07-02 17:19:35] ALERT: I.C. GIOVANNI PAOLO II | CUP G14D25005630006 | 2 avviso/i: Pubblicità iniziale Snodi formativi | I.C. Giovann; Pubblicità iniziale Snodi formativi
+[2026-07-02 17:19:35] ALERT: I.C. MONREALE - F. MORVILLO | CUP D34D25007780006 | 1 avviso/i: Decreto di avvio di trattativa diretta MEPA serviz
+[2026-07-02 17:21:49] ALERT: ISTITUTO OMNICOMPRENSIVO - F. DE SANCTIS | CUP D94D25003900006 | 1 avviso/i: ASSUNZIONE A BILANCIO - PNRR - D.M. 219/2025 - M4C
+[2026-07-02 17:21:51] ALERT: IC DON LORENZO MILANI | CUP D34D25007810006 | 2 avviso/i: Accordo di concessione firmato PNRR Snodi formativ; Decreto assunzione a bilancio PNRR Snodi formativi
+[2026-07-02 17:22:48] ALERT: "R. VIRTUOSO" - SALERNO | CUP J54D25008420006 | 2 avviso/i: Avviso selezione di docenti interni ed esterni Sno; DECRETO di avvio selezione di docenti interni ed e
+[2026-07-02 17:23:35] ALERT: I. C. DON E. FERRARIS CIGLIANO | CUP E74D25004770006 | 1 avviso/i: DECRETO DI RETTIFICA IN AUTOTUTELA PER MERO ERRORE
+[2026-07-02 17:24:52] ALERT: I.C. SAN MAURO I | CUP C54D25007890006 | 2 avviso/i: CUP C54D25007890006 progetto M4C1I2.1-2026-1745 Sn; CUP C54D25007890006_DECRETO ASSUNZIONE PA 2026 PRO
+[2026-07-02 17:26:13] ERROR fetching LEPC03000R (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-02 17:26:50] ALERT: I.C. "N. INGANNAMORTE" | CUP G84D25006880006 | 3 avviso/i: Decreto di costituzione della commissione per la v; Secondo avviso rivolto ad esperti esterni per recl; Decreto di avviso prot. 4977 del 18 maggio 2026 an
+[2026-07-02 17:32:29] ALERT: ERNESTO BALDUCCI | CUP G84D25006890006 | 1 avviso/i: Assunzione PTOF PNRR Snodo formativo IA
+[2026-07-02 17:36:32] ALERT: IIS FARAVELLI - STRADELLA | CUP E84D25005990006 | 1 avviso/i: DICHIARAZIONE DS ASSENZA CANDIDATURE PER FORMATORI
+[2026-07-02 17:38:35] ALERT: I.C. 2 "DON ANTONIO SANNA" | CUP B84D25005470006 | 1 avviso/i: PROGETTO PNRR DM 219/2025 CUP B84D25005470006 - “g
+[2026-07-02 17:39:31] ALERT: IPSIA A.PACINOTTI | CUP D84D25004770006 | 4 avviso/i: Decreto Avviso INTERNO per la selezione di n. 6 un; Avviso INTERNO per la selezione di n. 6 unità di p; Avviso INTERNO per la selezione di n. 6 unità di p; Decreto Avviso INTERNO per la selezione di n. 6 un
+[2026-07-02 17:52:52] ALERT: L.G.S "ENNIO QUIRINO VISCONTI" | CUP G84D25006900006 | 1 avviso/i: PNRR 219 - AVVISO DI SELEZIONE A.A. PNRR 219 _
+[2026-07-02 17:55:57] ALERT: I.C. "G.F. INGRASSIA" | CUP E54D25008900006 | 2 avviso/i: AVVISO per il conferimento al personale amministra; Decreto avvio procedura di selezione per il confer
+[2026-07-02 17:56:49] ALERT: I.C. GABELLI - TO | CUP G14D25005610006 | 1 avviso/i: Decreto di assunzione a bilancio Investimento 2.1 
+[2026-07-02 17:59:49] ALERT: I.C. GIACOMO MATTEOTTI | CUP B14D25003970006 | 1 avviso/i: Snodi Formativi DM219/2025
+[2026-07-02 18:01:06] ALERT: MORETTA | CUP C44D25003160006 | 1 avviso/i: Avviso PNRR DM 219.pdf
+[2026-07-02 18:11:14] ERROR fetching TPIS008004 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-02 18:15:50] ALERT: LICEO SCIENTIFICO "F. SEVERI" C. MARE | CUP G84D25006910006 | 2 avviso/i: AVVISO PUBBLICO, RIVOLTO AI DOCENTI INTERNI, PER L; Decreto di assegnazione al Dirigente Scolastico de
+[2026-07-02 18:18:23] ALERT: LICEO STATALE "G. TURRISI COLONNA" | CUP H64D25003000006 | 1 avviso/i: PNRR Intelligenza Artificiale - Informazione, comu
+[2026-07-02 18:54:46] ERROR hydrating BGIS00300C|2462174: 404 Client Error: Not Found for url: https://web.spaggiari.eu/sdg2/Documenti/BGII0014/200660184?download=1
