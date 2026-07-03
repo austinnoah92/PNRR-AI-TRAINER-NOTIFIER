@@ -60,6 +60,14 @@ class StateStore(ABC):
     @abstractmethod
     def iter_decisions(self, school_code: str | None = None) -> list[dict]: ...
 
+    @abstractmethod
+    def get_checkpoint(self) -> int:
+        """Index into the mapped-schools list where the next run should start."""
+
+    @abstractmethod
+    def advance_checkpoint(self, count: int, total: int) -> None:
+        """Move the checkpoint forward by `count` schools, wrapping at `total`."""
+
     def close(self) -> None:
         pass
 
@@ -118,6 +126,16 @@ CREATE TABLE IF NOT EXISTS decisions (
     updated_at  TEXT DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_decisions_school ON decisions(school_code);
+
+-- Rotating cursor into the mapped-schools list: a single row tracking where
+-- the NEXT run should start, so a run that gets cut off partway (timeout,
+-- manual cancel) doesn't cause the same head of the list to be re-polled
+-- forever while the tail is never reached.
+CREATE TABLE IF NOT EXISTS checkpoint (
+    id          INTEGER PRIMARY KEY CHECK (id = 1),
+    next_index  INTEGER NOT NULL DEFAULT 0,
+    updated_at  TEXT DEFAULT CURRENT_TIMESTAMP
+);
 """
 
 
@@ -226,6 +244,30 @@ class SqliteStateStore(StateStore):
             self._conn.row_factory = None
         return [dict(r) for r in rows]
 
+    def get_checkpoint(self) -> int:
+        with self._lock:
+            cur = self._conn.execute("SELECT next_index FROM checkpoint WHERE id = 1")
+            row = cur.fetchone()
+            return row[0] if row else 0
+
+    def advance_checkpoint(self, count: int, total: int) -> None:
+        if total <= 0:
+            return
+        with self._lock:
+            cur = self._conn.execute("SELECT next_index FROM checkpoint WHERE id = 1")
+            row = cur.fetchone()
+            current = row[0] if row else 0
+            new_index = (current + count) % total
+            self._conn.execute(
+                """
+                INSERT INTO checkpoint (id, next_index) VALUES (1, ?)
+                ON CONFLICT(id) DO UPDATE SET next_index = excluded.next_index,
+                                               updated_at = CURRENT_TIMESTAMP
+                """,
+                (new_index,),
+            )
+            self._conn.commit()
+
     def close(self) -> None:
         with self._lock:
             try:
@@ -293,6 +335,12 @@ class PostgresStateStore(StateStore):
                     updated_at  TIMESTAMPTZ DEFAULT now()
                 );
                 CREATE INDEX IF NOT EXISTS idx_decisions_school ON decisions(school_code);
+
+                CREATE TABLE IF NOT EXISTS checkpoint (
+                    id          INTEGER PRIMARY KEY CHECK (id = 1),
+                    next_index  INTEGER NOT NULL DEFAULT 0,
+                    updated_at  TIMESTAMPTZ DEFAULT now()
+                );
                 """
             )
 
@@ -382,6 +430,29 @@ class PostgresStateStore(StateStore):
             else:
                 cur.execute("SELECT * FROM decisions ORDER BY updated_at DESC")
             return [dict(row) for row in cur.fetchall()]
+
+    def get_checkpoint(self) -> int:
+        with self._lock, self._conn.cursor() as cur:
+            cur.execute("SELECT next_index FROM checkpoint WHERE id = 1")
+            row = cur.fetchone()
+            return row["next_index"] if row else 0
+
+    def advance_checkpoint(self, count: int, total: int) -> None:
+        if total <= 0:
+            return
+        with self._lock, self._conn.cursor() as cur:
+            cur.execute("SELECT next_index FROM checkpoint WHERE id = 1")
+            row = cur.fetchone()
+            current = row["next_index"] if row else 0
+            new_index = (current + count) % total
+            cur.execute(
+                """
+                INSERT INTO checkpoint (id, next_index) VALUES (1, %s)
+                ON CONFLICT (id) DO UPDATE SET next_index = EXCLUDED.next_index,
+                                                updated_at = now()
+                """,
+                (new_index,),
+            )
 
     def close(self) -> None:
         with self._lock:

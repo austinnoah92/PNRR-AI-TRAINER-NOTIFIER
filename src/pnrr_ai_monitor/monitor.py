@@ -74,6 +74,12 @@ class Monitor:
         projects = [p for p in self.repository.load() if p.is_mapped]
         if limit:
             projects = projects[:limit]
+        elif projects and not dry_run:
+            # Rotate the start of the list so a run that gets cut off partway
+            # (timeout, manual cancel) doesn't leave the tail of the CSV
+            # permanently unreached while the head gets re-polled every day.
+            start = self.state.get_checkpoint() % len(projects)
+            projects = projects[start:] + projects[:start]
         ai_desc = self.ai_verifier.mode
         if ai_desc == "capped":
             ai_desc += f" (budget {self.ai_verifier.budget_left})"
@@ -84,9 +90,12 @@ class Monitor:
             self.settings.log_file,
         )
         stats = RunStats()
+        total = len(projects)
         if self.workers == 1:
             for project in projects:
                 stats.add(self._process_school(project, dry_run))
+                if not dry_run:
+                    self.state.advance_checkpoint(1, total)
                 if self.per_school_delay:
                     time.sleep(self.per_school_delay)
         else:
@@ -97,6 +106,8 @@ class Monitor:
                         stats.add(future.result())
                     except Exception as exc:
                         log_message(f"ERROR worker failed: {exc}", self.settings.log_file)
+                    if not dry_run:
+                        self.state.advance_checkpoint(1, total)
         log_message(f"Run ended. {stats.summary()}", self.settings.log_file)
         return stats
 
