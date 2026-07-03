@@ -13,11 +13,13 @@ from __future__ import annotations
 import argparse
 import os
 import sqlite3
+import sys
 from pathlib import Path
 
-from pnrr_ai_monitor.state import PostgresStateStore
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from pnrr_ai_monitor.state import PostgresStateStore
 
 _TABLES = {
     "processed_items": ("item_key", "school_code", "title", "published"),
