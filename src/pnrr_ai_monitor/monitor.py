@@ -170,9 +170,18 @@ class Monitor:
             try:
                 item = adapter.enrich_item(item)
             except Exception as exc:
+                error_text = str(exc)
                 log_message(f"ERROR enriching {item.key}: {exc}", self.settings.log_file)
                 decisions.append((item.key, project.school_code, item.title, item.url,
-                                  "enrich_error", str(exc)[:300]))
+                                  "enrich_error", error_text[:300]))
+                if "404" in error_text:
+                    # A 404 means the document is permanently gone, not a
+                    # transient blip - without this, an item that never gets
+                    # marked processed gets re-fetched and re-parsed forever,
+                    # every single run. Other errors (timeouts, 5xx) stay
+                    # unmarked so they still get retried, since those can
+                    # resolve on their own.
+                    processed.append(item)
                 continue
             if self._is_expired(item):
                 processed.append(item)
@@ -182,9 +191,12 @@ class Monitor:
             try:
                 text = adapter.hydrate(item)
             except Exception as exc:
+                error_text = str(exc)
                 log_message(f"ERROR hydrating {item.key}: {exc}", self.settings.log_file)
                 decisions.append((item.key, project.school_code, item.title, item.url,
-                                  "hydrate_error", str(exc)[:300]))
+                                  "hydrate_error", error_text[:300]))
+                if "404" in error_text:
+                    processed.append(item)
                 continue
             context = f"Categoria: {item.category} | Pubblicato: {item.published} | Scadenza: {item.expires}".strip()
             candidate = CandidateDocument(project, item.url, item.title, item.url, text=f"{context}\n{text}")
