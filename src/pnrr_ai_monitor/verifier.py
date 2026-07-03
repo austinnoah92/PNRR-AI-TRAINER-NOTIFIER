@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import re
+import time
 from dataclasses import replace
 from threading import Lock
 
@@ -228,17 +229,33 @@ class AiVerifier:
     """Second-opinion judge backed by Gemini. The *mode* controls how many AI
     calls are spent, so the same code runs free (off/capped) or fully (paid)."""
 
+    # A 429/RESOURCE_EXHAUSTED from Gemini is usually a per-minute rate limit
+    # (common on free-tier keys), not a hard daily quota — permanently giving
+    # up on AI for the rest of a multi-hour run over one transient 429 would
+    # silently degrade thousands of schools to rule-only. Back off instead,
+    # with the cooldown doubling on repeated failures (capped) so a genuinely
+    # exhausted daily quota doesn't get hammered with retries forever.
+    _BASE_COOLDOWN_SECONDS = 60.0
+    _MAX_COOLDOWN_SECONDS = 300.0
+
     def __init__(self, mode: str = AI_CAPPED, budget: int = 200) -> None:
         if mode not in AI_MODES:
             raise ValueError(f"ai mode must be one of {AI_MODES}, got {mode!r}")
         self.mode = mode
         self._remaining = budget
-        self._disabled_reason: str | None = None
+        self._cooldown_until = 0.0
+        self._cooldown_seconds = self._BASE_COOLDOWN_SECONDS
+        self._last_error: str | None = None
+        self.skipped_in_cooldown = 0
         self._lock = Lock()
 
     @property
     def budget_left(self) -> int:
         return self._remaining
+
+    @property
+    def last_rate_limit_error(self) -> str | None:
+        return self._last_error
 
     def verify(self, candidate: CandidateDocument, rule_result: VerificationResult) -> VerificationResult:
         if self.mode == AI_OFF:
@@ -246,7 +263,8 @@ class AiVerifier:
         if not os.getenv("GEMINI_API_KEY"):
             return rule_result
         with self._lock:
-            if self._disabled_reason:
+            if time.monotonic() < self._cooldown_until:
+                self.skipped_in_cooldown += 1
                 return rule_result
         try:
             from google import genai
@@ -283,7 +301,8 @@ IGNORE | motivo (in italiano)
 '''
         try:
             with self._lock:
-                if self._disabled_reason:
+                if time.monotonic() < self._cooldown_until:
+                    self.skipped_in_cooldown += 1
                     return rule_result
                 if self.mode == AI_CAPPED:
                     if self._remaining <= 0:
@@ -296,8 +315,15 @@ IGNORE | motivo (in italiano)
             error_text = f"{type(exc).__name__}: {str(exc)[:120]}"
             if "429" in error_text or "RESOURCE_EXHAUSTED" in error_text:
                 with self._lock:
-                    self._disabled_reason = error_text
+                    self._last_error = error_text
+                    self._cooldown_until = time.monotonic() + self._cooldown_seconds
+                    self._cooldown_seconds = min(self._cooldown_seconds * 2, self._MAX_COOLDOWN_SECONDS)
             return replace(rule_result, ai_error=error_text)
+        with self._lock:
+            # A successful call means the rate limit has cleared - reset the
+            # backoff so the next 429 (if any) starts from the short cooldown
+            # again instead of staying pinned at the max from an earlier spike.
+            self._cooldown_seconds = self._BASE_COOLDOWN_SECONDS
         if not answer.upper().startswith("MATCH"):
             return VerificationResult(False, Confidence.LOW, f"AI rejected candidate: {answer}", ai_used=True)
         parts = [part.strip() for part in answer.split("|")]

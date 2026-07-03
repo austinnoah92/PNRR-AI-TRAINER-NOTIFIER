@@ -113,7 +113,13 @@ class Monitor:
                         log_message(f"ERROR worker failed: {exc}", self.settings.log_file)
                     if not dry_run:
                         self.state.advance_checkpoint(1, total)
-        log_message(f"Run ended. {stats.summary()}", self.settings.log_file)
+        cooldown_note = ""
+        if self.ai_verifier.skipped_in_cooldown:
+            cooldown_note = (
+                f"; ai_cooldown_skips: {self.ai_verifier.skipped_in_cooldown} "
+                f"(last rate-limit error: {self.ai_verifier.last_rate_limit_error})"
+            )
+        log_message(f"Run ended. {stats.summary()}{cooldown_note}", self.settings.log_file)
         return stats
 
     def _process_school(self, project: ProjectRecord, dry_run: bool) -> RunStats:
