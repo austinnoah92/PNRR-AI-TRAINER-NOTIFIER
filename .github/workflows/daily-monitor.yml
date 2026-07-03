@@ -12,7 +12,7 @@ on:
         options: ["off", "capped", "full"]
       ai_budget:
         description: "Max AI calls per run (capped mode)"
-        default: "50"
+        default: "500"
 
 # Never let two runs overlap (avoids double-processing and commit races).
 concurrency:
@@ -22,6 +22,11 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    # Explicit rather than relying on GitHub's default (also 360): a full pass
+    # over ~2000 schools has taken close to this before, and the rotating
+    # checkpoint means a run that hits this ceiling still makes forward
+    # progress next time instead of losing everything.
+    timeout-minutes: 360
     permissions:
       contents: write   # to commit the dedup state back to the repo
 
@@ -56,7 +61,7 @@ jobs:
           uv run python run_monitor.py \
             --projects data/projects_funded.csv \
             --ai-mode "${{ github.event.inputs.ai_mode || 'capped' }}" \
-            --ai-budget "${{ github.event.inputs.ai_budget || '50' }}" \
+            --ai-budget "${{ github.event.inputs.ai_budget || '500' }}" \
             --monitor-workers 8
 
       - name: Persist dedup state

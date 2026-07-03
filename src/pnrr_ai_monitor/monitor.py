@@ -25,6 +25,8 @@ class RunStats:
     confirmed: int = 0
     alerts: int = 0
     ai_failures: int = 0
+    ai_verified: int = 0
+    rule_only: int = 0
 
     def add(self, other: "RunStats") -> None:
         self.schools += other.schools
@@ -34,12 +36,15 @@ class RunStats:
         self.confirmed += other.confirmed
         self.alerts += other.alerts
         self.ai_failures += other.ai_failures
+        self.ai_verified += other.ai_verified
+        self.rule_only += other.rule_only
 
     def summary(self) -> str:
         return (
             f"Schools: {self.schools}; unsupported: {self.unsupported}; "
             f"new items: {self.new_items}; passed prefilter: {self.prefiltered}; "
-            f"confirmed: {self.confirmed}; alerts: {self.alerts}; ai_failures: {self.ai_failures}"
+            f"confirmed: {self.confirmed}; alerts: {self.alerts}; ai_failures: {self.ai_failures}; "
+            f"ai_verified: {self.ai_verified}; rule_only (AI not consulted): {self.rule_only}"
         )
 
 
@@ -260,6 +265,10 @@ class Monitor:
             record("rule_rejected", rule_result.reason)
             return None, True
         final = self.ai_verifier.verify(candidate, rule_result)
+        if final.ai_used:
+            stats.ai_verified += 1
+        else:
+            stats.rule_only += 1
         if final.ai_error:
             stats.ai_failures += 1
             log_message(

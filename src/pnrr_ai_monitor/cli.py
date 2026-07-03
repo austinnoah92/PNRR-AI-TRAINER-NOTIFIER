@@ -80,7 +80,7 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=10, help="Parallel workers for --map (default 10).")
     parser.add_argument("--ai-mode", choices=AI_MODES, default=AI_CAPPED,
                         help="off: rules only. capped: AI on up to --ai-budget notices. full: AI on every candidate.")
-    parser.add_argument("--ai-budget", type=int, default=50, help="Max AI calls per run in 'capped' mode (default 50).")
+    parser.add_argument("--ai-budget", type=int, default=500, help="Max AI calls per run in 'capped' mode (default 500).")
     parser.add_argument("--search-budget", type=int, default=30, help="Max web searches per run for the search fallback (default 30).")
     parser.add_argument("--monitor-workers", type=int, default=8, help="Parallel workers for monitor runs (default 8).")
     parser.add_argument("--projects", default=None,
