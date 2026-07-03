@@ -24,8 +24,13 @@ class DocumentReader:
     def read(self, content: bytes, content_type: str, url: str) -> ReadDocumentResult:
         lowered = content_type.lower()
         low_url = url.lower()
-        if low_url.endswith(".pdf") or "pdf" in lowered:
+        if (low_url.endswith(".pdf") or "pdf" in lowered) and content.lstrip()[:5] == b"%PDF-":
             return self._read_pdf(content, content_type)
+        # Some servers label error/redirect pages (or plain HTML) with a .pdf
+        # URL or a "pdf" content-type header even though the bytes aren't a
+        # PDF at all — routing those into the PDF path wastes two failed
+        # library parses plus a doomed pdftoppm/OCR subprocess spawn for
+        # content that was never a PDF to begin with. Fall through to HTML.
         if low_url.endswith(".docx") or "wordprocessingml" in lowered:
             return self._read_docx(content, content_type)
         if low_url.endswith(".doc"):
