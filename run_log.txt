@@ -161,3 +161,81 @@
 [2026-07-02 18:15:50] ALERT: LICEO SCIENTIFICO "F. SEVERI" C. MARE | CUP G84D25006910006 | 2 avviso/i: AVVISO PUBBLICO, RIVOLTO AI DOCENTI INTERNI, PER L; Decreto di assegnazione al Dirigente Scolastico de
 [2026-07-02 18:18:23] ALERT: LICEO STATALE "G. TURRISI COLONNA" | CUP H64D25003000006 | 1 avviso/i: PNRR Intelligenza Artificiale - Informazione, comu
 [2026-07-02 18:54:46] ERROR hydrating BGIS00300C|2462174: 404 Client Error: Not Found for url: https://web.spaggiari.eu/sdg2/Documenti/BGII0014/200660184?download=1
+[2026-07-03 13:26:59] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 500); workers: 8
+[2026-07-03 13:27:01] ERROR fetching VITF010009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VIIT0007
+[2026-07-03 13:27:03] ERROR fetching RESD01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/REIA0001
+[2026-07-03 13:27:05] ERROR fetching TRIS009005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TRLS0003
+[2026-07-03 13:27:06] ERROR fetching NAIC8GR00N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0258
+[2026-07-03 13:27:06] ERROR fetching BATD21000D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/bait0040
+[2026-07-03 13:27:13] ERROR fetching RCTF030008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RCIT0012
+[2026-07-03 13:27:17] ERROR fetching PCIC818008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PCME0017
+[2026-07-03 13:27:19] ERROR fetching PGIS014001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGII0007
+[2026-07-03 13:27:19] ERROR fetching RMIS071006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMII0075
+[2026-07-03 13:27:19] ERROR fetching VARC02000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VAIP0001
+[2026-07-03 13:27:20] ERROR fetching SIIS00300R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SIII0001
+[2026-07-03 13:27:24] ERROR fetching GOIS00900R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/goii0009
+[2026-07-03 13:27:24] ERROR fetching SPTD110005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SPII0004
+[2026-07-03 13:27:26] ERROR fetching NOTF040002 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NOIT0005
+[2026-07-03 13:27:29] ERROR fetching SRIS011004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SRII0005
+[2026-07-03 13:27:30] ERROR fetching BGIC87800N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BGME0038
+[2026-07-03 13:27:36] ERROR fetching RMPC41000C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMLG0034
+[2026-07-03 13:27:36] ERROR fetching APIC81000A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/apme0011
+[2026-07-03 13:27:49] ERROR fetching CAIC8AF006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/cadd0077
+[2026-07-03 13:27:49] ERROR fetching ARIS00200R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ARII0002
+[2026-07-03 13:27:52] ERROR fetching PETD07000X (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PEII0007
+[2026-07-03 13:27:54] ERROR fetching VAIS008004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VAII0005
+[2026-07-03 13:27:55] ERROR fetching LETD08000R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LEIT0016
+[2026-07-03 13:27:56] ERROR fetching ARIC81600E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ARME0005
+[2026-07-03 13:28:02] ERROR fetching NAIC8EZ00C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0087
+[2026-07-03 13:28:35] ERROR fetching CSIC8AH00B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/CSDD0041
+[2026-07-03 13:28:53] ERROR fetching PRIS00300G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/prii0002
+[2026-07-03 13:29:04] ERROR fetching TEIC84500C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TEME0030
+[2026-07-03 13:29:04] ERROR fetching RMIC80700P (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0150
+[2026-07-03 13:29:09] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for FIIS00800G | Decreto di avvio procedura di selezione per il reclutamento 
+[2026-07-03 13:29:11] ERROR fetching TPIS01200Q (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TPII0011
+[2026-07-03 13:29:11] ERROR fetching RMIC8DZ00R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0312
+[2026-07-03 13:29:11] ERROR fetching PGIC847004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGME0045
+[2026-07-03 13:29:11] ERROR fetching MNIS00900E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MNII0005
+[2026-07-03 13:29:26] ERROR fetching CNIC812005 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/CNME0013
+[2026-07-03 13:29:27] ERROR fetching AVIC87500G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/AVME0031
+[2026-07-03 13:29:35] ERROR fetching RMIS00100X (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMII0016
+[2026-07-03 13:29:44] ERROR fetching ARIC82800R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ARME0009
+[2026-07-03 13:29:45] ERROR fetching LOTD010003 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LOIT0001
+[2026-07-03 13:30:02] ERROR fetching PGPC09000R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PGII0008
+[2026-07-03 13:30:11] ERROR fetching RMPS33000X (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMLS0032
+[2026-07-03 13:30:43] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TVTF04000T | Avviso pubblico per la procedura di selezione per il conferi
+[2026-07-03 13:30:44] ERROR fetching ARIS00800Q (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-03 13:30:44] ERROR fetching RCIS03100L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/rcii0020
+[2026-07-03 13:30:45] ERROR fetching ANIS01100Q (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ANII0007
+[2026-07-03 13:30:45] ALERT: LS ENRICO FERMI AVERSA | CUP C34D25003070006 | 1 avviso/i: Decreto di avvio della procedura per la selezione 
+[2026-07-03 13:30:48] ERROR fetching TOTF10000X (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TOIT0030
+[2026-07-03 13:30:48] ERROR fetching FEIS00600L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/FEII0002
+[2026-07-03 13:30:49] ERROR fetching VIIC863006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VIME0056
+[2026-07-03 13:31:04] ERROR fetching NAIC8CG00G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAME0005
+[2026-07-03 13:31:14] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for CSPC060008 | AVVIO PROCEDURA DI SELEZIONE ALUNNI PIANO ESTATE
+[2026-07-03 13:31:15] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TOIC8CG002 | Secondo Avviso di selezione allievi scuola secondaria per l’
+[2026-07-03 13:31:16] ERROR fetching LTIS02800R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LTIT0009
+[2026-07-03 13:31:33] ERROR fetching CZIC86500R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/CZME0056
+[2026-07-03 13:31:34] ERROR fetching NAIC8G900N (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NAMM0229
+[2026-07-03 13:31:36] ERROR fetching RMIC863003 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0087
+[2026-07-03 13:31:43] ERROR fetching CEMM07000A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/CEMM0068
+[2026-07-03 13:31:49] ERROR fetching BSIC82000E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BSME0011
+[2026-07-03 13:31:57] ERROR fetching VRPS03000R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VRLS0001
+[2026-07-03 13:31:58] ERROR fetching MNIS01100E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/mnit0004
+[2026-07-03 13:32:17] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for PTIC81200R | DECRETO AFFIDAMENTO INCARICHI in relazione all’avviso prot85
+[2026-07-03 13:32:17] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for RIIS008004 | Dichiarazione DS assenza candidature avviso interno prot. n.
+[2026-07-03 13:32:19] ALERT: IC E.FERMI | CUP G24D25004680006 | 1 avviso/i: DECRETO AFFIDAMENTO INCARICHI in relazione all’avv
+[2026-07-03 13:32:19] ALERT: I.I.S. "GREGORIO DA CATINO" | CUP E44D25004150006 | 1 avviso/i: Dichiarazione DS assenza candidature avviso intern
+[2026-07-03 13:32:21] ERROR fetching VVIS00200C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VVII0002
+[2026-07-03 13:32:28] ERROR fetching BSIS003001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BSII0017
+[2026-07-03 13:32:32] ERROR fetching AGPC060002 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/AGLG0004
+[2026-07-03 13:32:33] ERROR fetching LCPS020004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LCLS0002
+[2026-07-03 13:32:37] ERROR fetching RMTD640001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMIT0006
+[2026-07-03 13:33:05] ERROR fetching RMIS08100R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMII0071
+[2026-07-03 13:33:06] ERROR fetching RMIC8DB002 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/rmme0208
+[2026-07-03 13:33:06] ERROR fetching MOIC84300E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MOME0044
+[2026-07-03 13:33:07] ERROR fetching TOIS01200T (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TOII0017
+[2026-07-03 13:33:08] ERROR fetching LEIS03100A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/leii0020
+[2026-07-03 13:33:11] ERROR fetching APIS01600D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/APIP0004
+[2026-07-03 13:33:13] ERROR fetching NAPS55000X (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-03 13:33:14] ERROR fetching MIRH02000X (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIIP0002
