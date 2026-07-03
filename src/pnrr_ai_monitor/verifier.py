@@ -3,10 +3,30 @@ from __future__ import annotations
 import os
 import re
 import time
+import unicodedata
 from dataclasses import replace
 from threading import Lock
 
 from .models import AlboItem, CandidateDocument, Confidence, VerificationResult
+
+# Real-world text breaks plain substring matching in three independent ways
+# we've confirmed against live documents: Argo's feed delivers mojibake
+# apostrophes as U+FFFD ("dell'incarico" -> "dell�incarico"), the term
+# lists below were typed without full Italian accents ("pubblicita" never
+# matches "pubblicità"), and document filenames use hyphens/underscores in
+# place of spaces ("decreto-nomina-rup" never matches "nomina rup"). Each of
+# these silently breaks NEGATIVE_TERMS/STRONG_NEGATIVE_TERMS/INTERNAL_TERMS
+# rejections (and, symmetrically, could suppress genuine CALL_TERMS matches
+# too) - normalize both sides identically before comparing so formatting
+# differences stop mattering.
+_SEPARATOR_CHARS = re.compile(r"[’‘´`'�_-]")
+
+
+def normalize_text(value: str) -> str:
+    folded = unicodedata.normalize("NFKD", value)
+    folded = "".join(ch for ch in folded if not unicodedata.combining(ch))
+    folded = _SEPARATOR_CHARS.sub(" ", folded)
+    return " ".join(folded.lower().split())
 
 
 PROJECT_CONTEXT_TERMS = (
@@ -24,7 +44,11 @@ CALL_TERMS = (
     "formatori", "tutor", "reclutamento", "percorsi formativi", "laboratori formativi",
     "percorsi e laboratori formativi", "figure professionali", "operatori economici",
     "operatore economico", "manifestazione di interesse", "manifestazione d'interesse", "indagine di mercato",
-    "affidamento diretto", "servizi di formazione", "rdo", "mepa", "capitolato",
+    # NOT bare "rdo" here either — see the identical note on EXTERNAL_TERMS
+    # below. Confirmed live: "l'accordo di concessione" (funding-agreement
+    # boilerplate present in nearly every DM219 document) contains "rdo" and
+    # was single-handedly producing a false HIGH-confidence MATCH.
+    "affidamento diretto", "servizi di formazione", "mepa", "capitolato",
     "disciplinare", "presentazione candidatura", "istanza di partecipazione",
     "domanda di partecipazione", "richiesta disponibilita", "richiesta disponibilità",
     "candidatura",
@@ -37,7 +61,8 @@ CALL_CORE_TERMS = (
     "reclutamento esperti", "reclutamento tutor", "reclutamento formatori",
     "avviso di reclutamento", "figure professionali", "operatori economici",
     "operatore economico", "manifestazione di interesse", "manifestazione d'interesse operatori economici", "indagine di mercato",
-    "rdo", "mepa", "istanza di partecipazione", "domanda di partecipazione",
+    # NOT bare "rdo" - same accidental-substring issue as above.
+    "mepa", "istanza di partecipazione", "domanda di partecipazione",
     "presentazione candidatura", "richiesta disponibilita",
 )
 
@@ -151,6 +176,18 @@ STRONG_PREFILTER_TERMS = (
 )
 
 
+# Precomputed once at import time (verify() runs per-candidate, thousands of
+# times per run) so matching is cheap: normalize each static term the same
+# way the input text gets normalized, rather than re-normalizing per call.
+_PROJECT_CONTEXT_TERMS_N = tuple(normalize_text(t) for t in PROJECT_CONTEXT_TERMS)
+_CALL_TERMS_N = tuple(normalize_text(t) for t in CALL_TERMS)
+_CALL_CORE_TERMS_N = tuple(normalize_text(t) for t in CALL_CORE_TERMS)
+_NEGATIVE_TERMS_N = tuple(normalize_text(t) for t in NEGATIVE_TERMS)
+_STRONG_NEGATIVE_TERMS_N = tuple(normalize_text(t) for t in STRONG_NEGATIVE_TERMS)
+_INTERNAL_TERMS_N = tuple(normalize_text(t) for t in INTERNAL_TERMS)
+_EXTERNAL_TERMS_N = tuple(normalize_text(t) for t in EXTERNAL_TERMS)
+
+
 class OpportunityPrefilter:
     """Fast first-pass gate on title+category.
 
@@ -165,15 +202,25 @@ class OpportunityPrefilter:
 
     @staticmethod
     def _compile(terms: tuple[str, ...]) -> re.Pattern[str]:
-        pattern = "|".join(re.escape(t) for t in sorted(set(terms), key=len, reverse=True))
+        normalized = {normalize_text(t) for t in terms}
+        pattern = "|".join(re.escape(t) for t in sorted(normalized, key=len, reverse=True))
         return re.compile(pattern, re.IGNORECASE)
 
     def is_relevant(self, item: AlboItem) -> bool:
-        text = f"{item.title} {item.category}"
+        text = normalize_text(f"{item.title} {item.category}")
         return bool(self._strong.search(text) or (self._project.search(text) and self._weak.search(text)))
 
 
 class OpportunityVerifier:
+    # "decreto di assegnazione AL DIRIGENTE SCOLASTICO dell'incarico di..." -
+    # confirmed live (NAPS110002): the role sits BETWEEN "assegnazione" and
+    # "dell'incarico", so no fixed-phrase term in STRONG_NEGATIVE_TERMS can
+    # match it (and a bare "decreto di assegnazione" would wrongly also
+    # match the funding-award decree cited in every document's preamble -
+    # see the comment on that list). A bounded-word-gap regex catches the
+    # real self-appointment pattern without that false-positive risk.
+    _ASSIGNMENT_OF_ROLE_RE = re.compile(r"decreto di assegnazione\b(?:\s+\S+){0,6}\s+dell.incarico")
+
     # How much of the (title + metadata + filenames + body) text counts as the
     # document's "kind" signal for STRONG_NEGATIVE_TERMS. Adapters put the title,
     # descrizione/tipologia, and attachment filenames FIRST, deep attachment body
@@ -189,14 +236,16 @@ class OpportunityVerifier:
         text = self._normalize(f"{candidate.title} {candidate.url} {candidate.text}")
         kind_text = self._normalize(f"{candidate.title} {candidate.url} {candidate.text[:self.KIND_SIGNAL_CHARS]}")
         project = candidate.project
-        exact_hits = [term for term in (project.cup.lower(), project.clp.lower()) if term and term in text]
-        context_hits = [term for term in PROJECT_CONTEXT_TERMS if term in text]
-        call_hits = [term for term in CALL_TERMS if term in text]
-        core_call_hits = [term for term in CALL_CORE_TERMS if term in text]
-        negative_hits = [term for term in NEGATIVE_TERMS if term in kind_text]
-        strong_neg = [term for term in STRONG_NEGATIVE_TERMS if term in kind_text]
-        internal_hits = [term for term in INTERNAL_TERMS if term in text]
-        external_hits = [term for term in EXTERNAL_TERMS if term in text]
+        exact_hits = [term for term in (normalize_text(project.cup), normalize_text(project.clp)) if term and term in text]
+        context_hits = [term for term in _PROJECT_CONTEXT_TERMS_N if term in text]
+        call_hits = [term for term in _CALL_TERMS_N if term in text]
+        core_call_hits = [term for term in _CALL_CORE_TERMS_N if term in text]
+        negative_hits = [term for term in _NEGATIVE_TERMS_N if term in kind_text]
+        strong_neg = [term for term in _STRONG_NEGATIVE_TERMS_N if term in kind_text]
+        if self._ASSIGNMENT_OF_ROLE_RE.search(kind_text):
+            strong_neg.append("decreto di assegnazione ... dell'incarico")
+        internal_hits = [term for term in _INTERNAL_TERMS_N if term in text]
+        external_hits = [term for term in _EXTERNAL_TERMS_N if term in text]
         internal_only = bool(internal_hits) and not external_hits
 
         if strong_neg and not core_call_hits:
@@ -216,7 +265,7 @@ class OpportunityVerifier:
         return VerificationResult(True, Confidence.LOW, f"Linguaggio di bando presente ({', '.join(core_call_hits[:3])}) ma collegamento al progetto debole - richiede valutazione AI.", core_call_hits[0])
 
     def _normalize(self, value: str) -> str:
-        return " ".join(value.lower().split())
+        return normalize_text(value)
 
 
 AI_OFF = "off"
