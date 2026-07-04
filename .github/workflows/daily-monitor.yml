@@ -2,7 +2,7 @@ name: PNRR AI Opportunity Monitor
 
 on:
   schedule:
-    - cron: "45 13 * * *"   # daily between 2:45 pm and 3:45 pm Italy time
+    - cron: "45 14 * * *"   # daily between 3:45 pm and 4:45 pm Italy time
   workflow_dispatch:
     inputs:
       ai_mode:
