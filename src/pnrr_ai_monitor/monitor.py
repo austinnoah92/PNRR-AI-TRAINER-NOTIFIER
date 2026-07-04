@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import time
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from email.utils import parsedate_to_datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, replace
 
 from .adapters.base import AdapterRegistry
+from .adapters.search import SEARCH_WINDOW_DAYS
 from .alerts import AlertService
 from .config import Settings
 from .deadline_parser import extract_application_deadline, is_deadline_passed
@@ -187,6 +188,13 @@ class Monitor:
                     # resolve on their own.
                     processed.append(item)
                 continue
+            if self._outside_search_window(item):
+                processed.append(item)
+                decisions.append((item.key, project.school_code, item.title, item.url,
+                                  "outside_search_window",
+                                  f"Published {item.published}, older than the rolling "
+                                  f"{SEARCH_WINDOW_DAYS}-day search window as of today."))
+                continue
             if self._is_expired(item):
                 processed.append(item)
                 decisions.append((item.key, project.school_code, item.title, item.url,
@@ -276,6 +284,22 @@ class Monitor:
             return False
         parsed = Monitor._parse_date(expires)
         return bool(parsed and parsed <= date.today())
+
+    @staticmethod
+    def _outside_search_window(item: AlboItem) -> bool:
+        # Only the web-search fallback has this ambiguity — every other
+        # adapter reads real platform data, not a DuckDuckGo result with no
+        # date of its own. date.today() is evaluated fresh each time this
+        # runs, so the window is always "the last N days as of today," not a
+        # fixed range left over from an earlier day. An item whose published
+        # date we couldn't determine at all is NOT rejected here — absence
+        # of a signal isn't evidence it's stale, so it proceeds normally.
+        if item.vendor.lower() != "search":
+            return False
+        published = Monitor._parse_date(item.published)
+        if published is None:
+            return False
+        return published < date.today() - timedelta(days=SEARCH_WINDOW_DAYS)
 
     @staticmethod
     def _parse_date(value: str) -> date | None:

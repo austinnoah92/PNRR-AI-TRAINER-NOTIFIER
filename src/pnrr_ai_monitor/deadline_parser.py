@@ -124,3 +124,38 @@ def is_deadline_passed(deadline: ApplicationDeadline) -> bool:
         deadline_dt = datetime.combine(deadline.date, deadline.time, tzinfo=ROME_TZ)
         return now > deadline_dt
     return deadline.date < now.date()
+
+
+# Signals a document's own publish/protocol date, for sources (the web-search
+# fallback) that have no structured "published" field of their own —
+# DuckDuckGo's HTML results expose no per-result date at all, so this is the
+# only place a real date can come from for those items.
+_PUBLISHED_NUM_RE = re.compile(rf"pubblicat[oa]\s*(?:il|in\s*data)?\s*{_NUM_DATE}", re.IGNORECASE)
+_PUBLISHED_WORD_RE = re.compile(rf"pubblicat[oa]\s*(?:il|in\s*data)?\s*{_WORD_DATE}", re.IGNORECASE)
+# "del"/"dell'" (elided before a vowel, e.g. "prot. 4625 dell'8 maggio 2026" —
+# normalize_text already turns the apostrophe into a space, leaving "dell").
+# Confirmed real: protocol dates in these documents are usually spelled out
+# ("del 27 marzo 2026"), not numeric, so both forms are needed.
+_PROTOCOL_NUM_RE = re.compile(rf"prot(?:ocollo)?\.?\s*n?\.?\s*\d+\s*de(?:l|ll)\s*{_NUM_DATE}", re.IGNORECASE)
+_PROTOCOL_WORD_RE = re.compile(rf"prot(?:ocollo)?\.?\s*n?\.?\s*\d+\s*de(?:l|ll)\s*{_WORD_DATE}", re.IGNORECASE)
+
+
+def extract_published_date(text: str) -> date | None:
+    """Best-effort extraction of when a document was actually published,
+    from its own text — an explicit "pubblicato il/in data ..." statement
+    first, falling back to a protocol citation date. Same conservative
+    validation as extract_application_deadline: an unparseable match is
+    discarded rather than guessed."""
+    normalized = normalize_text(text)
+    for pattern in (_PUBLISHED_NUM_RE, _PUBLISHED_WORD_RE, _PROTOCOL_NUM_RE, _PROTOCOL_WORD_RE):
+        match = pattern.search(normalized)
+        if not match:
+            continue
+        groups = match.groupdict()
+        if groups.get("monthname"):
+            found_date = _to_date(groups["day2"], groups["monthname"], groups["year2"])
+        else:
+            found_date = _to_date(groups["day"], groups["month"], groups["year"])
+        if found_date is not None:
+            return found_date
+    return None
