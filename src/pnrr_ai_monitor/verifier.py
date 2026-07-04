@@ -149,6 +149,14 @@ EXTERNAL_TERMS = (
     # list exists to support. (Confirmed: matched inside "riguardo" in a real
     # notice, silently turning an internal-only avviso into a false "external".)
 )
+# NOTE: a rule-based "external is only a fallback contingency" check was
+# tried and reverted — the obvious candidate phrase ("indire nuovo avviso
+# oppure ricercare all'esterno...") turned out to be generic Italian PA
+# boilerplate that shows up in genuinely-both-internal-and-external notices
+# too (confirmed: present verbatim in the Caselette notice, which explicitly
+# targets "interno/esterno" from the outset). This distinction needs actual
+# semantic understanding of the document, not keyword matching — see the
+# AI prompt in AiVerifier.verify() instead.
 
 # Strong title/category terms can pass the cheap prefilter alone. Weak terms pass
 # only when paired with a programme/project signal.
@@ -259,7 +267,17 @@ class OpportunityVerifier:
         if not core_call_hits:
             return VerificationResult(False, Confidence.LOW, "No clear open-call/procurement language found.")
         if exact_hits:
-            return VerificationResult(True, Confidence.HIGH, f"Identificativo di progetto esatto trovato ({', '.join(exact_hits)}) insieme a termini di bando ({', '.join(core_call_hits[:3])}).", core_call_hits[0])
+            # An exact CUP/CLP match is strong evidence this document is
+            # about the right project, but says nothing about whether
+            # internal/external framing is ambiguous. A document mixing both
+            # internal-staff AND external language (e.g. "external only if
+            # no internal candidate is found") needs AI's actual semantic
+            # judgment, not a rule-only HIGH-confidence bypass — downgrading
+            # to MEDIUM here routes it through the ai_unavailable_deferred
+            # path (retry later) instead of alerting on rule-only confidence
+            # when AI happens to be unavailable for this specific document.
+            confidence = Confidence.MEDIUM if (internal_hits and external_hits) else Confidence.HIGH
+            return VerificationResult(True, confidence, f"Identificativo di progetto esatto trovato ({', '.join(exact_hits)}) insieme a termini di bando ({', '.join(core_call_hits[:3])}).", core_call_hits[0])
         if len(context_hits) >= 2:
             return VerificationResult(True, Confidence.MEDIUM, f"Forte contesto D.M. 219 sull'IA ({', '.join(context_hits[:3])}) con termini di bando ({', '.join(core_call_hits[:3])}).", core_call_hits[0])
         return VerificationResult(True, Confidence.LOW, f"Linguaggio di bando presente ({', '.join(core_call_hits[:3])}) ma collegamento al progetto debole - richiede valutazione AI.", core_call_hits[0])
@@ -314,7 +332,12 @@ class AiVerifier:
         with self._lock:
             if time.monotonic() < self._cooldown_until:
                 self.skipped_in_cooldown += 1
-                return rule_result
+                # ai_error (not a bare rule_result) so monitor.py's
+                # ai_unavailable_deferred path retries this on a future run
+                # instead of permanently finalizing on rule-only confidence —
+                # a cooldown recovers within minutes, this isn't a settled
+                # "AI won't be consulted" decision like mode=off/no key.
+                return replace(rule_result, ai_error="AI in cooldown after a recent rate limit")
         try:
             from google import genai
         except Exception as exc:
@@ -324,8 +347,9 @@ You are an expert procurement analyst for an AI-training consulting firm. You re
 
 Return MATCH only if ALL hold:
 1. It is a CURRENTLY OPEN call/tender/selection/market survey (avviso pubblico, selezione, manifestazione di interesse, indagine di mercato, RDO/MePA, affidamento) - not an already-closed/awarded/ranked one.
-2. It seeks an EXTERNAL party: "esperto esterno", "operatori economici", "collaborazione plurima", an open market/company tender.
-   -> Return IGNORE if it is reserved to INTERNAL staff only ("docenti interni", "personale interno", "in servizio presso questa istituzione"), unless external candidates are explicitly admitted (e.g. only if no internal candidate is found).
+2. It seeks an EXTERNAL party UNCONDITIONALLY, from the outset: "esperto esterno", "operatori economici", "collaborazione plurima", an open market/company tender.
+   -> Return IGNORE if it is reserved to INTERNAL staff only ("docenti interni", "personale interno", "in servizio presso questa istituzione").
+   -> Also return IGNORE if external candidates are admitted only as a FALLBACK/contingency — e.g. "in mancanza di candidature interne", "qualora non si rinvenga personale interno", "solo in caso di indisponibilità di personale interno" — i.e. internal hiring is the real plan and external is merely a contingency clause, not a present offer. This school is very likely to publish a separate, clearer notice later if the fallback is ever actually triggered; that notice — not this contingency clause — is the real opportunity to catch.
 3. It plausibly concerns AI / digital / PNRR training services this firm could deliver - ideally this project (CUP/CLP below), but accept clear D.M. 219 / "intelligenza artificiale" / "snodi formativi" / digital-skills training even if the CUP is not literally printed.
 
 Return IGNORE for: news/dissemination, internal-only appointments, graduatorie/verbali/aggiudicazioni (results), RUP/accounting acts, contract-stage documents, pure goods purchases unrelated to training, and unrelated projects.
@@ -352,10 +376,12 @@ IGNORE | motivo (in italiano)
             with self._lock:
                 if time.monotonic() < self._cooldown_until:
                     self.skipped_in_cooldown += 1
-                    return rule_result
+                    return replace(rule_result, ai_error="AI in cooldown after a recent rate limit")
                 if self.mode == AI_CAPPED:
                     if self._remaining <= 0:
-                        return rule_result
+                        # Budget resets next run — same reasoning as cooldown
+                        # above: this is "not right now", not "never".
+                        return replace(rule_result, ai_error="AI budget exhausted for this run")
                     self._remaining -= 1
                 client = genai.Client()
                 response = client.models.generate_content(model="gemini-3-flash-preview", contents=prompt)
