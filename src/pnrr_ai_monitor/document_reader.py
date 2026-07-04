@@ -22,6 +22,13 @@ from pypdf import PdfReader
 # than building a "quality status" tracking system nobody downstream needs.
 logging.getLogger("pdfminer").setLevel(logging.ERROR)
 logging.getLogger("pypdf").setLevel(logging.ERROR)
+# BeautifulSoup's own encoding-detection heuristic (bs4.dammit.UnicodeDammit)
+# logs "Some characters could not be decoded..." routinely for real-world
+# HTML with ambiguous/mixed character encodings — same kind of harmless
+# library noise as the two above, just from _read_html's parser instead of
+# the PDF path, and missed by the original fix because that was only tested
+# against a PDF document.
+logging.getLogger("bs4").setLevel(logging.ERROR)
 # Belt-and-suspenders alongside the content-sniffing fix below: if some
 # future caller still hands genuinely-XML bytes to _read_html, don't let the
 # warning through either.
