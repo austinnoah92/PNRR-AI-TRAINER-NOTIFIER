@@ -34,6 +34,16 @@ _AUTHORIZING_ONLY_RE = re.compile(
     r"si\s+autorizza\s+l.avvio|autorizza\s+l.avvio\s+della\s+procedura|"
     r"decreta\s+di\s+autorizzare|si\s+decreta\s+l.avvio"
 )
+# Confirmed real case: a 53KB pure-authorization Decreto ("VISTO...VISTA...
+# DECRETA...") that doesn't match _AUTHORIZING_ONLY_RE's specific phrasings
+# has ZERO occurrences of domanda/candidatura/presentare/istanza/entro
+# anywhere in the whole document — a much more reliable negative signal than
+# trying to enumerate every authorization phrasing. If none of this weak
+# vocabulary appears at all, the document isn't describing an application
+# process, full stop; no need to guess or spend an AI call on it.
+_WEAK_APPLICATION_VOCAB_RE = re.compile(
+    r"domanda|candidatura|istanza|presentare|inviare|iscrizione|modalita\s+di\s+partecipazione"
+)
 
 TIME_PROXIMITY_DAYS = 5
 AI_ESCALATION_MAX_DAYS = 30
@@ -72,17 +82,20 @@ def extract_signals(candidate: CandidateDocument, item: AlboItem) -> ThreadSigna
 def is_actionable(candidate: CandidateDocument, ai_verifier: AiVerifier) -> bool:
     """Does this document give a candidate concrete steps to apply, or is it
     primarily an authorization act that references the process without
-    restating how to apply? Cheap rule pass first; AI only when genuinely
-    ambiguous (neither pattern fires, or both do)."""
+    restating how to apply? Cheap rule pass first; AI only for the narrow
+    genuinely-ambiguous middle ground."""
     text = normalize_text(f"{candidate.title} {candidate.text}")
-    has_instructions = bool(_APPLY_INSTRUCTION_RE.search(text))
-    authorizing_only = bool(_AUTHORIZING_ONLY_RE.search(text)) and not has_instructions
-    if has_instructions:
+    if _APPLY_INSTRUCTION_RE.search(text):
         return True
-    if authorizing_only:
+    if _AUTHORIZING_ONLY_RE.search(text) or not _WEAK_APPLICATION_VOCAB_RE.search(text):
+        # Confidently not actionable: either explicit authorization-only
+        # language, or (confirmed real case) NO application-related word at
+        # all anywhere in the document — a document genuinely describing an
+        # application process always mentions at least one of these.
         return False
-    # Ambiguous: neither pattern matched clearly. Escalate to AI, budget-
-    # gated the same way regular verification calls already are.
+    # Some weak application vocabulary present, but not the concrete
+    # instruction phrase — genuinely ambiguous. Escalate to AI, budget-gated
+    # the same way regular verification calls already are.
     verdict = ai_verifier.is_actionable_content(candidate.text)
     return verdict if verdict is not None else True  # default to sending rather than silently dropping
 

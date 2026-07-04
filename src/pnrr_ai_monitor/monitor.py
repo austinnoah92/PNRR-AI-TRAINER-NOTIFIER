@@ -9,6 +9,7 @@ from dataclasses import dataclass, replace
 from .adapters.base import AdapterRegistry
 from .alerts import AlertService
 from .config import Settings
+from .deadline_parser import extract_application_deadline, is_deadline_passed
 from .logging_utils import log_message
 from .models import Alert, AlboItem, CandidateDocument, Confidence, Opportunity, ProjectRecord
 from .repository import ProjectRepository
@@ -201,6 +202,22 @@ class Monitor:
                 if "404" in error_text:
                     processed.append(item)
                 continue
+            # The platform's expiry date is visibility, not necessarily the
+            # real application cutoff — confirmed real mismatch (CNIC83100E:
+            # platform said 15/07/2026, the document itself said 14/07/2026
+            # 12:00). Check the document's own stated deadline too, after
+            # the cheap platform-only check above already filtered out the
+            # obviously-expired majority.
+            doc_deadline = extract_application_deadline(text)
+            if doc_deadline is not None and is_deadline_passed(doc_deadline):
+                processed.append(item)
+                deadline_str = doc_deadline.date.strftime("%d/%m/%Y")
+                if doc_deadline.time is not None:
+                    deadline_str += f" {doc_deadline.time.strftime('%H:%M')}"
+                decisions.append((item.key, project.school_code, item.title, item.url, "expired",
+                                  f"Document-stated application deadline {deadline_str} has passed "
+                                  f"(platform-reported expiry was {item.expires or 'unspecified'})."))
+                continue
             context = f"Categoria: {item.category} | Pubblicato: {item.published} | Scadenza: {item.expires}".strip()
             candidate = CandidateDocument(project, item.url, item.title, item.url, text=f"{context}\n{text}")
             alert, can_mark_processed = self._evaluate(candidate, item, dry_run, stats, decisions)
@@ -313,14 +330,24 @@ class Monitor:
         if not final.is_match:
             record("ai_rejected", final.reason)
             return None, True
-        # Prefer the platform's own archive/expiry date over the AI's free-text
-        # guess for the deadline shown to the user — it's structured data (Argo's
-        # dataArchiviazioneEffettiva, Spaggiari's data_scadenza), not a parse of
-        # the document body, and we've seen the AI extract inconsistent dates for
-        # the same notice across runs.
-        expiry = self._parse_date(item.expires)
-        if expiry is not None:
-            final = replace(final, deadline=expiry.strftime("%d/%m/%Y"))
+        # Deadline shown to the user, priority order: (1) the document's own
+        # stated application deadline — deterministic regex, not an AI guess,
+        # so it doesn't have the run-to-run inconsistency problem an AI-
+        # extracted date would; (2) the platform's structured archive/expiry
+        # date (Argo's dataArchiviazioneEffettiva, Spaggiari's data_scadenza)
+        # — visibility, not necessarily the true cutoff, but better than
+        # nothing; (3) whatever the AI/rule verifier already put in
+        # final.deadline, left untouched, as a last resort.
+        doc_deadline = extract_application_deadline(candidate.text)
+        if doc_deadline is not None:
+            deadline_str = doc_deadline.date.strftime("%d/%m/%Y")
+            if doc_deadline.time is not None:
+                deadline_str += f" {doc_deadline.time.strftime('%H:%M')}"
+            final = replace(final, deadline=deadline_str)
+        else:
+            expiry = self._parse_date(item.expires)
+            if expiry is not None:
+                final = replace(final, deadline=expiry.strftime("%d/%m/%Y"))
         stats.confirmed += 1
         alert = Alert(candidate, final)
         if not dry_run:
