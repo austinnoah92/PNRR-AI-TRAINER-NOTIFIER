@@ -378,3 +378,78 @@ IGNORE | motivo (in italiano)
         parts = [part.strip() for part in answer.split("|")]
         confidence = Confidence(parts[1].lower()) if len(parts) > 1 and parts[1].lower() in {"high", "medium", "low"} else Confidence.MEDIUM
         return VerificationResult(True, confidence, parts[4] if len(parts) > 4 else answer, parts[2] if len(parts) > 2 else rule_result.opportunity_type, parts[3] if len(parts) > 3 else "non specificata", True)
+
+    def _call_gemini_raw(self, prompt: str) -> str | None:
+        """Shared low-level Gemini call for the narrow disambiguation methods
+        below — same budget/cooldown/backoff gating as verify(), just
+        returning the raw answer (or None if unavailable) instead of a
+        VerificationResult, since these callers have no rule_result to fall
+        back to."""
+        if self.mode == AI_OFF or not os.getenv("GEMINI_API_KEY"):
+            return None
+        try:
+            from google import genai
+        except Exception:
+            return None
+        try:
+            with self._lock:
+                if time.monotonic() < self._cooldown_until:
+                    self.skipped_in_cooldown += 1
+                    return None
+                if self.mode == AI_CAPPED:
+                    if self._remaining <= 0:
+                        return None
+                    self._remaining -= 1
+                client = genai.Client()
+                response = client.models.generate_content(model="gemini-3-flash-preview", contents=prompt)
+            answer = (response.text or "").strip()
+        except Exception as exc:
+            error_text = f"{type(exc).__name__}: {str(exc)[:120]}"
+            if "429" in error_text or "RESOURCE_EXHAUSTED" in error_text:
+                with self._lock:
+                    self._last_error = error_text
+                    self._cooldown_until = time.monotonic() + self._cooldown_seconds
+                    self._cooldown_seconds = min(self._cooldown_seconds * 2, self._MAX_COOLDOWN_SECONDS)
+            return None
+        with self._lock:
+            self._cooldown_seconds = self._BASE_COOLDOWN_SECONDS
+        return answer
+
+    def same_process(self, text_a: str, text_b: str) -> bool | None:
+        """Are these two documents about the same specific selection process
+        (companion documents — e.g. a Decreto and its Avviso) rather than two
+        genuinely different calls that happen to share a funded project?
+        Only invoked for the rare case where rule-based signals (protocol
+        citation, role overlap + publish-date proximity) couldn't decide on
+        their own. Shares this verifier's existing budget/cooldown pool."""
+        prompt = f'''Sei un analista che confronta due documenti amministrativi pubblicati dalla stessa scuola italiana per lo stesso progetto finanziato (stesso CUP). Decidi se descrivono LO STESSO processo di selezione (es. un decreto di avvio e il relativo avviso pubblico) oppure due processi DIVERSI (es. ruoli diversi, selezioni distinte).
+
+DOCUMENTO A:
+"""
+{text_a[:4000]}
+"""
+
+DOCUMENTO B:
+"""
+{text_b[:4000]}
+"""
+
+Rispondi con UNA sola parola: STESSO oppure DIVERSO.'''
+        answer = self._call_gemini_raw(prompt)
+        return answer.strip().upper().startswith("STESSO") if answer is not None else None
+
+    def is_actionable_content(self, text: str) -> bool | None:
+        """Does this document give an external candidate concrete steps to
+        apply (deadline, how/where to submit), or is it primarily an internal
+        authorization act that merely references the process? Only invoked
+        when a cheap rule check on the text couldn't tell."""
+        prompt = f'''Sei un analista che legge un documento amministrativo di una scuola italiana. Decidi se il testo fornisce a un candidato ESTERNO le informazioni concrete per candidarsi (termine di scadenza, modalità/indirizzo di invio della domanda), oppure se è principalmente un atto di autorizzazione interna che si limita a citare il processo senza spiegare come partecipare.
+
+TESTO:
+"""
+{text[:6000]}
+"""
+
+Rispondi con UNA sola parola: AZIONABILE oppure SOLO_AUTORIZZAZIONE.'''
+        answer = self._call_gemini_raw(prompt)
+        return answer.strip().upper().startswith("AZIONABILE") if answer is not None else None

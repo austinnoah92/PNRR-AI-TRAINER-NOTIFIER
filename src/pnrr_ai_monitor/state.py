@@ -1,13 +1,20 @@
 from __future__ import annotations
 
 import sqlite3
+import uuid
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from threading import RLock
 
 from .models import AlboItem, Opportunity
+
+# Columns update_thread() is allowed to touch — whitelisted so the dynamic
+# UPDATE builder never interpolates caller-controlled column names.
+_THREAD_UPDATABLE_FIELDS = frozenset({
+    "role_signature", "protocol_ref", "status", "subject", "message_id", "last_item_key", "last_title",
+})
 
 STATUS_OPEN = "aperta"
 STATUS_EXPIRED = "scaduta"
@@ -67,6 +74,21 @@ class StateStore(ABC):
     @abstractmethod
     def advance_checkpoint(self, count: int, total: int) -> None:
         """Move the checkpoint forward by `count` schools, wrapping at `total`."""
+
+    @abstractmethod
+    def find_open_threads(self, school_code: str, cup: str, since_days: int = 60) -> list[dict]:
+        """held/sent call_threads rows for this school+CUP, updated within since_days."""
+
+    @abstractmethod
+    def create_thread(
+        self, school_code: str, cup: str, clp: str, role_signature: str, protocol_ref: str | None,
+        status: str, subject: str | None, message_id: str | None, last_item_key: str, last_title: str = "",
+    ) -> str:
+        """Create a new call_threads row and return its generated thread_id."""
+
+    @abstractmethod
+    def update_thread(self, thread_id: str, **fields: str | None) -> None:
+        """Update one or more of _THREAD_UPDATABLE_FIELDS on an existing thread."""
 
     def close(self) -> None:
         pass
@@ -136,6 +158,28 @@ CREATE TABLE IF NOT EXISTS checkpoint (
     next_index  INTEGER NOT NULL DEFAULT 0,
     updated_at  TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+-- One row per distinct selection process (not per document). A "Decreto di
+-- avvio" and its companion "Avviso pubblico" both cite the same process but
+-- arrive as separate documents/URLs — this is what lets the monitor recognize
+-- them as one thread instead of two unrelated alerts, without conflating
+-- genuinely different processes that happen to share a CUP.
+CREATE TABLE IF NOT EXISTS call_threads (
+    thread_id      TEXT PRIMARY KEY,
+    school_code    TEXT NOT NULL,
+    cup            TEXT,
+    clp            TEXT,
+    role_signature TEXT,
+    protocol_ref   TEXT,
+    status         TEXT NOT NULL,
+    subject        TEXT,
+    message_id     TEXT,
+    last_item_key  TEXT,
+    last_title     TEXT,
+    created_at     TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_call_threads_school_cup ON call_threads(school_code, cup);
 """
 
 
@@ -268,6 +312,52 @@ class SqliteStateStore(StateStore):
             )
             self._conn.commit()
 
+    def find_open_threads(self, school_code: str, cup: str, since_days: int = 60) -> list[dict]:
+        cutoff = (datetime.utcnow() - timedelta(days=since_days)).strftime("%Y-%m-%d %H:%M:%S")
+        with self._lock:
+            self._conn.row_factory = sqlite3.Row
+            rows = self._conn.execute(
+                """
+                SELECT * FROM call_threads
+                WHERE school_code = ? AND cup = ? AND status IN ('held', 'sent') AND updated_at >= ?
+                ORDER BY updated_at DESC
+                """,
+                (school_code, cup, cutoff),
+            ).fetchall()
+            self._conn.row_factory = None
+        return [dict(r) for r in rows]
+
+    def create_thread(
+        self, school_code: str, cup: str, clp: str, role_signature: str, protocol_ref: str | None,
+        status: str, subject: str | None, message_id: str | None, last_item_key: str, last_title: str = "",
+    ) -> str:
+        thread_id = uuid.uuid4().hex
+        with self._lock:
+            self._conn.execute(
+                """
+                INSERT INTO call_threads
+                    (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
+                     subject, message_id, last_item_key, last_title)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
+                 subject, message_id, last_item_key, last_title),
+            )
+            self._conn.commit()
+        return thread_id
+
+    def update_thread(self, thread_id: str, **fields: str | None) -> None:
+        columns = [c for c in fields if c in _THREAD_UPDATABLE_FIELDS]
+        if not columns:
+            return
+        assignments = ", ".join(f"{c} = ?" for c in columns)
+        with self._lock:
+            self._conn.execute(
+                f"UPDATE call_threads SET {assignments}, updated_at = CURRENT_TIMESTAMP WHERE thread_id = ?",
+                [fields[c] for c in columns] + [thread_id],
+            )
+            self._conn.commit()
+
     def close(self) -> None:
         with self._lock:
             try:
@@ -341,6 +431,23 @@ class PostgresStateStore(StateStore):
                     next_index  INTEGER NOT NULL DEFAULT 0,
                     updated_at  TIMESTAMPTZ DEFAULT now()
                 );
+
+                CREATE TABLE IF NOT EXISTS call_threads (
+                    thread_id      TEXT PRIMARY KEY,
+                    school_code    TEXT NOT NULL,
+                    cup            TEXT,
+                    clp            TEXT,
+                    role_signature TEXT,
+                    protocol_ref   TEXT,
+                    status         TEXT NOT NULL,
+                    subject        TEXT,
+                    message_id     TEXT,
+                    last_item_key  TEXT,
+    last_title     TEXT,
+                    created_at     TIMESTAMPTZ DEFAULT now(),
+                    updated_at     TIMESTAMPTZ DEFAULT now()
+                );
+                CREATE INDEX IF NOT EXISTS idx_call_threads_school_cup ON call_threads(school_code, cup);
                 """
             )
 
@@ -452,6 +559,48 @@ class PostgresStateStore(StateStore):
                                                 updated_at = now()
                 """,
                 (new_index,),
+            )
+
+    def find_open_threads(self, school_code: str, cup: str, since_days: int = 60) -> list[dict]:
+        cutoff = datetime.utcnow() - timedelta(days=since_days)
+        with self._lock, self._conn.cursor() as cur:
+            cur.execute(
+                """
+                SELECT * FROM call_threads
+                WHERE school_code = %s AND cup = %s AND status IN ('held', 'sent') AND updated_at >= %s
+                ORDER BY updated_at DESC
+                """,
+                (school_code, cup, cutoff),
+            )
+            return [dict(row) for row in cur.fetchall()]
+
+    def create_thread(
+        self, school_code: str, cup: str, clp: str, role_signature: str, protocol_ref: str | None,
+        status: str, subject: str | None, message_id: str | None, last_item_key: str, last_title: str = "",
+    ) -> str:
+        thread_id = uuid.uuid4().hex
+        with self._lock, self._conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO call_threads
+                    (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
+                     subject, message_id, last_item_key, last_title)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
+                 subject, message_id, last_item_key, last_title),
+            )
+        return thread_id
+
+    def update_thread(self, thread_id: str, **fields: str | None) -> None:
+        columns = [c for c in fields if c in _THREAD_UPDATABLE_FIELDS]
+        if not columns:
+            return
+        assignments = ", ".join(f"{c} = %s" for c in columns)
+        with self._lock, self._conn.cursor() as cur:
+            cur.execute(
+                f"UPDATE call_threads SET {assignments}, updated_at = now() WHERE thread_id = %s",
+                [fields[c] for c in columns] + [thread_id],
             )
 
     def close(self) -> None:

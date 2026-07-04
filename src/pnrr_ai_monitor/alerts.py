@@ -3,6 +3,7 @@ from __future__ import annotations
 import html as _html
 import smtplib
 from email.message import EmailMessage
+from email.utils import make_msgid
 
 from .config import Settings
 from .models import Alert
@@ -24,23 +25,44 @@ class AlertService:
     def __init__(self, settings: Settings):
         self.settings = settings
 
-    def build_message(self, alerts: list[Alert]) -> EmailMessage:
+    def build_message(
+        self,
+        alerts: list[Alert],
+        in_reply_to: str | None = None,
+        references: str | None = None,
+        subject_override: str | None = None,
+    ) -> tuple[EmailMessage, str]:
         """Render ONE Italian multipart email for a group of notices that share a
         school/CUP. One notice -> a single-item email; several -> all listed
         together so one project never produces a flood of separate emails.
-        Pure (no network) so it can be tested and previewed."""
+        Pure (no network) so it can be tested and previewed.
+
+        When `in_reply_to` is given, the email threads onto that Message-ID
+        (a companion document for an already-alerted process — e.g. an
+        Avviso following a Decreto) instead of arriving as a disconnected
+        new email. Returns (message, message_id) — smtplib/Gmail never hand
+        back a Message-ID after sending, so we generate and track our own.
+        """
         project = alerts[0].candidate.project
         n = len(alerts)
 
-        subject = f"Opportunità formatore IA PNRR: {project.school_name}"
-        if n > 1:
-            subject += f" — {n} avvisi"
-        elif _has_deadline(alerts[0].verification.deadline):
-            subject += f" (scade {alerts[0].verification.deadline})"
+        if subject_override:
+            subject = subject_override if subject_override.lower().startswith("re:") else f"Re: {subject_override}"
+        else:
+            subject = f"Opportunità formatore IA PNRR: {project.school_name}"
+            if n > 1:
+                subject += f" — {n} avvisi"
+            elif _has_deadline(alerts[0].verification.deadline):
+                subject += f" (scade {alerts[0].verification.deadline})"
 
+        message_id = make_msgid()
         message = EmailMessage()
         message["Subject"] = subject
         message["From"] = self.settings.sender_email
+        message["Message-ID"] = message_id
+        if in_reply_to:
+            message["In-Reply-To"] = in_reply_to
+            message["References"] = references or in_reply_to
         if self.settings.receiver_emails:
             message["To"] = ", ".join(self.settings.receiver_emails)
         if self.settings.cc_emails:
@@ -50,7 +72,7 @@ class AlertService:
 
         message.set_content(self._plain_body(project, alerts))
         message.add_alternative(self._html_body(project, alerts), subtype="html")
-        return message
+        return message, message_id
 
     @staticmethod
     def _plain_body(project, alerts: list[Alert]) -> str:
@@ -123,15 +145,27 @@ class AlertService:
       </div>
     </div>"""
 
-    def send(self, alerts: list[Alert], dry_run: bool = False) -> bool:
+    def send(
+        self,
+        alerts: list[Alert],
+        dry_run: bool = False,
+        in_reply_to: str | None = None,
+        references: str | None = None,
+        subject_override: str | None = None,
+    ) -> tuple[bool, str | None, str | None]:
+        """Returns (success, message_id, subject). message_id is the one
+        generated for THIS email (even on a reply) — callers store the
+        THREAD ROOT's message_id/subject separately so later replies keep
+        threading onto the original, not the most recent reply."""
         if not alerts:
-            return False
+            return False, None, None
+        message, message_id = self.build_message(alerts, in_reply_to, references, subject_override)
+        subject = message["Subject"]
         if dry_run:
-            return True
+            return True, message_id, subject
         if not self.settings.email_enabled:
-            return False
-        message = self.build_message(alerts)
+            return False, None, None
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(self.settings.sender_email, self.settings.email_password)
             smtp.send_message(message)
-        return True
+        return True, message_id, subject

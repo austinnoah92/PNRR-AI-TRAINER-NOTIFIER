@@ -13,6 +13,7 @@ from .logging_utils import log_message
 from .models import Alert, AlboItem, CandidateDocument, Confidence, Opportunity, ProjectRecord
 from .repository import ProjectRepository
 from .state import StateStore
+from .thread_matching import ThreadDecision, ThreadMatcher, ThreadSignals, extract_signals, is_actionable
 from .verifier import AiVerifier, OpportunityPrefilter, OpportunityVerifier
 
 
@@ -61,6 +62,7 @@ class Monitor:
         ai_verifier: AiVerifier,
         state: StateStore,
         alerts: AlertService,
+        thread_matcher: ThreadMatcher | None = None,
         per_school_delay: float = 0.0,
         workers: int = 1,
     ) -> None:
@@ -72,6 +74,7 @@ class Monitor:
         self.ai_verifier = ai_verifier
         self.state = state
         self.alerts = alerts
+        self.thread_matcher = thread_matcher or ThreadMatcher(state, ai_verifier)
         self.per_school_delay = per_school_delay
         self.workers = max(1, workers)
 
@@ -146,7 +149,7 @@ class Monitor:
         # even started.
         superseded = self._superseded_keys(project, items)
 
-        pending: list[tuple[Alert, AlboItem]] = []
+        pending: list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]] = []
         processed: list[AlboItem] = []
         # Every item that reaches a verdict — including "never got past the cheap
         # keyword gate" — gets one row here. This is what makes a future miss
@@ -202,7 +205,10 @@ class Monitor:
             candidate = CandidateDocument(project, item.url, item.title, item.url, text=f"{context}\n{text}")
             alert, can_mark_processed = self._evaluate(candidate, item, dry_run, stats, decisions)
             if alert is not None:
-                pending.append((alert, item))
+                signals = extract_signals(candidate, item)
+                actionable = is_actionable(candidate, self.ai_verifier)
+                decision = self.thread_matcher.resolve(candidate, signals, actionable)
+                pending.append((alert, item, decision, signals))
             elif can_mark_processed:
                 processed.append(item)
 
@@ -327,39 +333,160 @@ class Monitor:
 
     def _send_grouped(
         self,
-        pending: list[tuple[Alert, AlboItem]],
+        pending: list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]],
         dry_run: bool,
         stats: RunStats,
         decisions: list[tuple[str, str, str, str, str, str]],
     ) -> list[AlboItem]:
-        groups: dict[str, list[tuple[Alert, AlboItem]]] = {}
-        for alert, item in pending:
-            project = alert.candidate.project
-            key = project.cup or project.school_code
-            groups.setdefault(key, []).append((alert, item))
+        # Items already resolved to the SAME existing thread are grouped by
+        # that thread_id — unambiguous. Brand-new items (thread_id is None)
+        # still need clustering by role/protocol overlap even when they
+        # share a CUP: a school publishing separate Tutor and Esperto
+        # decreti under one project CUP is two different calls, not one,
+        # even though both are "new" in the same run (confirmed real case:
+        # SAIS07600R has exactly this pair).
+        threaded: dict[str, list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]]] = {}
+        new_by_cup: dict[tuple[str, str], list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]]] = {}
+        for entry in pending:
+            decision = entry[2]
+            project = entry[0].candidate.project
+            if decision.thread_id:
+                threaded.setdefault(decision.thread_id, []).append(entry)
+            else:
+                new_by_cup.setdefault((project.school_code, project.cup or project.school_code), []).append(entry)
+
+        groups: list[list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]]] = list(threaded.values())
+        for cup_entries in new_by_cup.values():
+            groups.extend(self._cluster_new_entries(cup_entries))
 
         sent_items: list[AlboItem] = []
-        for key, entries in groups.items():
-            alerts = [a for a, _ in entries]
-            if not self.alerts.send(alerts, dry_run=dry_run):
-                for alert, item in entries:
-                    decisions.append((item.key, alert.candidate.project.school_code, item.title, item.url,
-                                      "send_failed", "Confirmed and grouped, but AlertService.send() returned False."))
-                continue
-            stats.alerts += 1
-            project = alerts[0].candidate.project
-            if not dry_run:
-                for alert, item in entries:
-                    self.state.mark_alerted(alert.unique_id, project.school_code, item.url)
-                    sent_items.append(item)
+        for entries in groups:
+            project = entries[0][0].candidate.project
+            cup_label = project.cup or project.school_code
+            actions = {e[2].action for e in entries}
+            merged_signals = ThreadMatcher.merge_signals([e[3] for e in entries])
+            last_item, last_title = entries[-1][1], entries[-1][0].candidate.title
+
+            if actions & {"send_new", "send_reply"}:
+                sent_items.extend(self._send_thread_group(
+                    entries, cup_label, merged_signals, last_item, last_title,
+                    is_reply="send_reply" in actions, dry_run=dry_run, stats=stats, decisions=decisions,
+                ))
+            elif "hold" in actions:
+                thread_id = next((e[2].thread_id for e in entries if e[2].thread_id), None)
+                if not dry_run:
+                    if thread_id:
+                        self.thread_matcher.update_thread(
+                            project.school_code, cup_label, thread_id,
+                            role_signature=" ".join(sorted(merged_signals.role_signature)),
+                            protocol_ref=merged_signals.protocol_ref,
+                            last_item_key=last_item.key, last_title=last_title,
+                        )
+                    else:
+                        self.thread_matcher.create_thread(
+                            project.school_code, cup_label, project.clp, merged_signals,
+                            "held", None, None, last_item.key, last_title,
+                        )
+                for alert, item, decision, _ in entries:
+                    decisions.append((item.key, project.school_code, item.title, item.url, "held",
+                                      "Confirmed opportunity, but no actionable application details yet; "
+                                      "waiting for a companion document (e.g. the Avviso) before emailing."))
+                sent_items.extend(item for _, item, _, _ in entries)
             else:
-                sent_items.extend(item for _, item in entries)
-            for alert, item in entries:
+                # all "suppress" — a companion document that adds nothing new
+                # beyond what was already alerted for this process.
+                for alert, item, decision, _ in entries:
+                    decisions.append((item.key, project.school_code, item.title, item.url,
+                                      "suppressed_duplicate", decision.reason))
+                sent_items.extend(item for _, item, _, _ in entries)
+        return sent_items
+
+    @staticmethod
+    def _cluster_new_entries(
+        entries: list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]],
+    ) -> list[list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]]]:
+        """Greedily group same-CUP, not-yet-threaded items by role/protocol
+        overlap — same linking rule ThreadMatcher uses against persisted
+        threads, applied here among items discovered together in one run so
+        two genuinely distinct new processes never get merged just because
+        they share a CUP."""
+        clusters: list[tuple[frozenset[str], str | None, list]] = []
+        for entry in entries:
+            signals = entry[3]
+            for i, (roles, protocol_ref, bucket) in enumerate(clusters):
+                same_protocol = bool(signals.protocol_ref and protocol_ref and signals.protocol_ref == protocol_ref)
+                if same_protocol or (signals.role_signature & roles):
+                    bucket.append(entry)
+                    clusters[i] = (roles | signals.role_signature, protocol_ref or signals.protocol_ref, bucket)
+                    break
+            else:
+                clusters.append((signals.role_signature, signals.protocol_ref, [entry]))
+        return [bucket for _, _, bucket in clusters]
+
+    def _send_thread_group(
+        self,
+        entries: list[tuple[Alert, AlboItem, ThreadDecision, ThreadSignals]],
+        cup_label: str,
+        merged_signals: ThreadSignals,
+        last_item: AlboItem,
+        last_title: str,
+        is_reply: bool,
+        dry_run: bool,
+        stats: RunStats,
+        decisions: list[tuple[str, str, str, str, str, str]],
+    ) -> list[AlboItem]:
+        project = entries[0][0].candidate.project
+        alerts = [e[0] for e in entries]
+        thread_id = next((e[2].thread_id for e in entries if e[2].thread_id), None)
+
+        in_reply_to = references = subject_override = None
+        if is_reply and thread_id:
+            root = self.thread_matcher.get_thread(project.school_code, cup_label, thread_id)
+            if root:
+                in_reply_to = references = root.get("message_id")
+                subject_override = root.get("subject")
+
+        success, message_id, subject = self.alerts.send(
+            alerts, dry_run=dry_run, in_reply_to=in_reply_to, references=references, subject_override=subject_override,
+        )
+        if not success:
+            for alert, item, decision, _ in entries:
                 decisions.append((item.key, project.school_code, item.title, item.url,
-                                  "alerted", alert.verification.reason))
-            log_message(
-                f"ALERT: {project.school_name} | CUP {key} | {len(alerts)} avviso/i: "
-                + "; ".join(a.candidate.title[:50] for a in alerts),
-                self.settings.log_file,
-            )
+                                  "send_failed", "Confirmed and grouped, but AlertService.send() did not succeed."))
+            return []
+
+        stats.alerts += 1
+        sent_items: list[AlboItem] = []
+        if not dry_run:
+            for alert, item, decision, _ in entries:
+                self.state.mark_alerted(alert.unique_id, project.school_code, item.url)
+                sent_items.append(item)
+            # A reply threads onto the existing root — don't overwrite its
+            # stored message_id/subject. A fresh send establishes a new
+            # thread (or upgrades a held one) and becomes the root itself.
+            if is_reply and thread_id:
+                self.thread_matcher.update_thread(project.school_code, cup_label, thread_id,
+                                                   last_item_key=last_item.key, last_title=last_title)
+            elif thread_id:
+                self.thread_matcher.update_thread(
+                    project.school_code, cup_label, thread_id,
+                    status="sent", subject=subject, message_id=message_id,
+                    last_item_key=last_item.key, last_title=last_title,
+                )
+            else:
+                self.thread_matcher.create_thread(
+                    project.school_code, cup_label, project.clp, merged_signals,
+                    "sent", subject, message_id, last_item.key, last_title,
+                )
+        else:
+            sent_items.extend(item for _, item, _, _ in entries)
+
+        for alert, item, decision, _ in entries:
+            decisions.append((item.key, project.school_code, item.title, item.url,
+                              "alerted", alert.verification.reason))
+        log_message(
+            f"ALERT: {project.school_name} | CUP {cup_label} | {len(alerts)} avviso/i: "
+            + "; ".join(a.candidate.title[:50] for a in alerts),
+            self.settings.log_file,
+        )
         return sent_items
