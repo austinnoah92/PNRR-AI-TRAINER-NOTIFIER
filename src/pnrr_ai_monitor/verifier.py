@@ -79,9 +79,9 @@ NEGATIVE_TERMS = (
     "pubblicaz. graduat", "decreto pubblicazione graduatoria", "verbale commissione",
     "verbale apertura", "apertura candidature", "nomina commissione",
     "determina", "determinazione", "decisione a contrarre", "decisione affid",
-    "stipula", "fornitura", "forniture", "acquisto", "consumabili", "cancelleria",
+    "fornitura", "forniture", "acquisto", "consumabili", "cancelleria",
     "materiale igienico", "elettrodi", "cambridge", "accordo sindacale",
-    "riunioni e collegi", "commissione liceo", "classe", "studenti", "studente",
+    "riunioni e collegi", "commissione liceo", "studenti", "studente",
     "acfdg", "acprot",
     "nomina rup", "incarico rup", "supporto tecnico", "supporto al rup", "supporto tecnico al rup",
     "responsabile unico del progetto", "assunzione in bilancio", "assunzione al bilancio",
@@ -99,10 +99,22 @@ STRONG_NEGATIVE_TERMS = (
     "graduatoria", "graduat", "pubblicazione graduatoria", "pubblicaz. graduat", "aggiudicazione",
     "verbale", "verbale apertura", "apertura candidature", "nomina commissione",
     "determina", "determinazione", "decisione a contrarre", "decisione affid",
-    "stipula", "fornitura", "forniture", "acquisto", "consumabili",
+    "fornitura", "forniture", "acquisto", "consumabili",
     "materiale igienico", "elettrodi", "cambridge", "accordo sindacale",
-    "riunioni e collegi", "commissione liceo", "classe", "studenti", "studente",
+    "riunioni e collegi", "commissione liceo", "studenti", "studente",
     "acfdg", "acprot",
+    # NOT "stipula" or "classe": both confirmed live to be false-positive noise,
+    # not real closure signals. "stipula" only ever appeared as the standard
+    # legal-basis boilerplate every avviso cites ("l'istituzione scolastica può
+    # STIPULARE contratti di prestazione d'opera con esperti...", D.I. 129/2018
+    # art. 45) - describing a FUTURE possible contract, not evidence one was
+    # already signed. "classe" is a generic word (school "class", website nav
+    # menus) that also happens to appear inside a real funded project's own
+    # official title ("IA in classe: consapevolezza e innovazione") - it wrongly
+    # rejected that project's own genuine avviso. Every other document these two
+    # terms touched in a live 100-school test was already correctly rejected by
+    # a separate, more specific term (graduatoria/determina/disseminazione/
+    # contratto), so removing them doesn't reopen any of those.
     "commissione valutazione", "assunzione in bilancio", "assunzione al bilancio",
     "decreto assunzione in bilancio", "decreto assunzione al bilancio",
     "disseminazione", "azione di informazione", "azione di disseminazione",
@@ -278,9 +290,21 @@ class OpportunityVerifier:
             # when AI happens to be unavailable for this specific document.
             confidence = Confidence.MEDIUM if (internal_hits and external_hits) else Confidence.HIGH
             return VerificationResult(True, confidence, f"Identificativo di progetto esatto trovato ({', '.join(exact_hits)}) insieme a termini di bando ({', '.join(core_call_hits[:3])}).", core_call_hits[0])
-        if len(context_hits) >= 2:
+        # No exact CUP/CLP citation, so this is judged purely on how many
+        # distinct D.M. 219 signals ("219", "intelligenza artificiale", "snodi
+        # formativi", ...) show up alongside the call language. There is no
+        # LOW tier here anymore: a single weak mention isn't reliable evidence
+        # on its own (confirmed live: a school BUYING an AI training course
+        # matched on one bare "intelligenza artificiale" hit) and, since this
+        # confidence can be sent without AI confirmation when AI is
+        # unavailable, only a genuinely strong rule-only signal should qualify.
+        # Real DM 219 notices overwhelmingly cite the CUP directly (the exact_hits
+        # branch above), so this path firing at all should be rare - confirmed
+        # against 50 real live schools: 23/26 non-CUP candidates had zero
+        # context hits, only 1 had 2, none had 3+.
+        if len(context_hits) >= 3:
             return VerificationResult(True, Confidence.MEDIUM, f"Forte contesto D.M. 219 sull'IA ({', '.join(context_hits[:3])}) con termini di bando ({', '.join(core_call_hits[:3])}).", core_call_hits[0])
-        return VerificationResult(True, Confidence.LOW, f"Linguaggio di bando presente ({', '.join(core_call_hits[:3])}) ma collegamento al progetto debole - richiede valutazione AI.", core_call_hits[0])
+        return VerificationResult(False, Confidence.LOW, f"Linguaggio di bando presente ({', '.join(core_call_hits[:3])}) ma collegamento al progetto insufficiente ({len(context_hits)} riferimento/i) - probabilmente un altro programma.")
 
     def _normalize(self, value: str) -> str:
         return normalize_text(value)
