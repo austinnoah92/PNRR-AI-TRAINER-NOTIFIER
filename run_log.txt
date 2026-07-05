@@ -355,3 +355,228 @@
 [2026-07-03 15:41:52] ERROR fetching RMIC80800E (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0038
 [2026-07-03 15:42:01] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for NAEE177001 | Decreto nomine esperti esterni AGENDA SUD - FSE 24
 [2026-07-03 15:42:30] ERROR fetching RMIS08200L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/rmii0072
+[2026-07-05 12:51:51] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 500); workers: 8
+[2026-07-05 12:51:52] ERROR fetching PZIS001007 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PZII0002
+[2026-07-05 12:51:52] ERROR fetching FORF03000N (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-05 12:51:57] ERROR fetching FRIC830001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/FRME0029
+[2026-07-05 12:51:57] ERROR fetching MIIC8BM008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIME0078
+[2026-07-05 12:51:57] ERROR fetching VETF060003 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VEIT0020
+[2026-07-05 12:51:58] ERROR fetching LUIC843006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LUME0034
+[2026-07-05 12:52:01] ERROR fetching BSIC89200C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/bsme0091
+[2026-07-05 12:52:05] ERROR fetching SAIS024004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SAII0018
+[2026-07-05 12:52:12] ERROR fetching MOIC845006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MOMM0009
+[2026-07-05 12:54:30] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for NAPS84000X | DM 19 COMPETENZE DI BASE 2-AVVISO per la selezione di ESPERT
+[2026-07-05 12:54:31] ALERT: LICEO STATALE "V. CUOCO - T. CAMPANELLA" | CUP C64D25003730006 | 1 avviso/i: DM 19 COMPETENZE DI BASE 2-AVVISO per la selezione
+[2026-07-05 12:54:46] ERROR fetching VRIC814009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VRME0004
+[2026-07-05 12:56:59] ALERT: PORTICI IC 4 DE LAUZIERES | CUP B74D25004750006 | 1 avviso/i: ALLEGATO A istanza di partecipazione FIGURE PROFES
+[2026-07-05 12:57:00] ERROR fetching VRIC8AC00D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VRME0081
+[2026-07-05 12:57:00] ERROR fetching SAIC880008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SAME0062
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for NAIS001001 | Decreto di revoca in autotutela di manifestazione di interes
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for FIIS00600X | Decisione di contrarre mediante Affidamento Diretto fuori da
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for PAIC8BC00E | AVVISO di AVVIO PROCEDURA DI SELEZIONE ATA AGENDA SUD PN FSE
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for TVIC870002 | ADDENDUM NUOVO AVVISO DI SELEZIONE competenze di base
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAIS001001 | Errata Corrige AVVISO DI SELEZIONE figure per Attività tecni
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAIS001001 | AVVISO DI SELEZIONE figure per Attività tecnica del gruppo d
+[2026-07-05 12:57:07] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PRRI010009 | Avviso di selezione Esperto nuoto_signed_PNRR Agenda Nord 2
+[2026-07-05 12:57:08] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TOIS023008 | Circ. 194 Avviso di selezione Esperti e Tutor PERCORSI DI OR
+[2026-07-05 12:57:08] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for REIS00900L | Avviso esplorativo per manifestazione di interesse a parteci
+[2026-07-05 12:57:09] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FIIS00600X | Decisione di contrarre mediante Affidamento Diretto fuori ME
+[2026-07-05 12:57:09] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVIC870002 | Decreto avvio di nuova procedura di selezione_ Agenda Nord -
+[2026-07-05 12:57:10] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAIS001001 | Oggetto: AVVISO DI SELEZIONE AZIENDE SETTORE GRAFICO IEFP 20
+[2026-07-05 12:57:10] ALERT: "A. ZANELLI" | CUP J84D25005020006 | 1 avviso/i: Avviso esplorativo per manifestazione di interesse
+[2026-07-05 12:57:10] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAIS001001 | AVVISO DI SELEZIONE AZIENDE SETTORE GRAFICO IEFP 2025-2026 P
+[2026-07-05 12:57:10] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PRRI010009 | Decreto procedura di selezione corsi Italiano L2 in orario c
+[2026-07-05 12:57:11] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FIIS00600X | Decisione di contrarre mediante Trattativa Diretta MEPA movi
+[2026-07-05 12:57:12] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVIC870002 | Decreto avvio di nuova procedura di selezione_ Agenda Nord -
+[2026-07-05 12:57:13] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PRRI010009 | Decreto per l’avvio di una procedura di selezione per il con
+[2026-07-05 12:57:14] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PAIC8BC00E | AVVISO di AVVIO PROCEDURA DI SELEZIONE ATA Percorsi di ORIEN
+[2026-07-05 12:57:14] ALERT: IC TREVISO 1 "MARTINI" | CUP E44D25004520006 | 3 avviso/i: ADDENDUM NUOVO AVVISO DI SELEZIONE competenze di b; Decreto avvio di nuova procedura di selezione_ Age; Decreto avvio di nuova procedura di selezione_ Age
+[2026-07-05 12:57:17] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PRRI010009 | Decreto avviso di selezione FORMATORE PER CORSI LINGUA INGLE
+[2026-07-05 12:57:21] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PRRI010009 | Decreto avviso di selezione TUTOR PER CORSI ICDL_PNRR STEM
+[2026-07-05 12:57:23] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PAIC8BC00E | AVVISO di AVVIO di una PROCEDURA DI SELEZIONE ATA AA e CS Av
+[2026-07-05 12:57:24] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for ORIC80600G | PNRR-dm66-decreto-avvio-procedura-selettiva-personale-intern
+[2026-07-05 12:57:25] ALERT: I.C. G. FALCONE - CARINI - | CUP D24D25005110006 | 3 avviso/i: AVVISO di AVVIO PROCEDURA DI SELEZIONE ATA AGENDA ; AVVISO di AVVIO PROCEDURA DI SELEZIONE ATA Percors; AVVISO di AVVIO di una PROCEDURA DI SELEZIONE ATA 
+[2026-07-05 12:57:26] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PRRI010009 | Decreto avviso di selezione FORMATORE PER CORSI ICDL_progett
+[2026-07-05 12:57:28] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for ORIC80600G | Decreto_avvio_procedura_selettiva_PNRR_Scuola_4.0_IC_Santu_L
+[2026-07-05 12:57:29] ALERT: "PRIMO LEVI" | CUP F94D25003840006 | 6 avviso/i: Avviso di selezione Esperto nuoto_signed_PNRR Agen; Decreto procedura di selezione corsi Italiano L2 i; Decreto per l’avvio di una procedura di selezione ; Decreto avviso di selezione FORMATORE PER CORSI LI; Decreto avviso di selezione TUTOR PER CORSI ICDL_P; Decreto avviso di selezione FORMATORE PER CORSI IC
+[2026-07-05 12:57:30] ALERT: I.C. SANTULUSSURGIU | CUP D64D25005390006 | 2 avviso/i: PNRR-dm66-decreto-avvio-procedura-selettiva-person; Decreto_avvio_procedura_selettiva_PNRR_Scuola_4.0_
+[2026-07-05 12:57:32] ERROR fetching BGIC83500Q (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BGME0037
+[2026-07-05 12:57:32] ERROR fetching VRIC845001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VRME0008
+[2026-07-05 12:57:33] ERROR fetching VRIS01900L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VRLS0008
+[2026-07-05 12:57:33] ERROR fetching BTTF06000Q (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BAIT0014
+[2026-07-05 12:57:34] ERROR fetching TOPS190009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TOLS0011
+[2026-07-05 12:57:35] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for IMIC81500V | Decisione di contrarre mediante Acquisti da catalogo sul Mer
+[2026-07-05 12:57:35] ERROR fetching TVPM02000G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TVIM0002
+[2026-07-05 12:57:35] ERROR fetching FRIC82500D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/FRME0017
+[2026-07-05 12:57:36] ERROR fetching MIIS09700T (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIII0064
+[2026-07-05 12:57:38] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for IMIC81500V | Copia del documento prot. 8346/2026-Decisione di contrarre m
+[2026-07-05 12:57:40] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NOIC821001 | FSEPN-PI-2026-377 AGENDA NORD - Avviso di selezione aluni e 
+[2026-07-05 12:57:40] ALERT: GIOVANNI XXIII - ARONA | CUP G24D25005010006 | 1 avviso/i: FSEPN-PI-2026-377 AGENDA NORD - Avviso di selezion
+[2026-07-05 12:57:43] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAPS73000C | AVVISO DI SELEZIONE INTERNA ESPERTI PROGETTO LE INVASIONI SE
+[2026-07-05 12:57:44] ALERT: LICEO STATALE "LAURA BASSI" | CUP F34D25004620006 | 1 avviso/i: AVVISO DI SELEZIONE INTERNA ESPERTI PROGETTO LE IN
+[2026-07-05 12:57:44] ERROR fetching LUIC821009 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/lume0021
+[2026-07-05 12:57:46] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FOIC813004 | Avviso di selezione n. 2 unità (ESPERTO DOCENTE-TUTOR) PN 20
+[2026-07-05 12:57:49] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FOIC813004 | Decreto avvio procedura di selezione n. 2 unità (ESPERTO DOC
+[2026-07-05 12:57:50] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for AGIC85600X | Avviso di selezione interna-collaborazioni plurime ed estern
+[2026-07-05 12:57:50] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FIPS21000P | ALLEGATO 1 - ISTANZA DI PARTECIPAZIONE - AVVISO DI MANIFESTA
+[2026-07-05 12:57:51] ALERT: IC PREDAPPIO | CUP D84D25005040006 | 2 avviso/i: Avviso di selezione n. 2 unità (ESPERTO DOCENTE-TU; Decreto avvio procedura di selezione n. 2 unità (E
+[2026-07-05 12:57:52] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for SAIS02100L | AVVISO DI SELEZIONE RIVOLTO A DIPENDENTI DI ALTRE PUBBLICHE 
+[2026-07-05 12:57:52] ALERT: LICEO SCIENTIFICO E LINGUISTICO RODOLICO | CUP J14D25008430006 | 1 avviso/i: ALLEGATO 1 - ISTANZA DI PARTECIPAZIONE - AVVISO DI
+[2026-07-05 12:57:53] ALERT: I.O.C. "A. SACCO" - SANT'ARSENIO | CUP B94D25003940006 | 1 avviso/i: AVVISO DI SELEZIONE RIVOLTO A DIPENDENTI DI ALTRE 
+[2026-07-05 12:57:53] ERROR fetching LOIC80100V (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LOME0004
+[2026-07-05 12:57:55] ERROR fetching RMIC8FS007 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0335
+[2026-07-05 12:57:57] ERROR fetching MBIC830004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIME0160
+[2026-07-05 12:57:58] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for AGIC85600X | Decreto di riapertura termini procedura di selezione per il 
+[2026-07-05 12:58:00] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for UDIC847009 | Avviso di selezione per esperti e tutor, interne ed esterne,
+[2026-07-05 12:58:07] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for AGIC85600X | Decreto di riapertura termini procedura di selezione per il 
+[2026-07-05 12:58:07] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PVIC800005 | Avviso di Selezione esperti e tutor ESO4.5.A2.B-FSEPNLO- 202
+[2026-07-05 12:58:12] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for SAIC81300D | timbrato_FIRMATO_DECRETO_DI_AVVIO_DELLA_PROCEDURA_DI_SELEZIO
+[2026-07-05 12:58:15] ERROR fetching TOPS04000B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TOLS0005
+[2026-07-05 12:58:17] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for AGIC85600X | Decreto per l’avvio della procedura di selezione per il conf
+[2026-07-05 12:58:20] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PVIC800005 | Avviso di Selezione interna, aperta anche a dipendenti di al
+[2026-07-05 12:58:20] ERROR fetching RMIC8DS002 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/rmme0214
+[2026-07-05 12:58:22] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for AGIC85600X | Decreto avvio procedura di selezione costituzione dei Gruppi
+[2026-07-05 12:58:23] ERROR fetching TOIC878008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TOME0076
+[2026-07-05 12:58:24] ALERT: IC - DON BOSCO | CUP E94D25007100006 | 5 avviso/i: Avviso di selezione interna-collaborazioni plurime; Decreto di riapertura termini procedura di selezio; Decreto di riapertura termini procedura di selezio; Decreto per l’avvio della procedura di selezione p; Decreto avvio procedura di selezione costituzione 
+[2026-07-05 12:58:24] ERROR fetching TVIC86900T (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TVME0058
+[2026-07-05 12:58:25] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PVIC800005 | Decreto per l?avvio di una procedura di selezione per il con
+[2026-07-05 12:58:25] ERROR fetching MIIC84700L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIME0054
+[2026-07-05 12:58:28] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PVIC800005 | Decreto per l?avvio di una procedura di selezione per il con
+[2026-07-05 12:58:30] ALERT: IC SANTA MARIA DELLA VERSA | CUP B74D25004810006 | 4 avviso/i: Avviso di Selezione esperti e tutor ESO4.5.A2.B-FS; Avviso di Selezione interna, aperta anche a dipend; Decreto per l?avvio di una procedura di selezione ; Decreto per l?avvio di una procedura di selezione 
+[2026-07-05 12:58:30] ERROR fetching MNSL010001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MNIA0003
+[2026-07-05 12:58:35] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | PN 2021-2027: AVVISO 55669 del 10/03/2026 FSE+ Agenda NORD A
+[2026-07-05 12:58:36] ERROR fetching VAPC040006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/VALG0004
+[2026-07-05 12:58:39] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for CSIC892009 | Allegato-A-Domanda-di-partecipazione-esperto-tutor-PNRR-Disp
+[2026-07-05 12:58:40] ALERT: IC CARIATI | CUP J64D25004310006 | 1 avviso/i: Allegato-A-Domanda-di-partecipazione-esperto-tutor
+[2026-07-05 12:58:41] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | AVVISO DI SELEZIONE PERSONALE ESTERNOALLA RETE dell’AMBITO 6
+[2026-07-05 12:58:41] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RMIC8DT00T | AVVISO DI SELEZIONE COLLAUDATORE
+[2026-07-05 12:58:43] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione delle figu
+[2026-07-05 12:58:45] ERROR fetching MCIC82700V (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/mcme0021
+[2026-07-05 12:58:45] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione del verifi
+[2026-07-05 12:58:47] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione supporto o
+[2026-07-05 12:58:48] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione di n. 5 tu
+[2026-07-05 12:58:49] ERROR fetching MBIS10400L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIII0062
+[2026-07-05 12:58:49] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione di n. 1 es
+[2026-07-05 12:58:50] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione del Gruppo
+[2026-07-05 12:58:51] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione del Gruppo
+[2026-07-05 12:58:52] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decreto di avvio della procedura per la selezione di esperti
+[2026-07-05 12:58:54] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for VEIS004007 | DECRETO PER L’AVVIO DI UNA PROCEDURA DI SELEZIONE PER IL CON
+[2026-07-05 12:58:54] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decisione di avvio della procedura di affidamento diretto su
+[2026-07-05 12:58:55] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FGIC876009 | . VIAGGI DI ISTRUZIONE E VISITE GUIDATE Procedura di selezio
+[2026-07-05 12:58:56] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decisione di affidamento diretto su Mepa tramite OEI noleggi
+[2026-07-05 12:58:56] ALERT: I.C. "TOMMASONE - ALIGHIERI" | CUP D24D25005140006 | 1 avviso/i: . VIAGGI DI ISTRUZIONE E VISITE GUIDATE Procedura 
+[2026-07-05 12:58:57] ERROR fetching LTIC838007 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LTME0043
+[2026-07-05 12:58:57] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for VEIS004007 | DECRETO AVVIO PROCEDURA DI SELEZIONE PER IL CONFERIMENTO DI 
+[2026-07-05 12:58:57] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decisione di avvio della procedura di affidamento diretto su
+[2026-07-05 12:58:58] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decisione di affidamento diretto su Mepa tramite OEI noleggi
+[2026-07-05 12:59:00] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BSIC887001 | Decisione di avvio della procedura di affidamento diretto su
+[2026-07-05 12:59:01] ALERT: IC KENNEDY OVEST 3 BRESCIA | CUP B84D25005840006 | 15 avviso/i: PN 2021-2027: AVVISO 55669 del 10/03/2026 FSE+ Age; AVVISO DI SELEZIONE PERSONALE ESTERNOALLA RETE del; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decreto di avvio della procedura per la selezione ; Decisione di avvio della procedura di affidamento ; Decisione di affidamento diretto su Mepa tramite O; Decisione di avvio della procedura di affidamento ; Decisione di affidamento diretto su Mepa tramite O; Decisione di avvio della procedura di affidamento 
+[2026-07-05 12:59:02] ERROR fetching UDIS01300A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/UDII0001
+[2026-07-05 12:59:02] ERROR fetching RMPC150008 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMLG0014
+[2026-07-05 12:59:04] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TOIC8AZ00C | Avviso di selezione: Reperimento di associazioni per l’affid
+[2026-07-05 12:59:05] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TOIC8CB00V | DECRETO PER L'AVVIO PROCEDURA DI SELEZIONE - Piano Estate 20
+[2026-07-05 12:59:06] ALERT: I.C. ALBERTI/SALGARI - TO | CUP B14D25004230006 | 1 avviso/i: Avviso di selezione: Reperimento di associazioni p
+[2026-07-05 12:59:06] ERROR fetching MNMM11600B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MNPS0002
+[2026-07-05 12:59:07] ALERT: I.C. VALPERGA | CUP G74D25006030006 | 1 avviso/i: DECRETO PER L'AVVIO PROCEDURA DI SELEZIONE - Piano
+[2026-07-05 12:59:10] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Avviso di selezione personale amministrativo PON AGENDA NORD
+[2026-07-05 12:59:11] ERROR fetching RMIC8D8001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0269
+[2026-07-05 12:59:13] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto avvio procedura di selezione personale amministrativ
+[2026-07-05 12:59:14] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BTRI050008 | Avviso di selezione DPO - anno 2026
+[2026-07-05 12:59:15] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto avvio procedura di selezione personale amministrativ
+[2026-07-05 12:59:15] ALERT: I.P. "ARCHIMEDE " | CUP D94D25004170006 | 1 avviso/i: Avviso di selezione DPO - anno 2026
+[2026-07-05 12:59:16] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BRIC80600R | 2025 18 Lug PIANO NAZIONALE DI RIPRESA E RESILIENZA MISSIONE
+[2026-07-05 12:59:17] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di annullamento in autotutela avviso di selezione es
+[2026-07-05 12:59:18] ERROR fetching RMPC04000R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMLG0005
+[2026-07-05 12:59:18] ERROR fetching BGIC81400P (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BGME0055
+[2026-07-05 12:59:21] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Avviso di selezione n. 1 tutor nell'ambito del progetto "Ori
+[2026-07-05 12:59:22] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RGIC80500Q | Decreto per l’avvio di una procedura di selezione per il con
+[2026-07-05 12:59:25] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | AVVISO DI RICERCA ESPERTI ESTERNI
+[2026-07-05 12:59:26] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | MANIFESTAZIONE DI INTERESSE
+[2026-07-05 12:59:26] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di avvio procedura di selezione n. 1 tutor nell'ambi
+[2026-07-05 12:59:26] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | ORDINE MEPA
+[2026-07-05 12:59:26] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | AVVISO DI SELEZIONE DOCENTI PER ISTITUTO PENALE PER MINORENN
+[2026-07-05 12:59:26] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RGIC80500Q | Decreto per l’avvio di una procedura di selezione per il con
+[2026-07-05 12:59:27] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | AVVISO DI RICERCA ESPERTI ESTERNI
+[2026-07-05 12:59:27] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | AVVISO DI RICERCA ESPERTI ESTERNI
+[2026-07-05 12:59:27] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVMM140004 | Individuazione esperti esterni
+[2026-07-05 12:59:32] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | DECRETO DI AVVIO PROCEDURA DI SELEZIONE INTERNA/ESTERNA PER 
+[2026-07-05 12:59:32] ERROR fetching PITD03000R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PIIT0008
+[2026-07-05 12:59:32] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RGIC80500Q | Decreto per l’avvio di una procedura di selezione per il con
+[2026-07-05 12:59:33] ERROR fetching FRIS031001 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/FRII0023
+[2026-07-05 12:59:34] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PIPS01000Q | Attestazione di valutazione da parte del Dirigente Scolastic
+[2026-07-05 12:59:35] ALERT: IST. COMPR. "GESUALDO BUFALINO" | CUP H54D25008550006 | 3 avviso/i: Decreto per l’avvio di una procedura di selezione ; Decreto per l’avvio di una procedura di selezione ; Decreto per l’avvio di una procedura di selezione 
+[2026-07-05 12:59:36] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di avvio procedura di selezione figure di supporto p
+[2026-07-05 12:59:42] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PIPS01000Q | Attestazione di valutazione da parte del Dirigente Scolastic
+[2026-07-05 12:59:45] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di avvio procedura di selezione figure di supporto p
+[2026-07-05 12:59:52] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PITF030003 | All.1_Decreto avvio procedura selettiva_POC_AI Business Info
+[2026-07-05 12:59:53] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PIPS01000Q | Attestazione di valutazione da parte del Dirigente Scolastic
+[2026-07-05 12:59:54] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto avvio procedura di selezione Esperti e Tutor - PON F
+[2026-07-05 12:59:55] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FGIS064007 | SELEZIONE ALUNNI PARTECIPANTI AL PNRR RIGUARDO AI PCTO SULLE
+[2026-07-05 12:59:56] ALERT: I.T.I. G. MARCONI | CUP B84D25006170006 | 1 avviso/i: All.1_Decreto avvio procedura selettiva_POC_AI Bus
+[2026-07-05 12:59:58] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FGIS064007 | Domanda-di-partecipazione-e-Scheda-di-autovalutazione-Avviso
+[2026-07-05 12:59:58] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PIPS01000Q | Attestazione di valutazione da parte del Dirigente Scolastic
+[2026-07-05 13:00:00] ALERT: I.I.S.S. "E.MATTEI-FAZZINI-GIULIANI" | CUP C74D25003710006 | 2 avviso/i: SELEZIONE ALUNNI PARTECIPANTI AL PNRR RIGUARDO AI ; Domanda-di-partecipazione-e-Scheda-di-autovalutazi
+[2026-07-05 13:00:00] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto per l’avvio di una procedura di selezione per il con
+[2026-07-05 13:00:02] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PIPS01000Q | Attestazione di valutazione da parte del Dirigente Scolastic
+[2026-07-05 13:00:06] ERROR fetching TRIS00200A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TRII0001
+[2026-07-05 13:00:10] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PIPS01000Q | Attestazione di valutazione da parte del Dirigente Scolastic
+[2026-07-05 13:00:10] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto avvio procedura di selezione esperti e tutor per per
+[2026-07-05 13:00:11] ALERT: LICEO SCIENTIFICO G.MARCONI | CUP F24D25003170006 | 6 avviso/i: Attestazione di valutazione da parte del Dirigente; Attestazione di valutazione da parte del Dirigente; Attestazione di valutazione da parte del Dirigente; Attestazione di valutazione da parte del Dirigente; Attestazione di valutazione da parte del Dirigente; Attestazione di valutazione da parte del Dirigente
+[2026-07-05 13:00:12] ERROR fetching RMIC8FG00A (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMME0290
+[2026-07-05 13:00:21] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di RIAPERTURA TERMINI per la procedura di selezione 
+[2026-07-05 13:00:21] ERROR fetching UDPS05000P (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/UDLS0001
+[2026-07-05 13:00:21] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BGIC86600B | Decisione: Adesione ad Accordo di rete per individuazione me
+[2026-07-05 13:00:25] ALERT: PONTE S. PIETRO | CUP F34D25004670006 | 1 avviso/i: Decisione: Adesione ad Accordo di rete per individ
+[2026-07-05 13:00:26] ERROR fetching CTIC8AB00G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ctme0104
+[2026-07-05 13:00:29] ERROR fetching VRIC830007 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/vrme0070
+[2026-07-05 13:00:30] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto avvio procedura di selezione esperti e tutor - PNRR 
+[2026-07-05 13:00:31] ERROR fetching UDIS01600T (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/UDII0013
+[2026-07-05 13:00:32] ERROR fetching AQIC83400D (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/AQME0027
+[2026-07-05 13:00:32] ERROR fetching RMPS520003 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMLS0047
+[2026-07-05 13:00:32] ERROR fetching TOIC8A900C (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/TOME0128
+[2026-07-05 13:00:39] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for PVIC80800Q | Decreto di avvio di una procedura di selezione personale int
+[2026-07-05 13:00:42] ALERT: IC ROBBIO | CUP H54D25008560006 | 1 avviso/i: Decreto di avvio di una procedura di selezione per
+[2026-07-05 13:00:44] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto avvio procedura di selezione gruppi di lavoro - PNRR
+[2026-07-05 13:00:56] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di avvio procedura di selezione Formatore Coding e R
+[2026-07-05 13:01:00] ERROR fetching NAIC8FC004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/NADD0245
+[2026-07-05 13:01:01] ERROR fetching BAIS02800Q (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/BAII0017
+[2026-07-05 13:01:03] ERROR fetching ROIS003006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/ROII0005
+[2026-07-05 13:01:08] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC802007 | Decreto di avvio procedura di selezione Formatore - PNRR Ani
+[2026-07-05 13:01:12] ALERT: I.C. S. PIETRO IN VINCOLI | CUP F64D25004010006 | 17 avviso/i: Avviso di selezione personale amministrativo PON A; Decreto avvio procedura di selezione personale amm; Decreto avvio procedura di selezione personale amm; Decreto di annullamento in autotutela avviso di se; Avviso di selezione n. 1 tutor nell'ambito del pro; Decreto di avvio procedura di selezione n. 1 tutor; DECRETO DI AVVIO PROCEDURA DI SELEZIONE INTERNA/ES; Decreto di avvio procedura di selezione figure di ; Decreto di avvio procedura di selezione figure di ; Decreto avvio procedura di selezione Esperti e Tut; Decreto per l’avvio di una procedura di selezione ; Decreto avvio procedura di selezione esperti e tut; Decreto di RIAPERTURA TERMINI per la procedura di ; Decreto avvio procedura di selezione esperti e tut; Decreto avvio procedura di selezione gruppi di lav; Decreto di avvio procedura di selezione Formatore ; Decreto di avvio procedura di selezione Formatore 
+[2026-07-05 13:01:14] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for CZIC85800N | ORDINE_MEPA_-_SITO_WEB_PNRR
+[2026-07-05 13:01:14] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAMM15100Q | DISCIPLINARE DELLA T.D. SUL MEPA CON UNICO OPERATORE, PER SE
+[2026-07-05 13:01:19] ALERT: G.CAPORALE | CUP F34D25004710006 | 1 avviso/i: DISCIPLINARE DELLA T.D. SUL MEPA CON UNICO OPERATO
+[2026-07-05 13:01:20] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RAIC80400V | Decreto per l?avvio di una procedura di selezione Esperti_Tu
+[2026-07-05 13:01:24] ALERT: I.C. "BERTI F." - BAGNACAVALLO | CUP H34D25003160006 | 1 avviso/i: Decreto per l?avvio di una procedura di selezione 
+[2026-07-05 13:01:25] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RCIS03600Q | Avviso di selezione di un esperto di Biblioteconomia
+[2026-07-05 13:01:35] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVIC853008 | Decisione di avvio Avviso di selezione reperimento esperto i
+[2026-07-05 13:01:42] ERROR fetching PAPM010003 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PAIM0007
+[2026-07-05 13:01:42] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for TVIC853008 | Decisione di avvio Avviso di selezione reperimento docenti e
+[2026-07-05 13:01:43] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for LOIC81700C | 3 Allegato A - Format Domanda di partecipazione PNRR 1.4 D.M
+[2026-07-05 13:01:45] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for LOIC81700C | 3 Allegato A - Format Domanda di partecipazione PNRR 1.4 pot
+[2026-07-05 13:01:46] ALERT: IC DI CODOGNO | CUP I74D25004340006 | 2 avviso/i: 3 Allegato A - Format Domanda di partecipazione PN; 3 Allegato A - Format Domanda di partecipazione PN
+[2026-07-05 13:01:53] ERROR fetching LUIC84500T (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LUME0035
+[2026-07-05 13:01:59] ERROR fetching PSIC829003 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PSME0032
+[2026-07-05 13:02:02] ERROR fetching NAPS860005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-05 13:02:06] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for RMIC818005 | 2023 02 Ago 00009/2023 Parziale rettifica ed integrazione pr
+[2026-07-05 13:02:07] ERROR fetching GOIC801002 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/GOME0004
+[2026-07-05 13:02:07] ERROR fetching RMIS013006 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/RMII0043
+[2026-07-05 13:02:07] ERROR fetching LEIC84100R (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/leme0023
+[2026-07-05 13:02:10] ALERT: "ENNIO QUIRINO VISCONTI" | CUP B84D25006240006 | 1 avviso/i: 2023 02 Ago 00009/2023 Parziale rettifica ed integ
+[2026-07-05 13:02:11] ERROR fetching SSPS05000G (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/SSLS0004
+[2026-07-05 13:02:26] ERROR fetching PEPM020004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PEIM0001
+[2026-07-05 13:02:26] ERROR fetching PIIC824004 (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/PIME0004
+[2026-07-05 13:03:06] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for TPIS02200A | Locandina-webinar-Mepa
+[2026-07-05 13:03:08] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for BGIC82900C | Decisione di contrarre per indagine di mercato_richiesta di 
+[2026-07-05 13:03:10] ALERT: BREMBATE SOTTO | CUP G54D25010930006 | 1 avviso/i: Decisione di contrarre per indagine di mercato_ric
+[2026-07-05 13:03:14] ERROR fetching MITF19000B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIIT0027
+[2026-07-05 13:03:42] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NAIC8AR00E | Decreto per l’avvio di una procedura di selezione per il con
+[2026-07-05 13:03:44] ALERT: CASAMICCIOLA - I.C. IBSEN | CUP G34D25007250006 | 1 avviso/i: Decreto per l’avvio di una procedura di selezione 
+[2026-07-05 13:03:45] ERROR fetching LOTA01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LOIT0004
+[2026-07-05 13:03:59] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for NOIS006003 | AVVISO DI MANIFESTAZIONE DI INTERESSE CONCESSIONE DISTRIBUTO
+[2026-07-05 13:04:02] ALERT: I. I. S. PIER LUIGI NERVI | CUP I14D25003870006 | 1 avviso/i: AVVISO DI MANIFESTAZIONE DI INTERESSE CONCESSIONE 
+[2026-07-05 13:04:03] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for MBIC82600C | 2026 27 Mag 00007/2026 Scaduto Avviso di MANIFESTAZIONE INTE
+[2026-07-05 13:04:21] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for MBIC82600C | 2025 21 Nov 00020/2025 Scaduto Avviso di MANIFESTAZIONE INTE
+[2026-07-05 13:04:34] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for MBIC82600C | 2023 19 Apr 00008/2023 Scaduto Avviso di selezione Servizio 
+[2026-07-05 13:04:36] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FIIC85800C | avviso di selezione di n. 1 figura esperto e n. 1 figura tut
+[2026-07-05 13:04:46] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for FIIC85800C | Decreto avvio procedura di selezione di n. 1 figura esperto 
