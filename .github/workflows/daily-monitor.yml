@@ -2,7 +2,10 @@ name: PNRR AI Opportunity Monitor
 
 on:
   schedule:
-    - cron: "45 14 * * *"   # daily between 3:45 pm and 4:45 pm Italy time
+    # GitHub cron is UTC. These two entries cover Italy's summer/winter offset;
+    # the guard step below lets only the run that lands at 14:45 Europe/Rome continue.
+    - cron: "45 12 * * *"
+    - cron: "45 13 * * *"
   workflow_dispatch:
     inputs:
       ai_mode:
@@ -34,18 +37,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check Italy-time schedule
+        id: italy_time
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          hour=$(TZ=Europe/Rome date +%H)
+          if [ "$hour" = "14" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Not the 14:45 Europe/Rome run. Skipping."
+          fi
+
       - name: Install OCR system packages
+        if: ${{ github.event_name != 'schedule' || steps.italy_time.outputs.should_run == 'true' }}
         run: sudo apt-get update && sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-ita
 
       - name: Set up uv (installs Python from pyproject)
+        if: ${{ github.event_name != 'schedule' || steps.italy_time.outputs.should_run == 'true' }}
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
 
       - name: Install dependencies
+        if: ${{ github.event_name != 'schedule' || steps.italy_time.outputs.should_run == 'true' }}
         run: uv sync
 
       - name: Run monitor
+        if: ${{ github.event_name != 'schedule' || steps.italy_time.outputs.should_run == 'true' }}
         env:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
@@ -67,7 +86,7 @@ jobs:
       - name: Persist dedup state
         # Only needed when using the SQLite fallback (no DATABASE_URL). With
         # Postgres the state lives in the DB and this is a no-op diff.
-        if: ${{ always() }}
+        if: ${{ always() && (github.event_name != 'schedule' || steps.italy_time.outputs.should_run == 'true') }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
