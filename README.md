@@ -14,15 +14,15 @@ The process is split into two distinct phases:
 - **Detect:** Identifies the platform and *albo ID*
 - **Output:** Writes the `vendor` and `albo_id` to a CSV
 
-#### 2. Monitor Run (e.g., Hourly)
+#### 2. Monitor Run (e.g., Daily / Scheduled)
 *For each mapped school:*
 1. **Fetch:** `adapter.fetch_items()` *(1 light request)*
 2. **Deduplicate:** Diff vs already-seen notices (`StateStore`)
 3. **Prefilter:** Fast keyword check *(cheap)*
 4. **Download:** Retrieve notice PDF(s)
 5. **Rule Verification:** `OpportunityVerifier` *(checks rules)*
-6. **AI Verification:** `AiVerifier` *(Gemini, optional)*
-7. **Alert & Save:** `AlertService` emails matches & marks them as seen
+6. **AI Verification:** `AiVerifier` *(Gemini, optional; rule-based fallback when unavailable)*
+7. **Alert & Save:** `AlertService` emails matches, reserves send state, and marks them as sent
 
 ### Platform coverage (adapters)
 Schools cluster onto a few albo platforms; one adapter covers thousands of schools each.
@@ -57,7 +57,7 @@ pnrr-ai-monitor-poc/
 │       ├── models.py             # Core data classes (Pydantic/Dataclasses)
 │       ├── monitor.py            # Main orchestration loop
 │       ├── repository.py         # Database/Persistence abstraction
-│       ├── state.py              # SQLite store to deduplicate notices
+│       ├── state.py              # SQLite/Postgres state store and dedup memory
 │       └── verifier.py           # Validates notices (rules + AI)
 ├── pyproject.toml / uv.lock      # Python dependencies
 ├── run_monitor.py                # Main entrypoint script
@@ -72,8 +72,8 @@ All core logic resides in `src/pnrr_ai_monitor/`:
 - **`adapters/`** — `AlboAdapter` interface + `AdapterRegistry` + the four adapters.
 - **`document_reader.py`** — extracts text from HTML/PDF (reads full PDFs; OCR hook for scans).
 - **`verifier.py`** — `OpportunityPrefilter` (cheap title gate), `OpportunityVerifier` (rules: exact CUP/CLP, call language, rejects closed/internal acts), `AiVerifier` (Gemini judge: open-vs-closed, internal-vs-external).
-- **`state.py`** — `StateStore` (dedup of processed notices + sent alerts); SQLite locally, Postgres-ready.
-- **`alerts.py`** — sends email for confirmed, not-yet-alerted opportunities.
+- **`state.py`** — `StateStore` (dedup of processed notices + sent alerts); SQLite locally, Postgres via `DATABASE_URL` in CI/production. Postgres operations reconnect and retry on dropped connections.
+- **`alerts.py`** — sends Italian email for not-yet-alerted opportunities, including clearly marked unconfirmed rule-based alerts when AI is unavailable.
 - **`monitor.py`** — orchestrates one polling pass and reports `RunStats`.
 
 ## Setup
@@ -92,7 +92,7 @@ EMAIL_PASSWORD=...          # Gmail APP PASSWORD (not your login password)
 RECEIVER_EMAIL=...          # where alerts go
 GEMINI_API_KEY=...          # optional; enables the AI judge
 AI_VERIFICATION_REQUIRED=true
-DATABASE_URL=               # empty = local SQLite; set for Postgres
+DATABASE_URL=               # empty = local SQLite; set for Postgres in GitHub Actions/production
 ```
 `.env` is gitignored — never commit real keys. (`.env.example` holds placeholders only.)
 
@@ -124,7 +124,7 @@ python run_monitor.py --export-opportunities data/opportunities.csv
 | `--limit N` | Only process the first N schools. |
 | `--map` / `--refresh` | Run the mapping pass (and re-map already-mapped rows). |
 | `--ai-mode {off,capped,full}` | `off`: rules only (free). `capped`: AI on up to `--ai-budget` notices (free-tier safe). `full`: AI on every candidate (needs paid Gemini quota). Default: `capped`. |
-| `--ai-budget N` | Max AI calls per run in `capped` mode (default 50). |
+| `--ai-budget N` | Max AI calls per run in `capped` mode (default 500). |
 
 Each run logs to `run_log.txt`; the summary line reports
 `schools / new items / passed prefilter / confirmed / alerts / ai_failures`.
@@ -143,6 +143,8 @@ There are two schools CSVs: `data/projects_sample.csv` (small example set, used 
 
 ## Notes & limits
 
-- **AI quota:** the free Gemini tier is small. Use `--ai-mode off` (rules only, still FP-guarded) or `capped` to stay free; use a paid key + `full` for whole-list coverage.
+- **AI quota:** the free Gemini tier is small. Use `--ai-mode off` (rules only, still FP-guarded) or `capped` to stay free; use a paid key + `full` for whole-list coverage. If AI is unavailable, non-high rule matches can still be emailed as clearly marked "NON VERIFICATO DA AI" alerts so the POC does not fail silently.
 - **Mapping gaps:** ~20% of schools may not auto-resolve (no registered website / site down) and need manual `albo_id` entry.
-- **Scheduling:** `.github/workflows/hourly-monitor.yml` can run it in the cloud (set secrets there); state must persist between runs (Postgres recommended on ephemeral CI).
+- **Persistence:** local SQLite is fine for development. In GitHub Actions, use Postgres through `DATABASE_URL`; committing SQLite/CSV state back to Git is fragile and can create push conflicts. The Postgres store retries short dropped-connection failures before surfacing a real outage.
+- **Email dedup reliability:** alerts are reserved before SMTP send (`sending`), marked after Gmail accepts them (`sent`), and released on send failure (`failed`). This reduces duplicate emails if a run dies around the send step.
+- **Scheduling:** a GitHub Actions workflow can run it in the cloud (set secrets there). For the current POC, daily scheduling is usually enough; run more frequently only if you need faster discovery.

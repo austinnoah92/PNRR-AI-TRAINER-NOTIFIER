@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
+import time
 import uuid
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
@@ -15,6 +16,8 @@ from .models import AlboItem, Opportunity
 _THREAD_UPDATABLE_FIELDS = frozenset({
     "role_signature", "protocol_ref", "status", "subject", "message_id", "last_item_key", "last_title",
 })
+_ALERT_SEND_STALE_MINUTES = 120
+_POSTGRES_RETRY_DELAYS = (0.5, 2.0)
 
 STATUS_OPEN = "aperta"
 STATUS_EXPIRED = "scaduta"
@@ -44,7 +47,25 @@ class StateStore(ABC):
     def has_alerted(self, alert_key: str) -> bool: ...
 
     @abstractmethod
-    def mark_alerted(self, alert_key: str, school_code: str, url: str) -> None: ...
+    def reserve_alert_send(self, alert_key: str, school_code: str, url: str) -> bool:
+        """Atomically reserve an alert before SMTP send.
+
+        Returns False when the alert has already been sent or is currently
+        being sent by another worker. Stale reservations may be retried.
+        """
+
+    @abstractmethod
+    def mark_alerted(
+        self,
+        alert_key: str,
+        school_code: str,
+        url: str,
+        message_id: str | None = None,
+        subject: str | None = None,
+    ) -> None: ...
+
+    @abstractmethod
+    def mark_alert_failed(self, alert_key: str) -> None: ...
 
     @abstractmethod
     def record_opportunity(self, opportunity: Opportunity) -> None: ...
@@ -114,7 +135,11 @@ CREATE TABLE IF NOT EXISTS alerts (
     alert_key   TEXT PRIMARY KEY,
     school_code TEXT NOT NULL,
     url         TEXT NOT NULL,
-    created_at  TEXT DEFAULT CURRENT_TIMESTAMP
+    status      TEXT NOT NULL DEFAULT 'sent',
+    message_id  TEXT,
+    subject     TEXT,
+    created_at  TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS opportunities (
@@ -189,7 +214,19 @@ class SqliteStateStore(StateStore):
         self._conn = sqlite3.connect(db_path, check_same_thread=False)
         self._conn.execute("PRAGMA journal_mode=WAL")
         self._conn.executescript(_SCHEMA_SQLITE)
+        self._migrate_schema()
         self._conn.commit()
+
+    def _migrate_schema(self) -> None:
+        columns = {row[1] for row in self._conn.execute("PRAGMA table_info(alerts)")}
+        if "status" not in columns:
+            self._conn.execute("ALTER TABLE alerts ADD COLUMN status TEXT NOT NULL DEFAULT 'sent'")
+        if "message_id" not in columns:
+            self._conn.execute("ALTER TABLE alerts ADD COLUMN message_id TEXT")
+        if "subject" not in columns:
+            self._conn.execute("ALTER TABLE alerts ADD COLUMN subject TEXT")
+        if "updated_at" not in columns:
+            self._conn.execute("ALTER TABLE alerts ADD COLUMN updated_at TEXT DEFAULT CURRENT_TIMESTAMP")
 
     def unprocessed_keys(self, keys: Iterable[str]) -> set[str]:
         wanted = set(keys)
@@ -221,14 +258,68 @@ class SqliteStateStore(StateStore):
 
     def has_alerted(self, alert_key: str) -> bool:
         with self._lock:
-            cur = self._conn.execute("SELECT 1 FROM alerts WHERE alert_key = ? LIMIT 1", (alert_key,))
+            cutoff = (datetime.utcnow() - timedelta(minutes=_ALERT_SEND_STALE_MINUTES)).strftime("%Y-%m-%d %H:%M:%S")
+            cur = self._conn.execute(
+                """
+                SELECT 1 FROM alerts
+                WHERE alert_key = ?
+                  AND (status = 'sent' OR (status = 'sending' AND updated_at >= ?))
+                LIMIT 1
+                """,
+                (alert_key, cutoff),
+            )
             return cur.fetchone() is not None
 
-    def mark_alerted(self, alert_key: str, school_code: str, url: str) -> None:
+    def reserve_alert_send(self, alert_key: str, school_code: str, url: str) -> bool:
+        cutoff = (datetime.utcnow() - timedelta(minutes=_ALERT_SEND_STALE_MINUTES)).strftime("%Y-%m-%d %H:%M:%S")
+        with self._lock:
+            cur = self._conn.execute(
+                """
+                INSERT INTO alerts (alert_key, school_code, url, status, updated_at)
+                VALUES (?, ?, ?, 'sending', CURRENT_TIMESTAMP)
+                ON CONFLICT(alert_key) DO UPDATE SET
+                    school_code = excluded.school_code,
+                    url = excluded.url,
+                    status = 'sending',
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE alerts.status = 'failed'
+                   OR (alerts.status = 'sending' AND alerts.updated_at < ?)
+                """,
+                (alert_key, school_code, url, cutoff),
+            )
+            self._conn.commit()
+            return cur.rowcount > 0
+
+    def mark_alerted(
+        self,
+        alert_key: str,
+        school_code: str,
+        url: str,
+        message_id: str | None = None,
+        subject: str | None = None,
+    ) -> None:
         with self._lock:
             self._conn.execute(
-                "INSERT OR IGNORE INTO alerts (alert_key, school_code, url) VALUES (?, ?, ?)",
-                (alert_key, school_code, url),
+                """
+                INSERT INTO alerts (alert_key, school_code, url, status, message_id, subject, updated_at)
+                VALUES (?, ?, ?, 'sent', ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(alert_key) DO UPDATE SET
+                    school_code = excluded.school_code,
+                    url = excluded.url,
+                    status = 'sent',
+                    message_id = excluded.message_id,
+                    subject = excluded.subject,
+                    updated_at = CURRENT_TIMESTAMP
+                """,
+                (alert_key, school_code, url, message_id, subject),
+            )
+            self._conn.commit()
+
+    def mark_alert_failed(self, alert_key: str) -> None:
+        with self._lock:
+            self._conn.execute(
+                "UPDATE alerts SET status = 'failed', updated_at = CURRENT_TIMESTAMP WHERE alert_key = ? AND status = 'sending'",
+                (alert_key,),
             )
             self._conn.commit()
 
@@ -375,221 +466,338 @@ class PostgresStateStore(StateStore):
         except Exception as exc:
             raise RuntimeError("Postgres persistence requires the 'psycopg[binary]' dependency.") from exc
         self._lock = RLock()
-        self._conn = psycopg.connect(database_url, autocommit=True, row_factory=dict_row)
+        self._psycopg = psycopg
+        self._dict_row = dict_row
+        self._database_url = database_url
+        self._conn = self._connect()
         self._init_schema()
 
+    def _connect(self):
+        return self._psycopg.connect(self._database_url, autocommit=True, row_factory=self._dict_row)
+
+    def _reconnect(self) -> None:
+        try:
+            self._conn.close()
+        except Exception:
+            pass
+        self._conn = self._connect()
+
+    def _is_connection_error(self, exc: Exception) -> bool:
+        return isinstance(exc, self._psycopg.OperationalError) or "connection is closed" in str(exc).lower()
+
+    def _execute(self, operation):
+        with self._lock:
+            for attempt in range(len(_POSTGRES_RETRY_DELAYS) + 1):
+                try:
+                    return operation()
+                except Exception as exc:
+                    if attempt < len(_POSTGRES_RETRY_DELAYS) and self._is_connection_error(exc):
+                        self._reconnect()
+                        time.sleep(_POSTGRES_RETRY_DELAYS[attempt])
+                        continue
+                    raise
+
     def _init_schema(self) -> None:
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute(
-                """
-                CREATE TABLE IF NOT EXISTS processed_items (
-                    item_key    TEXT PRIMARY KEY,
-                    school_code TEXT NOT NULL,
-                    title       TEXT,
-                    published   TEXT,
-                    first_seen  TIMESTAMPTZ DEFAULT now()
-                );
-                CREATE INDEX IF NOT EXISTS idx_processed_school ON processed_items(school_code);
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    CREATE TABLE IF NOT EXISTS processed_items (
+                        item_key    TEXT PRIMARY KEY,
+                        school_code TEXT NOT NULL,
+                        title       TEXT,
+                        published   TEXT,
+                        first_seen  TIMESTAMPTZ DEFAULT now()
+                    );
+                    CREATE INDEX IF NOT EXISTS idx_processed_school ON processed_items(school_code);
 
-                CREATE TABLE IF NOT EXISTS alerts (
-                    alert_key   TEXT PRIMARY KEY,
-                    school_code TEXT NOT NULL,
-                    url         TEXT NOT NULL,
-                    created_at  TIMESTAMPTZ DEFAULT now()
-                );
+                    CREATE TABLE IF NOT EXISTS alerts (
+                        alert_key   TEXT PRIMARY KEY,
+                        school_code TEXT NOT NULL,
+                        url         TEXT NOT NULL,
+                        status      TEXT NOT NULL DEFAULT 'sent',
+                        message_id  TEXT,
+                        subject     TEXT,
+                        created_at  TIMESTAMPTZ DEFAULT now(),
+                        updated_at  TIMESTAMPTZ DEFAULT now()
+                    );
 
-                CREATE TABLE IF NOT EXISTS opportunities (
-                    opp_key          TEXT PRIMARY KEY,
-                    school_code      TEXT NOT NULL,
-                    school_name      TEXT,
-                    region           TEXT,
-                    cup              TEXT,
-                    clp              TEXT,
-                    title            TEXT,
-                    url              TEXT,
-                    published        TEXT,
-                    deadline         TEXT,
-                    opportunity_type TEXT,
-                    confidence       TEXT,
-                    first_seen       TIMESTAMPTZ DEFAULT now(),
-                    last_seen        TIMESTAMPTZ DEFAULT now()
-                );
+                    CREATE TABLE IF NOT EXISTS opportunities (
+                        opp_key          TEXT PRIMARY KEY,
+                        school_code      TEXT NOT NULL,
+                        school_name      TEXT,
+                        region           TEXT,
+                        cup              TEXT,
+                        clp              TEXT,
+                        title            TEXT,
+                        url              TEXT,
+                        published        TEXT,
+                        deadline         TEXT,
+                        opportunity_type TEXT,
+                        confidence       TEXT,
+                        first_seen       TIMESTAMPTZ DEFAULT now(),
+                        last_seen        TIMESTAMPTZ DEFAULT now()
+                    );
 
-                CREATE TABLE IF NOT EXISTS decisions (
-                    item_key    TEXT PRIMARY KEY,
-                    school_code TEXT NOT NULL,
-                    title       TEXT,
-                    url         TEXT,
-                    stage       TEXT NOT NULL,
-                    reason      TEXT,
-                    updated_at  TIMESTAMPTZ DEFAULT now()
-                );
-                CREATE INDEX IF NOT EXISTS idx_decisions_school ON decisions(school_code);
+                    CREATE TABLE IF NOT EXISTS decisions (
+                        item_key    TEXT PRIMARY KEY,
+                        school_code TEXT NOT NULL,
+                        title       TEXT,
+                        url         TEXT,
+                        stage       TEXT NOT NULL,
+                        reason      TEXT,
+                        updated_at  TIMESTAMPTZ DEFAULT now()
+                    );
+                    CREATE INDEX IF NOT EXISTS idx_decisions_school ON decisions(school_code);
 
-                CREATE TABLE IF NOT EXISTS checkpoint (
-                    id          INTEGER PRIMARY KEY CHECK (id = 1),
-                    next_index  INTEGER NOT NULL DEFAULT 0,
-                    updated_at  TIMESTAMPTZ DEFAULT now()
-                );
+                    CREATE TABLE IF NOT EXISTS checkpoint (
+                        id          INTEGER PRIMARY KEY CHECK (id = 1),
+                        next_index  INTEGER NOT NULL DEFAULT 0,
+                        updated_at  TIMESTAMPTZ DEFAULT now()
+                    );
 
-                CREATE TABLE IF NOT EXISTS call_threads (
-                    thread_id      TEXT PRIMARY KEY,
-                    school_code    TEXT NOT NULL,
-                    cup            TEXT,
-                    clp            TEXT,
-                    role_signature TEXT,
-                    protocol_ref   TEXT,
-                    status         TEXT NOT NULL,
-                    subject        TEXT,
-                    message_id     TEXT,
-                    last_item_key  TEXT,
-    last_title     TEXT,
-                    created_at     TIMESTAMPTZ DEFAULT now(),
-                    updated_at     TIMESTAMPTZ DEFAULT now()
-                );
-                CREATE INDEX IF NOT EXISTS idx_call_threads_school_cup ON call_threads(school_code, cup);
-                """
-            )
+                    CREATE TABLE IF NOT EXISTS call_threads (
+                        thread_id      TEXT PRIMARY KEY,
+                        school_code    TEXT NOT NULL,
+                        cup            TEXT,
+                        clp            TEXT,
+                        role_signature TEXT,
+                        protocol_ref   TEXT,
+                        status         TEXT NOT NULL,
+                        subject        TEXT,
+                        message_id     TEXT,
+                        last_item_key  TEXT,
+                        last_title     TEXT,
+                        created_at     TIMESTAMPTZ DEFAULT now(),
+                        updated_at     TIMESTAMPTZ DEFAULT now()
+                    );
+                    CREATE INDEX IF NOT EXISTS idx_call_threads_school_cup ON call_threads(school_code, cup);
+                    """
+                )
+                self._migrate_schema(cur)
+        self._execute(op)
+
+    def _migrate_schema(self, cur) -> None:
+        cur.execute("ALTER TABLE alerts ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'sent'")
+        cur.execute("ALTER TABLE alerts ADD COLUMN IF NOT EXISTS message_id TEXT")
+        cur.execute("ALTER TABLE alerts ADD COLUMN IF NOT EXISTS subject TEXT")
+        cur.execute("ALTER TABLE alerts ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT now()")
 
     def unprocessed_keys(self, keys: Iterable[str]) -> set[str]:
         wanted = set(keys)
         if not wanted:
             return set()
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute("SELECT item_key FROM processed_items WHERE item_key = ANY(%s)", (list(wanted),))
-            known = {row["item_key"] for row in cur.fetchall()}
-        return wanted - known
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute("SELECT item_key FROM processed_items WHERE item_key = ANY(%s)", (list(wanted),))
+                known = {row["item_key"] for row in cur.fetchall()}
+            return wanted - known
+        return self._execute(op)
 
     def mark_processed(self, items: Iterable[AlboItem]) -> None:
         payload = [(it.key, it.school_code, it.title, it.published) for it in items]
         if not payload:
             return
-        with self._lock, self._conn.cursor() as cur:
-            cur.executemany(
-                """
-                INSERT INTO processed_items (item_key, school_code, title, published)
-                VALUES (%s, %s, %s, %s)
-                ON CONFLICT (item_key) DO NOTHING
-                """,
-                payload,
-            )
+        def op():
+            with self._conn.cursor() as cur:
+                cur.executemany(
+                    """
+                    INSERT INTO processed_items (item_key, school_code, title, published)
+                    VALUES (%s, %s, %s, %s)
+                    ON CONFLICT (item_key) DO NOTHING
+                    """,
+                    payload,
+                )
+        self._execute(op)
 
     def has_alerted(self, alert_key: str) -> bool:
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute("SELECT 1 FROM alerts WHERE alert_key = %s LIMIT 1", (alert_key,))
-            return cur.fetchone() is not None
+        cutoff = datetime.utcnow() - timedelta(minutes=_ALERT_SEND_STALE_MINUTES)
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT 1 FROM alerts
+                    WHERE alert_key = %s
+                      AND (status = 'sent' OR (status = 'sending' AND updated_at >= %s))
+                    LIMIT 1
+                    """,
+                    (alert_key, cutoff),
+                )
+                return cur.fetchone() is not None
+        return self._execute(op)
 
-    def mark_alerted(self, alert_key: str, school_code: str, url: str) -> None:
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO alerts (alert_key, school_code, url)
-                VALUES (%s, %s, %s)
-                ON CONFLICT (alert_key) DO NOTHING
-                """,
-                (alert_key, school_code, url),
-            )
+    def reserve_alert_send(self, alert_key: str, school_code: str, url: str) -> bool:
+        cutoff = datetime.utcnow() - timedelta(minutes=_ALERT_SEND_STALE_MINUTES)
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO alerts (alert_key, school_code, url, status, updated_at)
+                    VALUES (%s, %s, %s, 'sending', now())
+                    ON CONFLICT (alert_key) DO UPDATE SET
+                        school_code = EXCLUDED.school_code,
+                        url = EXCLUDED.url,
+                        status = 'sending',
+                        updated_at = now()
+                    WHERE alerts.status = 'failed'
+                       OR (alerts.status = 'sending' AND alerts.updated_at < %s)
+                    """,
+                    (alert_key, school_code, url, cutoff),
+                )
+                return cur.rowcount > 0
+        return self._execute(op)
+
+    def mark_alerted(
+        self,
+        alert_key: str,
+        school_code: str,
+        url: str,
+        message_id: str | None = None,
+        subject: str | None = None,
+    ) -> None:
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO alerts (alert_key, school_code, url, status, message_id, subject, updated_at)
+                    VALUES (%s, %s, %s, 'sent', %s, %s, now())
+                    ON CONFLICT (alert_key) DO UPDATE SET
+                        school_code = EXCLUDED.school_code,
+                        url = EXCLUDED.url,
+                        status = 'sent',
+                        message_id = EXCLUDED.message_id,
+                        subject = EXCLUDED.subject,
+                        updated_at = now()
+                    """,
+                    (alert_key, school_code, url, message_id, subject),
+                )
+        self._execute(op)
+
+    def mark_alert_failed(self, alert_key: str) -> None:
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    "UPDATE alerts SET status = 'failed', updated_at = now() WHERE alert_key = %s AND status = 'sending'",
+                    (alert_key,),
+                )
+        self._execute(op)
 
     def record_opportunity(self, o: Opportunity) -> None:
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO opportunities
-                    (opp_key, school_code, school_name, region, cup, clp, title, url,
-                     published, deadline, opportunity_type, confidence)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                ON CONFLICT (opp_key) DO UPDATE SET
-                    last_seen = now(),
-                    deadline = EXCLUDED.deadline,
-                    opportunity_type = EXCLUDED.opportunity_type,
-                    confidence = EXCLUDED.confidence
-                """,
-                (o.key, o.school_code, o.school_name, o.region, o.cup, o.clp, o.title, o.url,
-                 o.published, o.deadline, o.opportunity_type, o.confidence),
-            )
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO opportunities
+                        (opp_key, school_code, school_name, region, cup, clp, title, url,
+                         published, deadline, opportunity_type, confidence)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (opp_key) DO UPDATE SET
+                        last_seen = now(),
+                        deadline = EXCLUDED.deadline,
+                        opportunity_type = EXCLUDED.opportunity_type,
+                        confidence = EXCLUDED.confidence
+                    """,
+                    (o.key, o.school_code, o.school_name, o.region, o.cup, o.clp, o.title, o.url,
+                     o.published, o.deadline, o.opportunity_type, o.confidence),
+                )
+        self._execute(op)
 
     def iter_opportunities(self) -> list[dict]:
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute("SELECT * FROM opportunities ORDER BY first_seen DESC")
-            return [dict(row) for row in cur.fetchall()]
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute("SELECT * FROM opportunities ORDER BY first_seen DESC")
+                return [dict(row) for row in cur.fetchall()]
+        return self._execute(op)
 
     def record_decisions(self, decisions: Iterable[tuple[str, str, str, str, str, str]]) -> None:
         payload = list(decisions)
         if not payload:
             return
-        with self._lock, self._conn.cursor() as cur:
-            cur.executemany(
-                """
-                INSERT INTO decisions (item_key, school_code, title, url, stage, reason)
-                VALUES (%s, %s, %s, %s, %s, %s)
-                ON CONFLICT (item_key) DO UPDATE SET
-                    title = EXCLUDED.title, url = EXCLUDED.url,
-                    stage = EXCLUDED.stage, reason = EXCLUDED.reason,
-                    updated_at = now()
-                """,
-                payload,
-            )
+        def op():
+            with self._conn.cursor() as cur:
+                cur.executemany(
+                    """
+                    INSERT INTO decisions (item_key, school_code, title, url, stage, reason)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (item_key) DO UPDATE SET
+                        title = EXCLUDED.title, url = EXCLUDED.url,
+                        stage = EXCLUDED.stage, reason = EXCLUDED.reason,
+                        updated_at = now()
+                    """,
+                    payload,
+                )
+        self._execute(op)
 
     def iter_decisions(self, school_code: str | None = None) -> list[dict]:
-        with self._lock, self._conn.cursor() as cur:
-            if school_code:
-                cur.execute("SELECT * FROM decisions WHERE school_code = %s ORDER BY updated_at DESC", (school_code,))
-            else:
-                cur.execute("SELECT * FROM decisions ORDER BY updated_at DESC")
-            return [dict(row) for row in cur.fetchall()]
+        def op():
+            with self._conn.cursor() as cur:
+                if school_code:
+                    cur.execute("SELECT * FROM decisions WHERE school_code = %s ORDER BY updated_at DESC", (school_code,))
+                else:
+                    cur.execute("SELECT * FROM decisions ORDER BY updated_at DESC")
+                return [dict(row) for row in cur.fetchall()]
+        return self._execute(op)
 
     def get_checkpoint(self) -> int:
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute("SELECT next_index FROM checkpoint WHERE id = 1")
-            row = cur.fetchone()
-            return row["next_index"] if row else 0
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute("SELECT next_index FROM checkpoint WHERE id = 1")
+                row = cur.fetchone()
+                return row["next_index"] if row else 0
+        return self._execute(op)
 
     def advance_checkpoint(self, count: int, total: int) -> None:
         if total <= 0:
             return
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute("SELECT next_index FROM checkpoint WHERE id = 1")
-            row = cur.fetchone()
-            current = row["next_index"] if row else 0
-            new_index = (current + count) % total
-            cur.execute(
-                """
-                INSERT INTO checkpoint (id, next_index) VALUES (1, %s)
-                ON CONFLICT (id) DO UPDATE SET next_index = EXCLUDED.next_index,
-                                                updated_at = now()
-                """,
-                (new_index,),
-            )
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute("SELECT next_index FROM checkpoint WHERE id = 1")
+                row = cur.fetchone()
+                current = row["next_index"] if row else 0
+                new_index = (current + count) % total
+                cur.execute(
+                    """
+                    INSERT INTO checkpoint (id, next_index) VALUES (1, %s)
+                    ON CONFLICT (id) DO UPDATE SET next_index = EXCLUDED.next_index,
+                                                    updated_at = now()
+                    """,
+                    (new_index,),
+                )
+        self._execute(op)
 
     def find_open_threads(self, school_code: str, cup: str, since_days: int = 60) -> list[dict]:
         cutoff = datetime.utcnow() - timedelta(days=since_days)
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute(
-                """
-                SELECT * FROM call_threads
-                WHERE school_code = %s AND cup = %s AND status IN ('held', 'sent') AND updated_at >= %s
-                ORDER BY updated_at DESC
-                """,
-                (school_code, cup, cutoff),
-            )
-            return [dict(row) for row in cur.fetchall()]
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    SELECT * FROM call_threads
+                    WHERE school_code = %s AND cup = %s AND status IN ('held', 'sent') AND updated_at >= %s
+                    ORDER BY updated_at DESC
+                    """,
+                    (school_code, cup, cutoff),
+                )
+                return [dict(row) for row in cur.fetchall()]
+        return self._execute(op)
 
     def create_thread(
         self, school_code: str, cup: str, clp: str, role_signature: str, protocol_ref: str | None,
         status: str, subject: str | None, message_id: str | None, last_item_key: str, last_title: str = "",
     ) -> str:
         thread_id = uuid.uuid4().hex
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO call_threads
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    """
+                    INSERT INTO call_threads
+                        (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
+                         subject, message_id, last_item_key, last_title)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """,
                     (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
-                     subject, message_id, last_item_key, last_title)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                """,
-                (thread_id, school_code, cup, clp, role_signature, protocol_ref, status,
-                 subject, message_id, last_item_key, last_title),
-            )
+                     subject, message_id, last_item_key, last_title),
+                )
+        self._execute(op)
         return thread_id
 
     def update_thread(self, thread_id: str, **fields: str | None) -> None:
@@ -597,11 +805,13 @@ class PostgresStateStore(StateStore):
         if not columns:
             return
         assignments = ", ".join(f"{c} = %s" for c in columns)
-        with self._lock, self._conn.cursor() as cur:
-            cur.execute(
-                f"UPDATE call_threads SET {assignments}, updated_at = now() WHERE thread_id = %s",
-                [fields[c] for c in columns] + [thread_id],
-            )
+        def op():
+            with self._conn.cursor() as cur:
+                cur.execute(
+                    f"UPDATE call_threads SET {assignments}, updated_at = now() WHERE thread_id = %s",
+                    [fields[c] for c in columns] + [thread_id],
+                )
+        self._execute(op)
 
     def close(self) -> None:
         with self._lock:

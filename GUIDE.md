@@ -69,12 +69,12 @@ The system runs in **two separate phases**. This separation is the key design id
 
 Think of it as building an address book: "School X → its noticeboard is on Argo, ID `SG29221`." This is slow-ish (it visits each school's site once) but you only do it occasionally.
 
-### Phase B — Monitoring (run often: e.g. hourly)
-**Goal:** using the address book, quickly check each school's noticeboard for **new** notices, judge them, and email you the real opportunities.
+### Phase B — Monitoring (run on a schedule: e.g. daily for the POC)
+**Goal:** using the address book, quickly check each school's noticeboard for **new** notices, judge them, and email you the real or likely opportunities.
 
 This is fast per school (usually one web request) because the mapping already told it exactly where to look.
 
-Why split them? Because checking 4,300 noticeboards every hour is only feasible if each check is one quick request. The slow "figure out where to look" work is done once, up front, not every hour.
+Why split them? Because checking 4,300 noticeboards is only feasible if each check is one quick request. The slow "figure out where to look" work is done once, up front, not every monitor run.
 
 ---
 
@@ -160,21 +160,22 @@ This decides whether a notice is a real, biddable opportunity. It has three laye
    - Does it contain the school's **exact CUP/CLP**? → very strong match.
    - Does it contain real **call language** ("avviso", "selezione", "manifestazione di interesse"…)?
    - It **rejects** acts that are clearly *not* opportunities even if they mention the project: already-awarded ("aggiudicazione", "graduatoria"), administrative ("nomina commissione"), publicity ("disseminazione"), or **internal-staff-only** ("personale interno"). This rule layer alone removes most noise.
-3. **`AiVerifier`** — an optional second opinion from Google's **Gemini** AI model. It reads the full notice and decides the subtle things rules can't: is the call **currently open vs already closed**, and is it **open to external** firms vs internal staff only? It replies in Italian with the opportunity type, the deadline, and a one-sentence reason. This is the biggest lever for cutting both false positives and false negatives — but it needs an API key/quota.
+3. **`AiVerifier`** — an optional second opinion from Google's **Gemini** AI model. It reads the full notice and decides the subtle things rules can't: is the call **currently open vs already closed**, and is it **open to external** firms vs internal staff only? It replies in Italian with the opportunity type, the deadline, and a one-sentence reason. This is the biggest lever for cutting both false positives and false negatives — but it needs an API key/quota. If AI is unavailable, the monitor can still send a clearly marked **NON VERIFICATO DA AI** rule-based alert so a POC run does not go silent.
 
 ### `state.py` (`StateStore`) — the memory
 Remembers what we've already handled so we don't repeat ourselves:
 - **processed** notices → don't re-download/re-judge them every hour,
 - **alerted** notices → never email the same opportunity twice,
+- **alert send state** → reserves an alert before sending (`sending`), marks it after Gmail accepts it (`sent`), and releases it if SMTP fails (`failed`), reducing duplicate emails if a run dies around the send step,
 - the **opportunities archive** → a permanent, browsable record of every confirmed opportunity (school, CUP/CLP, title, **link**, published/deadline, type, confidence, when first/last seen). This is what lets you keep a log of past/expired calls. Export it any time with `python run_monitor.py --export-opportunities data/opportunities.csv` — each row is tagged **aperta / scaduta / scadenza sconosciuta** (open / expired / unknown), computed from its deadline.
 
-Locally this is a small SQLite database file (`monitor_history.sqlite3`). It's built behind an interface so it can later be swapped for a cloud database (Postgres) without changing anything else.
+Locally this is a small SQLite database file (`monitor_history.sqlite3`). In GitHub Actions / production, set `DATABASE_URL` to use Postgres instead. The Postgres path reconnects and retries briefly when a hosted database drops an old connection, which is important for long scheduled runs.
 
 ### `repository.py` (`ProjectRepository`) — reads the CSV
 Loads the school rows from `data/projects_sample.csv` into `ProjectRecord` objects for the monitor to iterate.
 
 ### `alerts.py` (`AlertService`) — the email
-Builds and sends the alert email. It produces a proper **Italian** message in two formats (a nicely formatted HTML version with a "Vedi avviso" button, plus a plain-text fallback), and supports multiple recipients via To/Cc/Bcc. It only sends for confirmed, not-yet-alerted opportunities. **Notices are grouped by CUP**: if a single run finds several new notices for the same project, they go out as **one email** (the school/CUP header once, then each notice listed with its own link/deadline/reason) — so one project never floods you with separate messages.
+Builds and sends the alert email. It produces a proper **Italian** message in two formats (a nicely formatted HTML version with a "Vedi avviso" button, plus a plain-text fallback), and supports multiple recipients via To/Cc/Bcc. It sends not-yet-alerted opportunities, including clearly labelled rule-based alerts when AI is unavailable. **Notices are grouped by CUP**: if a single run finds several new notices for the same project, they go out as **one email** (the school/CUP header once, then each notice listed with its own link/deadline/reason) — so one project never floods you with separate messages.
 
 ### `monitor.py` (`Monitor`) — the conductor (Phase B engine)
 Ties it all together for one run. For each mapped school it:
@@ -184,7 +185,7 @@ Ties it all together for one run. For each mapped school it:
 4. prefilters the rest by title,
 5. downloads ("hydrates") the survivors,
 6. runs the rule verifier, then the AI verifier,
-7. emails confirmed opportunities and records them,
+7. emails confirmed or clearly unconfirmed opportunities and records them,
 and prints a summary line (`RunStats`) at the end. It's built so that one broken school can never crash the whole run.
 
 ### `scripts/extract_ministry_pdf.py` — the one-off list builder
@@ -210,7 +211,7 @@ All notices on a school's board
         ▼
    AI check (optional): open & external opportunity?         ← removes subtle false positives
         ▼
-   Confirmed → EMAIL (once) → recorded as alerted
+   Confirmed / clearly unconfirmed fallback → EMAIL (once) → recorded as alerted
 ```
 
 Each stage is cheaper than the next, so we spend expensive effort (downloading, AI) only on the few notices that deserve it.
@@ -222,18 +223,18 @@ Each stage is cheaper than the next, so we spend expensive effort (downloading, 
 Chosen at runtime with `--ai-mode`:
 
 - **`off`** — no AI; rules only. Free, always works, still removes most noise.
-- **`capped`** — AI on up to `--ai-budget` notices per run (default 50), then rules for the rest. Stays within a free API quota. *(Default.)*
+- **`capped`** — AI on up to `--ai-budget` notices per run (default 500), then rules for the rest. Stays within a controlled API quota. *(Default.)*
 - **`full`** — AI on every candidate. Best quality; needs a paid Gemini key for large runs.
 
-The **AI key** goes in `.env` as `GEMINI_API_KEY`. Without it, the tool runs in rules-only mode automatically.
+The **AI key** goes in `.env` as `GEMINI_API_KEY`. Without it, the tool runs in rules-only mode automatically. With `AI_VERIFICATION_REQUIRED=true`, AI-confirmed matches are preferred, but AI outages no longer force total silence: possible rule-based matches are labelled as unverified.
 
 ---
 
 ## 8. What an alert looks like
 
-When an opportunity is confirmed, recipients get an **Italian** email:
+When an opportunity is confirmed or sent as an unverified rule-based fallback, recipients get an **Italian** email:
 - **Subject:** `Opportunità formatore IA PNRR: {scuola} (scade {data})`
-- **Body:** school name, code, region, CUP, CLP, amount; the notice title; a clickable **Vedi avviso** button to the official notice; the opportunity type, deadline, confidence, and a one-line "Perché è stato segnalato" (why it was flagged).
+- **Body:** school name, code, region, CUP, CLP, amount; the notice title; a clickable **Vedi avviso** button to the official notice; the opportunity type, deadline, confidence, whether AI was used, and a one-line "Perché è stato segnalato" (why it was flagged). If AI was unavailable, the reason starts with **NON VERIFICATO DA AI**.
 
 You can send to several people at once via `RECEIVER_EMAIL`, `CC_EMAIL`, `BCC_EMAIL` (Bcc recipients are hidden from the others).
 
@@ -263,15 +264,15 @@ python run_monitor.py --export-opportunities data/opportunities.csv
 
 Useful flags: `--projects FILE` (which list to run), `--limit N` (only first N schools), `--ai-mode {off,capped,full}`, `--ai-budget N`, `--search-budget N` (web-search cap for the fallback), `--export-opportunities FILE`.
 
-**Scheduling:** `.github/workflows/hourly-monitor.yml` can run it automatically every hour in the cloud (GitHub Actions), so it works even when your laptop is off. It needs the same settings stored as repository "secrets."
+**Scheduling:** a GitHub Actions workflow can run it automatically in the cloud, so it works even when your laptop is off. For this POC, a daily run is reasonable. It needs the same settings stored as repository "secrets"; use `DATABASE_URL` for Postgres persistence in CI.
 
 ---
 
 ## 10. Honest limits (be transparent with your team)
 
 - **Mapping isn't 100%:** ~1 in 5 schools won't auto-resolve (no registered website, or the site is down). Those need a manual albo ID, or they're skipped.
-- **Timing is everything:** calls are open for short windows. The tool's value is *catching them early* — so it should run frequently (hourly), and the funding wave it watches will eventually close.
-- **AI needs quota:** the free Gemini tier is small; for whole-list coverage you need a paid key (it's cheap per check, but it adds up over thousands of notices).
+- **Timing is everything:** calls are open for short windows. The tool's value is *catching them early*. For the POC, a daily run is a practical balance; increase frequency only if you need faster discovery.
+- **AI needs quota:** the free Gemini tier is small; for whole-list coverage you need a paid key (it's cheap per check, but it adds up over thousands of notices). If AI is unavailable, the monitor can still send unverified rule-based alerts instead of staying silent.
 - **Generic/own-site schools are read less precisely** than the clean vendor feeds (their pages are messier), so they lean more on the AI judge.
 - **It reads public data politely**, but vendors can change their page formats; if that happens, the matching adapter needs a small update (the design isolates that to one file).
 ```

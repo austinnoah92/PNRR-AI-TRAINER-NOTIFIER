@@ -342,15 +342,27 @@ class Monitor:
                 self.settings.log_file,
             )
         if self.settings.ai_verification_required and final.ai_error and final.confidence != Confidence.HIGH:
-            record("ai_unavailable_deferred",
+            record("confirmed_unverified",
                    f"AI call failed ({final.ai_error}) and rule confidence was not HIGH; "
-                   f"will retry on a future run rather than dropping it.")
-            return None, False
-        if self.settings.ai_verification_required and not final.ai_used and final.confidence != Confidence.HIGH:
-            record("rule_only_insufficient",
+                   f"sending rule-based unconfirmed alert for POC visibility.")
+            final = replace(
+                final,
+                reason=(
+                    "NON VERIFICATO DA AI - possibile opportunità basata solo sulle regole "
+                    f"(AI non disponibile: {final.ai_error}). {rule_result.reason}"
+                ),
+            )
+        elif self.settings.ai_verification_required and not final.ai_used and final.confidence != Confidence.HIGH:
+            record("confirmed_unverified",
                    f"Rule confidence '{final.confidence.value}' without an AI confirmation "
                    f"(AI not consulted — mode/budget/key). Rule reason: {rule_result.reason}")
-            return None, True
+            final = replace(
+                final,
+                reason=(
+                    "NON VERIFICATO DA AI - possibile opportunità basata solo sulle regole "
+                    f"(AI non consultata - mode/budget/key). {rule_result.reason}"
+                ),
+            )
         if not final.is_match:
             record("ai_rejected", final.reason)
             return None, True
@@ -497,10 +509,25 @@ class Monitor:
                 in_reply_to = references = root.get("message_id")
                 subject_override = root.get("subject")
 
+        reserved: list[Alert] = []
+        if not dry_run:
+            for alert in alerts:
+                if not self.state.reserve_alert_send(alert.unique_id, project.school_code, alert.candidate.url):
+                    for reserved_alert in reserved:
+                        self.state.mark_alert_failed(reserved_alert.unique_id)
+                    for _, item, _, _ in entries:
+                        decisions.append((item.key, project.school_code, item.title, item.url,
+                                          "already_alerted",
+                                          "Alert was already sent or is currently being sent."))
+                    return [item for _, item, _, _ in entries]
+                reserved.append(alert)
+
         success, message_id, subject = self.alerts.send(
             alerts, dry_run=dry_run, in_reply_to=in_reply_to, references=references, subject_override=subject_override,
         )
         if not success:
+            for alert in reserved:
+                self.state.mark_alert_failed(alert.unique_id)
             for alert, item, decision, _ in entries:
                 decisions.append((item.key, project.school_code, item.title, item.url,
                                   "send_failed", "Confirmed and grouped, but AlertService.send() did not succeed."))
@@ -510,7 +537,7 @@ class Monitor:
         sent_items: list[AlboItem] = []
         if not dry_run:
             for alert, item, decision, _ in entries:
-                self.state.mark_alerted(alert.unique_id, project.school_code, item.url)
+                self.state.mark_alerted(alert.unique_id, project.school_code, item.url, message_id, subject)
                 sent_items.append(item)
             # A reply threads onto the existing root — don't overwrite its
             # stored message_id/subject. A fresh send establishes a new
