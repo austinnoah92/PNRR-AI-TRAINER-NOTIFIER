@@ -3464,3 +3464,28 @@
 [2026-07-10 14:00:02] ERROR fetching MITF19000B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIIT0027
 [2026-07-10 14:00:07] ERROR fetching LOTA01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LOIT0004
 [2026-07-10 14:26:07] Run ended. Schools: 4141; unsupported: 0; new items: 905; passed prefilter: 169; confirmed: 8; alerts: 3; ai_failures: 6; ai_verified: 4; rule_only (AI not consulted): 6
+[2026-07-10 14:56:13] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 500); workers: 8
+[2026-07-10 14:56:15] ERROR fetching ALIS00100E (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 14:56:25] ERROR fetching CTIC886005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 14:56:41] ERROR fetching SPPM01000D (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/XXXXXX
+[2026-07-10 14:57:25] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TOIS003003 | AVVISO DI SELEZIONE_PNRR DM 219/2025_PROGETTO AI FOR SCHOOLS
+[2026-07-10 14:57:32] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for TOIS003003 | DECRETO DI AVVIO DI SELEZIONE_PNRR DM 219/2025_PROGETTO AI F
+[2026-07-10 14:57:34] ALERT: I.I.S. E. MAJORANA | CUP I14D25003230006 | 2 avviso/i: AVVISO DI SELEZIONE_PNRR DM 219/2025_PROGETTO AI F; DECRETO DI AVVIO DI SELEZIONE_PNRR DM 219/2025_PRO
+[2026-07-10 14:57:40] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for SAIC8BB008 | Informativa sindacale su PROGETTO AI4SCHOOL: SNODI FORMATIVI
+[2026-07-10 14:58:26] ERROR fetching ARIS00800Q (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 15:00:43] ERROR fetching NAPS55000X (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 15:00:47] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for BO1M2F5007 | PNRR-DM-219-Avviso-pubblico-di-selezione-INTERNA-figure-espe
+[2026-07-10 15:00:49] ALERT: SCUOLA DELLE IDEE MARINO GOLINELLI | CUP D34D25007560006 | 1 avviso/i: PNRR-DM-219-Avviso-pubblico-di-selezione-INTERNA-f
+[2026-07-10 15:01:29] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for NARH080005 | dm 219_ AVVISO INTERNO ESTERNO ESPERTO CORSI FORMAZIONE.pdf
+[2026-07-10 15:01:32] ALERT: IPSEOA "G.ROSSINI" - NAPOLI | CUP H64D25002810006 | 1 avviso/i: dm 219_ AVVISO INTERNO ESTERNO ESPERTO CORSI FORMA
+[2026-07-10 15:02:52] WARNING: AI verification unavailable (ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ); falling back to rules for CHIC833003 | FIRMATO_Avviso selezione FORMATORI e TUTOR PNRR DM 219_2025.
+[2026-07-10 15:02:56] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for CHIC833003 | FIRMATO_Avviso di selezione gruppo di supporto PNRR DM 219_2
+[2026-07-10 15:02:58] ALERT: I. C. VASTO N.1 | CUP F34D25004040006 | 2 avviso/i: FIRMATO_Avviso selezione FORMATORI e TUTOR PNRR DM; FIRMATO_Avviso di selezione gruppo di supporto PNR
+[2026-07-10 15:03:37] WARNING: AI verification unavailable (AI in cooldown after a recent rate limit); falling back to rules for CTIC885009 | AVVISO PER RICHIESTA DISPONIBILITA PERSONALE ATA.pdf
+[2026-07-10 15:03:40] ALERT: IC G.PARINI - CATANIA | CUP J64D25003990006 | 1 avviso/i: AVVISO PER RICHIESTA DISPONIBILITA PERSONALE ATA.p
+[2026-07-10 15:03:52] ERROR fetching LEPC03000R (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 15:05:23] ERROR fetching TPIS008004 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 15:08:33] ERROR hydrating PVIC83300C|2290798: 404 Client Error: Not Found for url: https://web.spaggiari.eu/sdg2/Documenti/PVME0035/187460180?download=1
+[2026-07-10 15:16:15] ERROR fetching FORF03000N (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 15:24:23] ERROR fetching NAPS860005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-10 15:30:03] Run ended. Schools: 4141; unsupported: 0; new items: 1152; passed prefilter: 116; confirmed: 8; alerts: 5; ai_failures: 8; ai_verified: 4; rule_only (AI not consulted): 8; ai_cooldown_skips: 2 (last rate-limit error: ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and )
