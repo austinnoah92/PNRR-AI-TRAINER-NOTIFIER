@@ -153,7 +153,12 @@ INTERNAL_TERMS = (
 EXTERNAL_TERMS = (
     "esterno", "esterni", "esperti esterni", "formatori esterni", "personale esterno",
     "operatore economico", "operatori economici", "ente di formazione", "enti di formazione",
-    "soggetti giuridici", "soggetti qualificati", "manifestazione di interesse",
+    "soggetti giuridici", "soggetti qualificati",
+    # NOT "manifestazione di interesse": it's a neutral procedural label used
+    # for internal-only calls exactly as often as external ones (confirmed
+    # live: CHRH01000N's own internal-only-titled avviso is itself named
+    # "AVVISO MANIFESTAZIONE DI INTERESSE... ESPERTI INTERNI") - it says
+    # nothing about who's eligible, so it can't support an external_hits claim.
     "collaborazione plurima", "collaborazione esterna", "mepa",
     # NOT bare "rdo": it's a 3-letter substring of common Italian words
     # ("riguardo", "accordo", "ricordo", "assurdo"...) — in any document of real
@@ -241,6 +246,49 @@ class OpportunityVerifier:
     # real self-appointment pattern without that false-positive risk.
     _ASSIGNMENT_OF_ROLE_RE = re.compile(r"decreto di assegnazione\b(?:\s+\S+){0,6}\s+dell.incarico")
 
+    # "external only if internal search comes up empty" is standard boilerplate
+    # in an internal-only avviso ("sarà a discrezione del DS indire nuovo avviso
+    # oppure ricercare all'esterno la figura professionale mancante" / "di
+    # reiterare l'avviso interno ovvero di adottare sistemi di reclutamento per
+    # le figure mancanti, all'esterno della istituzione scolastica" / the D.Lgs
+    # 165/2001 art. 7 c. 6 "esigenza di ricorrere a soggetti esterni" citation) -
+    # confirmed live across 7 different schools nationwide, clearly a shared
+    # template, not free text. A prior attempt to reject on this phrase alone
+    # was reverted (see below) because the SAME sentence also appears in
+    # Caselette's notice, which is genuinely open to external candidates.
+    _EXTERNAL_AS_FALLBACK_ONLY_RE = re.compile(
+        r"indire nuovo avviso oppure ricercare all.esterno"
+        r"|per le figure mancanti,?\s*all.esterno della istituzione scolastica"
+        r"|esigenza di ricorrere a soggetti esterni"
+    )
+    # What actually distinguishes Caselette (genuinely open) from the 7
+    # internal-only false positives above: Caselette explicitly ranks and
+    # admits external candidates in the SAME process ("priorità a favore dei
+    # candidati interni... e, solo in via subordinata, dei candidati ESTERNI
+    # RISULTATI AMMESSI"; "per esterni: partita iva o disponibilità a
+    # contratto..."). None of the 7 false positives contain any of this -
+    # they only describe an escalation PROCEDURE if the internal pool is
+    # empty, never actually evaluating an external candidate. So the fallback
+    # phrase above only means "internal-only" when none of these are present.
+    _GENUINE_EXTERNAL_ELIGIBILITY_RE = re.compile(
+        r"in via subordinata|risultati ammessi|per esterni\s*:|partita iva"
+    )
+
+    # A generic self-identification checkbox on an application form ("this
+    # candidate is: an employee of this school / another school / another
+    # P.A. / an external expert") lists every possible applicant category
+    # regardless of whether THIS notice actually invites external candidates
+    # - it's a data field, not a policy statement, so its mere presence
+    # proves nothing about eligibility. Confirmed live: SRPC08000R's own
+    # scoring criteria only had a "Per le figure interne" tier (no external
+    # counterpart), yet this checkbox alone tripped external_hits. Genuinely
+    # open documents state real REQUIREMENTS for external candidates instead
+    # (Caselette: "per esterni: partita iva o disponibilità a contratto...")
+    # - none of the verified genuine matches rely on this checkbox phrase.
+    _STATUS_DECLARATION_CHECKBOX_RE = re.compile(
+        r"dipendente di altra p\.a\.,?\s*(?:o|ovvero)\s*se\s*[eè]\s*esperto esterno"
+    )
+
     # How much of the (title + metadata + filenames + body) text counts as the
     # document's "kind" signal for STRONG_NEGATIVE_TERMS. Adapters put the title,
     # descrizione/tipologia, and attachment filenames FIRST, deep attachment body
@@ -265,8 +313,15 @@ class OpportunityVerifier:
         if self._ASSIGNMENT_OF_ROLE_RE.search(kind_text):
             strong_neg.append("decreto di assegnazione ... dell'incarico")
         internal_hits = [term for term in _INTERNAL_TERMS_N if term in text]
-        external_hits = [term for term in _EXTERNAL_TERMS_N if term in text]
+        text_for_external = self._STATUS_DECLARATION_CHECKBOX_RE.sub(" ", text)
+        external_hits = [term for term in _EXTERNAL_TERMS_N if term in text_for_external]
         internal_only = bool(internal_hits) and not external_hits
+        if (
+            internal_hits and external_hits and not internal_only
+            and self._EXTERNAL_AS_FALLBACK_ONLY_RE.search(text)
+            and not self._GENUINE_EXTERNAL_ELIGIBILITY_RE.search(text)
+        ):
+            internal_only = True
 
         if strong_neg and not core_call_hits:
             return VerificationResult(False, Confidence.LOW, f"Closed/already-decided, contract-stage, or admin act ({', '.join(strong_neg[:3])}).")
@@ -288,8 +343,14 @@ class OpportunityVerifier:
             # to MEDIUM here routes it through the ai_unavailable_deferred
             # path (retry later) instead of alerting on rule-only confidence
             # when AI happens to be unavailable for this specific document.
-            confidence = Confidence.MEDIUM if (internal_hits and external_hits) else Confidence.HIGH
-            return VerificationResult(True, confidence, f"Identificativo di progetto esatto trovato ({', '.join(exact_hits)}) insieme a termini di bando ({', '.join(core_call_hits[:3])}).", core_call_hits[0])
+            mixed_signal = bool(internal_hits and external_hits)
+            confidence = Confidence.MEDIUM if mixed_signal else Confidence.HIGH
+            return VerificationResult(
+                True, confidence,
+                f"Identificativo di progetto esatto trovato ({', '.join(exact_hits)}) insieme a termini di bando ({', '.join(core_call_hits[:3])}).",
+                core_call_hits[0],
+                ambiguous_internal_external=mixed_signal,
+            )
         # No exact CUP/CLP citation, so this is judged purely on how many
         # distinct D.M. 219 signals ("219", "intelligenza artificiale", "snodi
         # formativi", ...) show up alongside the call language. There is no
