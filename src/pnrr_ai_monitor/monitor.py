@@ -342,6 +342,19 @@ class Monitor:
                 self.settings.log_file,
             )
         if self.settings.ai_verification_required and final.ai_error and final.confidence != Confidence.HIGH:
+            if final.ambiguous_internal_external:
+                # Confirmed live: this specific case (exact CUP match, but the
+                # document mixes internal-staff AND external language) has a
+                # much higher wrong-send rate without AI's real judgment than
+                # a plain weak-context MEDIUM match — of 6 real cases sent
+                # unconfirmed under this exact condition, 5 turned out to be
+                # genuinely internal-only. Hold it back for a future run
+                # instead, rather than sending unconfirmed like other MEDIUM.
+                record("ai_unavailable_deferred_ambiguous",
+                       f"AI call failed ({final.ai_error}) on a mixed internal/external signal; "
+                       f"holding back rather than sending unconfirmed (this specific case has a "
+                       f"confirmed high wrong-send rate without AI).")
+                return None, False
             record("confirmed_unverified",
                    f"AI call failed ({final.ai_error}) and rule confidence was not HIGH; "
                    f"sending rule-based unconfirmed alert for POC visibility.")
@@ -353,6 +366,12 @@ class Monitor:
                 ),
             )
         elif self.settings.ai_verification_required and not final.ai_used and final.confidence != Confidence.HIGH:
+            if final.ambiguous_internal_external:
+                record("ai_unavailable_deferred_ambiguous",
+                       f"Rule confidence '{final.confidence.value}' on a mixed internal/external "
+                       f"signal without an AI confirmation (AI not consulted — mode/budget/key); "
+                       f"holding back rather than sending unconfirmed.")
+                return None, False
             record("confirmed_unverified",
                    f"Rule confidence '{final.confidence.value}' without an AI confirmation "
                    f"(AI not consulted — mode/budget/key). Rule reason: {rule_result.reason}")
