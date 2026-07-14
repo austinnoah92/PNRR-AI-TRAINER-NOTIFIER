@@ -84,6 +84,14 @@ class VerificationResult:
     deadline: str = "non specificata"
     ai_used: bool = False
     ai_error: str = ""  # set when an AI call was attempted but failed (quota/network)
+    # True only for the exact-CUP-match branch where the document mixes
+    # internal-staff AND external language (genuinely ambiguous - could be a
+    # real mixed opening, or an internal-only notice whose external signal is
+    # incidental boilerplate rules can't fully rule out). Confirmed live: this
+    # specific case has a much higher wrong-send rate without AI than a plain
+    # weak-context MEDIUM match, so monitor.py treats it differently when AI
+    # is unavailable (defer, not send-unconfirmed) - see ambiguous_internal_external.
+    ambiguous_internal_external: bool = False
 
 
 @dataclass(frozen=True)
