@@ -90,7 +90,7 @@ NEGATIVE_TERMS = (
     "pubblicita", "lettera di incarico", "decreto di incarico", "decreto di nomina",
     "conferimento incarico", "conferimento incarich", "aggiudicazione", "determina di aggiudicazione",
     "determinazione di aggiudicazione", "determina cuc", "determinazione cuc",
-    "dichiarazione insussistenza", "insussistenza", "schema di contratto", "contratto",
+    "schema di contratto", "contratto",
 )
 
 # Acts that are clearly NOT an open opportunity even if they cite the project CUP:
@@ -132,13 +132,18 @@ STRONG_NEGATIVE_TERMS = (
     "assunzione incarico", "assunzione dell'incarico", "atti di nomina",
     "lettera di incarico", "decreto di incarico", "decreto di nomina", "nomina rup",
     "incarico rup", "supporto tecnico", "supporto al rup", "supporto tecnico al rup",
-    "responsabile unico del progetto", "dichiarazione insussistenza", "insussistenza",
+    "responsabile unico del progetto",
     "determina cuc", "determinazione cuc", "schema di contratto", "contratto",
-    # Standalone procedural/compliance attachments (e.g. a RUP's conflict-of-interest
-    # declaration) — routinely carry the project's CUP for traceability, but are
-    # paperwork, not a call anyone can respond to.
-    "dichiarazione di inesistenza", "inesistenza di cause", "inesistenza di conflitto",
-    "conflitto di interessi", "conflitto d'interessi", "conflitto di interesse",
+    # NOT "insussistenza"/"conflitto di interessi"/"inesistenza" variants: these
+    # were meant to catch a standalone RUP conflict-of-interest declaration act,
+    # but in practice they're the standard blank declaration FORM every
+    # applicant signs as part of a real application package (confirmed live:
+    # PAIS02200V's genuinely open, currently-live "Avviso Pubblico Esperti D.M.
+    # 219" — deadline 21/07/2026 — was wrongly rejected solely because its
+    # attachment list includes "dichiarazione...insussistenza cause ostative.pdf"
+    # and "dichiarazione assenza di conflitto di interessi.pdf", the routine
+    # blank forms, not evidence of closure). Same false-positive shape as
+    # "classe"/"stipula" above.
     "dichiarazione rup", "dichiarazione del rup",
 )
 
@@ -261,17 +266,23 @@ class OpportunityVerifier:
         r"|per le figure mancanti,?\s*all.esterno della istituzione scolastica"
         r"|esigenza di ricorrere a soggetti esterni"
     )
-    # What actually distinguishes Caselette (genuinely open) from the 7
-    # internal-only false positives above: Caselette explicitly ranks and
-    # admits external candidates in the SAME process ("priorità a favore dei
-    # candidati interni... e, solo in via subordinata, dei candidati ESTERNI
-    # RISULTATI AMMESSI"; "per esterni: partita iva o disponibilità a
-    # contratto..."). None of the 7 false positives contain any of this -
-    # they only describe an escalation PROCEDURE if the internal pool is
-    # empty, never actually evaluating an external candidate. So the fallback
-    # phrase above only means "internal-only" when none of these are present.
+    # What actually distinguishes genuinely-open documents from the 7
+    # internal-only false positives above: they explicitly rank/admit
+    # external candidates in the SAME process, either via Caselette's phrasing
+    # ("priorità a favore dei candidati interni... e, solo in via subordinata,
+    # dei candidati ESTERNI RISULTATI AMMESSI"; "per esterni: partita iva o
+    # disponibilità a contratto...") or via CZIS022003/TOIC87000N's phrasing
+    # ("rivolto a figure professionali interne ed esterne... in collaborazione
+    # plurima o come lavoro autonomo/prestazione occasionale" — a live,
+    # confirmed miss on first pass: TOIC87000N shares this exact subject-line
+    # template and was wrongly caught as internal-only until this was added).
+    # None of the 7 false positives contain any of this - they only describe
+    # an escalation PROCEDURE if the internal pool is empty, never actually
+    # evaluating an external candidate. So the fallback phrase above only
+    # means "internal-only" when none of these are present.
     _GENUINE_EXTERNAL_ELIGIBILITY_RE = re.compile(
         r"in via subordinata|risultati ammessi|per esterni\s*:|partita iva"
+        r"|lavoro autonomo|prestazione occasionale|interne ed esterne|interni ed esterni"
     )
 
     # A generic self-identification checkbox on an application form ("this
