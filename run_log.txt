@@ -6147,3 +6147,16 @@
 [2026-07-20 15:32:56] ERROR fetching FORF03000N (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
 [2026-07-20 15:40:21] ERROR fetching NAPS860005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
 [2026-07-20 15:47:30] Run ended. Schools: 4141; unsupported: 0; new items: 354; passed prefilter: 33; confirmed: 2; alerts: 1; ai_failures: 4; ai_verified: 5; rule_only (AI not consulted): 4
+[2026-07-21 12:56:17] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 500); workers: 8
+[2026-07-21 12:56:20] ERROR fetching ALIS00100E (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 12:56:37] ERROR fetching CTIC886005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 12:57:11] ERROR fetching SPPM01000D (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/XXXXXX
+[2026-07-21 12:58:33] ALERT: I.I.S. "E. FERMI - GUTTUSO" | CUP E84D25005550006 | 1 avviso/i: AVVISO per conferimento di n. 11 incarichi individ
+[2026-07-21 12:59:25] ERROR fetching ARIS00800Q (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 13:01:38] ERROR fetching NAPS55000X (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 13:07:46] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for BAPC23000Q | PROGETTO: TRANSAZIONE DIGITALE E IA – LABORATORIO DI INNOVAZ
+[2026-07-21 13:08:45] ERROR fetching LEPC03000R (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 13:11:12] ERROR fetching TPIS008004 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 13:21:40] ERROR fetching FORF03000N (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 13:32:30] ERROR fetching NAPS860005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-07-21 13:51:14] Run ended. Schools: 4141; unsupported: 0; new items: 898; passed prefilter: 136; confirmed: 1; alerts: 1; ai_failures: 1; ai_verified: 11; rule_only (AI not consulted): 1
