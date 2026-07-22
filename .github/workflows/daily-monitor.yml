@@ -90,12 +90,14 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # Force-add: these are gitignored for local hygiene but deliberately
-          # committed in CI to persist dedup state across runs (SQLite fallback).
-          git add -f monitor_history.sqlite3 run_log.txt 2>/dev/null || true
+          # Force-add: gitignored for local hygiene but deliberately committed
+          # in CI so the run log persists across runs.
+          git add -f run_log.txt 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No state changes to commit."
           else
             git commit -m "chore: update monitor state [skip ci]"
+            git fetch origin main
+            git rebase origin/main
             git push
           fi
