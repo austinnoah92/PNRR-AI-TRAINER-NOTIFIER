@@ -2,7 +2,7 @@
 .env
 
 # Claude Code local settings (per-machine permission approvals, not project config)
-.claude/settings.local.json
+.claude/
 
 # Virtual environment
 .venv/
