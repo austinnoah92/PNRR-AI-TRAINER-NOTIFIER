@@ -251,6 +251,33 @@ class OpportunityVerifier:
     # real self-appointment pattern without that false-positive risk.
     _ASSIGNMENT_OF_ROLE_RE = re.compile(r"decreto di assegnazione\b(?:\s+\S+){0,6}\s+dell.incarico")
 
+    # "insussistenza"/"conflitto di interessi"/"stipula" were removed from
+    # STRONG_NEGATIVE_TERMS entirely (they were false-firing on real avvisi
+    # that merely list a blank declaration form as one attachment among
+    # several). But that swung too far: confirmed live, several notices whose
+    # own published title IS the standalone act itself now wrongly matched
+    # ("DICHIARAZIONE ASSENZA DI CONFLITTO DI INTERESSE RUP DS", "DOCUMENTO DI
+    # STIPULA NUMERO TRATTATIVA... SERVIZIO DI NOLEGGIO" — a school's own RUP
+    # declaration or an unrelated equipment-rental contract record, not a call
+    # anyone can respond to). The real distinguishing signal is the notice's
+    # OWN TITLE, not the full text: a genuine avviso is titled as an avviso
+    # even when it bundles one of these as an attachment (PAIS02200V: "Avviso
+    # Pubblico Esperti D.M. 219" with "...insussistenza cause ostative.pdf"
+    # merely listed among its attachments) - only reject when the title
+    # itself announces the document IS the declaration/stipulation act.
+    _TITLE_IS_STANDALONE_DECLARATION_RE = re.compile(
+        r"dichiarazione\b.{0,60}(insussistenza|conflitt\w*.{0,5}interess\w*|incompatibilit|inesistenza)"
+        r"|documento di stipula"
+    )
+    # A DS asking their own regional office for permission to hold an
+    # additional coordination role - confirmed live (RIRH010007): same
+    # self-appointment/administrative-setup category as the bounded
+    # "decreto di assegnazione ... dell'incarico" pattern above, just
+    # phrased as a request rather than a decree.
+    _AUTHORIZATION_REQUEST_RE = re.compile(
+        r"richiesta autorizzazione\b(?:\s+\S+){0,6}\s+incarico"
+    )
+
     # "external only if internal search comes up empty" is standard boilerplate
     # in an internal-only avviso ("sarà a discrezione del DS indire nuovo avviso
     # oppure ricercare all'esterno la figura professionale mancante" / "di
@@ -323,6 +350,11 @@ class OpportunityVerifier:
         strong_neg = [term for term in _STRONG_NEGATIVE_TERMS_N if term in kind_text]
         if self._ASSIGNMENT_OF_ROLE_RE.search(kind_text):
             strong_neg.append("decreto di assegnazione ... dell'incarico")
+        title_text = self._normalize(candidate.title)
+        if self._TITLE_IS_STANDALONE_DECLARATION_RE.search(title_text):
+            strong_neg.append("dichiarazione/documento di stipula standalone (titolo)")
+        if self._AUTHORIZATION_REQUEST_RE.search(title_text):
+            strong_neg.append("richiesta autorizzazione incarico (titolo)")
         internal_hits = [term for term in _INTERNAL_TERMS_N if term in text]
         text_for_external = self._STATUS_DECLARATION_CHECKBOX_RE.sub(" ", text)
         external_hits = [term for term in _EXTERNAL_TERMS_N if term in text_for_external]
