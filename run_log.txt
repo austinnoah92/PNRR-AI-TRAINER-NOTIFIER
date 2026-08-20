@@ -12188,3 +12188,17 @@
 [2026-08-19 13:31:38] ERROR fetching MITF19000B (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/MIIT0027
 [2026-08-19 13:31:43] ERROR fetching LOTA01000L (Spaggiari): 403 Client Error: Forbidden for url: https://web.spaggiari.eu/sdg2/AlboOnline/LOIT0004
 [2026-08-19 13:32:47] Run ended. Schools: 4141; unsupported: 0; new items: 292; passed prefilter: 51; confirmed: 1; alerts: 1; ai_failures: 0; ai_verified: 5; rule_only (AI not consulted): 0
+[2026-08-20 13:10:47] Starting monitor. Mapped schools: 4141; adapters: argo, generic, nuvola, search, spaggiari; ai-mode: capped (budget 500); workers: 8
+[2026-08-20 13:10:51] ERROR fetching ALIS00100E (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:11:06] ERROR fetching CTIC886005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:11:28] ERROR fetching SPPM01000D (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/XXXXXX
+[2026-08-20 13:12:58] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for SIIS00300R | AVVISO SELELZIONE FIGURE DM 219-2025_signed.pdf
+[2026-08-20 13:13:57] ERROR fetching ARIS00800Q (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:16:05] ERROR fetching NAPS55000X (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:16:26] WARNING: AI verification unavailable (ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand ); falling back to rules for FIIC81300V | 04 Assunzione PTOF_dmIA_signed.pdf
+[2026-08-20 13:18:51] ERROR hydrating RMIC8D6009|2613078: 404 Client Error: Not Found for url: https://web.spaggiari.eu/sdg2/Documenti/RMME0317/206526864?download=1
+[2026-08-20 13:19:47] ERROR fetching LEPC03000R (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:21:40] ERROR fetching TPIS008004 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:32:49] ERROR fetching FORF03000N (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:39:45] ERROR fetching NAPS860005 (Argo): 404 Client Error: Not Found for url: https://generale.portaleargo.it/albopretorio/api/public/atti/rss/albopretorioPF3
+[2026-08-20 13:40:35] Run ended. Schools: 4141; unsupported: 0; new items: 1955; passed prefilter: 238; confirmed: 2; alerts: 0; ai_failures: 2; ai_verified: 5; rule_only (AI not consulted): 2
